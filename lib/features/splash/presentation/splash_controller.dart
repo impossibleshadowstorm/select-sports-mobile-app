@@ -16,6 +16,7 @@ class SplashController {
     final hasVisited = await splashRepository.hasAlreadyVisited();
 
     if (!hasVisited) {
+      print('here');
       await splashRepository.setAlreadyVisited(true);
       // Navigate to onboarding screen
       if (context.mounted) {
@@ -30,7 +31,7 @@ class SplashController {
     if (isTokenValid) {
       // Navigate to home screen
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/main');
       }
     } else {
       // Navigate to login screen

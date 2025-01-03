@@ -12,7 +12,7 @@ class SplashRepository {
   /// Check if the token is valid by calling the `/me` endpoint
   Future<bool> checkTokenValidity() async {
     try {
-      final response = await apiClient.authorizedGet('/me');
+      final response = await apiClient.authorizedGet(ApiEndpoints.me);
       return response.statusCode == 200;
     } catch (e) {
       return false;
