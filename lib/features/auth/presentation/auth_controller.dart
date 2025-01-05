@@ -14,6 +14,7 @@ class AuthController extends StateNotifier<void> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
+  final TextEditingController otpController = TextEditingController();
 
   bool passwordVisible = false;
 

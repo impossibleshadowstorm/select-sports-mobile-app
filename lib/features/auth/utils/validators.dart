@@ -48,4 +48,15 @@ class Validators {
     }
     return null;
   }
+
+  static String? validateOTP(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "OTP is required";
+    }
+    final otpRegex = RegExp(r'^[0-9]{6}$');
+    if (!otpRegex.hasMatch(value.trim())) {
+      return "Enter a valid 6-digit OTP";
+    }
+    return null;
+  }
 }

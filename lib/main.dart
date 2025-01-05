@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/network/shared_preferences_helper.dart';
+import 'package:select_sports/features/auth/presentation/Reset_page.dart';
+import 'package:select_sports/features/auth/presentation/forgot_page.dart';
 import 'package:select_sports/features/auth/presentation/login_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:select_sports/features/auth/presentation/signup_page.dart';
+import 'package:select_sports/features/auth/presentation/verifyOTP_page.dart';
 import 'package:select_sports/features/home/presentation/home_screen.dart';
 import 'package:select_sports/features/main/presentation/main_screen.dart';
 import 'package:select_sports/features/onboarding/presentation/onboarding_screen.dart';
@@ -51,7 +54,7 @@ class MyApp extends ConsumerWidget {
                 GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
           ),
           themeMode: themeMode,
-          initialRoute: '/',
+          initialRoute: '/verifyOTP',
           routes: {
             '/': (context) => SplashScreen(),
             '/login': (context) => LoginScreen(),
@@ -59,6 +62,10 @@ class MyApp extends ConsumerWidget {
             '/onboarding': (context) => OnboardingScreen(),
             '/home': (context) => HomeScreen(),
             '/main': (context) => MainScreen(),
+            '/forgot':(context) => ForgotScreen(),
+            '/verifyOTP':(context) => VerifyOTPScreen(), 
+            '/reset':(context) => ResetScreen(),
+
           },
         ),
       );

@@ -52,7 +52,7 @@ Follow these steps to set up the app locally:
                      or
    git clone https://github.com/SaurHub123/select-sports-mobile-app
 
-   cd select-sports-mobile-appb
+   cd select-sports-mobile-app
    ```
 2. **Install Dependencies Ensure you have Flutter installed. Then, run:**
    ```bash
