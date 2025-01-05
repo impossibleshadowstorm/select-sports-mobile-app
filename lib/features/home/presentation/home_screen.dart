@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
+import 'package:select_sports/core/widgets/bottom_nav_visibility.dart';
 import 'package:select_sports/core/widgets/frosted_glass.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 
@@ -40,7 +41,7 @@ class HomeScreen extends ConsumerWidget {
                         image: AssetImage(
                           Paths.homePlaygroundImage,
                         ),
-                        opacity: 0.4,
+                        opacity: isDarkMode ? 0.4 : 1,
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.only(
@@ -149,13 +150,14 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
             // Box So that the data behind the bottom bar must be visible..
-            Container(
-              height: 70,
-              width: 100.w,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-              ),
-            ),
+            BottomNavBarVisibility.bottomNavBarVisibleWidget(),
+            // Container(
+            //   height: 70,
+            //   width: 100.w,
+            //   decoration: BoxDecoration(
+            //     color: Colors.transparent,
+            //   ),
+            // ),
           ],
         ),
       ),

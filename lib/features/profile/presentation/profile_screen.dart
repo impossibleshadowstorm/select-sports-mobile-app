@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
-
+import 'package:select_sports/core/widgets/bottom_nav_visibility.dart';
 import '../../../providers/theme_provider.dart';
 import '../../auth/presentation/auth_controller.dart';
 
@@ -24,28 +25,98 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final themeNotifier = ref.read(themeProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Home",
-          style: AppTextStyles.body.copyWith(
-            color: isDarkMode ? AppColors.darkText : AppColors.lightText,
-          ),
+      body: Container(
+        height: 100.h,
+        width: 100.w,
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).viewPadding.top,
+            ),
+            Expanded(
+              child: Stack(
+                children: [
+                  Container(
+                    height: 50.h,
+                    margin: EdgeInsets.symmetric(horizontal: 2.5.w),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: AppColors.darkGreyColor),
+                    ),
+                    child: Center(
+                      child: Container(
+                        height: 37.5.h,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColors.darkGreyColor),
+                        ),
+                        child: Center(
+                          child: Container(
+                            height: 31.h,
+                            padding: EdgeInsets.all(5.w),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              shape: BoxShape.circle,
+                            ),
+                            // child: Image(image: Net),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    child: Container(
+                      height: 100.h,
+                      width: 100.w,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 50.h,
+                              width: 100.w,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            SizedBox(height: 5.w),
+                            Column(
+                              children: [
+                                Container(
+                                  height: 30.h,
+                                  width: 100.w,
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                                Container(
+                                  height: 10.h,
+                                  width: 100.w,
+                                  decoration: BoxDecoration(
+                                    color: Colors.yellow,
+                                  ),
+                                ),
+                                Container(
+                                  height: 10.h,
+                                  width: 100.w,
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                BottomNavBarVisibility
+                                    .bottomNavBarVisibleWidget(height: 140),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
-        actions: [
-          IconButton(
-            icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
-            onPressed: () => themeNotifier.toggleTheme(context),
-          ),
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              authController.logout();
-              Navigator.pushReplacementNamed(context, '/login');
-            },
-          ),
-        ],
       ),
-      body: const Center(child: Text('Profile Screen')),
     );
   }
 }
