@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class BottomNavBarVisibility {
+class VisibilityWidgets {
   static Widget bottomNavBarVisibleWidget({double height = 70}) {
     return Container(
       height: height,
@@ -9,6 +9,15 @@ class BottomNavBarVisibility {
       decoration: BoxDecoration(
         color: Colors.transparent,
       ),
+    );
+  }
+
+  static Widget statusBarVisibleWidget({
+    required BuildContext context,
+    double additionalHeight = 0,
+  }) {
+    return SizedBox(
+      height: MediaQuery.of(context).viewPadding.top + additionalHeight,
     );
   }
 }

@@ -73,7 +73,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 5.h, horizontal: 5.w),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,7 +185,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.pushReplacementNamed(context, '/login');
+                              Navigator.pushNamed(context, '/login');
                             },
                             child: Text(
                               "Login here.",
@@ -224,7 +225,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
       if (result['success']) {
         CustomSnackBar.showSuccess(
             "${result['message']}. Please login using credentials.");
-        Navigator.pushReplacementNamed(context, '/login');
+        Navigator.pushNamed(context, '/login');
       } else {
         CustomSnackBar.showError(result['message']);
       }

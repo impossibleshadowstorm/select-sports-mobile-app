@@ -29,8 +29,11 @@ class AppColors {
   static const darkScaffoldBackground = Color(0xFF171717);
   static const inputFilledBackground = Color(0xFF35393D);
 
-  static const lightGreenColor = Color(0xFFC0E863);
-  static const darkGreenColor = Color(0xFF4F6A29);
+  // original light green static const lightGreenColor = Color(0xFFC0E863);
+  static const lightGreenColor = Color(0xFF19C965);
+  static const mediumGreenColor = Color(0xFF19C965);
+  // static const darkGreenColor = Color(0xFF4F6A29);
+  static const darkGreenColor = Color(0xFF17633A);
 
 
   // Texts

@@ -16,11 +16,10 @@ class SplashController {
     final hasVisited = await splashRepository.hasAlreadyVisited();
 
     if (!hasVisited) {
-      print('here');
       await splashRepository.setAlreadyVisited(true);
       // Navigate to onboarding screen
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, '/onboarding');
+        Navigator.pushNamed(context, '/onboarding');
       }
       return;
     }
@@ -31,12 +30,12 @@ class SplashController {
     if (isTokenValid) {
       // Navigate to home screen
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, '/main');
+        Navigator.pushNamed(context, '/main');
       }
     } else {
       // Navigate to login screen
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, '/login');
+        Navigator.pushNamed(context, '/login');
       }
     }
   }

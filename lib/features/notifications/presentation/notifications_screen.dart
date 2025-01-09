@@ -40,7 +40,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
             icon: Icon(Icons.logout),
             onPressed: () {
               authController.logout();
-              Navigator.pushReplacementNamed(context, '/login');
+              Navigator.pushNamed(context, '/login');
             },
           ),
         ],
