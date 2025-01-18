@@ -15,6 +15,9 @@ class AuthController extends StateNotifier<void> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
+  final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   bool passwordVisible = false;
 
@@ -42,6 +45,23 @@ class AuthController extends StateNotifier<void> {
     );
   }
 
+  Future<Map<String, dynamic>> forgot() {
+    return authRepository.forgot(emailController.text.trim());
+  }
+
+  Future<Map<String, dynamic>> verify() {
+    return authRepository.verifyOtp(
+        emailController.text.trim(), otpController.text.trim());
+  }
+
+  Future<Map<String, dynamic>> reset() {
+    return authRepository.reset(
+        emailController.text.trim(),
+        otpController.text.trim(), 
+        newPasswordController.text.trim()
+      );
+  }
+
   Future<bool> logout() async {
     await SharedPreferencesHelper.clear();
     // After logging out User must not be redirected to Onboarding Page
@@ -58,6 +78,9 @@ class AuthController extends StateNotifier<void> {
     nameController.dispose();
     phoneController.dispose();
     ageController.dispose();
+    otpController.dispose();
+    newPasswordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 }

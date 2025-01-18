@@ -27,6 +27,17 @@ class Validators {
     return null;
   }
 
+  static String? validateConfirmPassword(
+      String? confirmPassword, String? newPassword) {
+    if (confirmPassword == null || confirmPassword.trim().isEmpty) {
+      return "Confirm Password is required";
+    }
+    if (confirmPassword != newPassword) {
+      return "Both Password must be Same";
+    }
+    return null;
+  }
+
   static String? validatePhone(String? value) {
     if (value == null || value.trim().isEmpty) {
       return "Phone number is required";

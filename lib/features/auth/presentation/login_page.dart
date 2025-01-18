@@ -126,9 +126,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         controller: authController.passwordController,
                         hintText: "**************",
                         labelText: "Password",
-                        obscureText: !authController.passwordVisible,
                         validator: Validators.validatePassword,
                         ref: ref,
+                        obscureText: !authController.passwordVisible,
                         isPrefix: false,
                         icon: Icon(
                           authController.passwordVisible

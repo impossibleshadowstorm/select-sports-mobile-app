@@ -173,9 +173,21 @@ class _ForgotScreenState extends ConsumerState<ForgotScreen> {
 
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
-      _login();
+      _forgot();
     }
   }
 
-  Future<void> _login() async {}
+  Future<void> _forgot() async {
+    // Check if the widget is still mounted before triggering UI updates
+    final result = await ref.read(authControllerProvider).forgot();
+
+    if (mounted) {
+      if (result['success']) {
+        CustomSnackBar.showSuccess(result["message"]);
+        Navigator.pushReplacementNamed(context, '/reset');
+      } else {
+        CustomSnackBar.showError(result["message"]);
+      }
+    }
+  }
 }

@@ -9,6 +9,89 @@ class AuthRepository {
 
   AuthRepository(this.apiClient);
 
+  Future<Map<String, dynamic>> forgot(String email) async {
+    try {
+      final response = await apiClient.post(ApiEndpoints.fogrot, {
+        'email': email,
+      });
+
+      final message = response.data['message'] ?? "Unexpected response";
+
+      if (response.statusCode == 200) {
+        return {
+          'success': true,
+          'message': message,
+        };
+      }
+
+      return {'success': false, 'message': message};
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print(e.response?.data["error"]);
+      }
+      return {'success': false, 'message': e.response?.data["message"]};
+    } catch (e) {
+      return {'success': false, 'message': e.toString()};
+    }
+  }
+
+
+  Future<Map<String, dynamic>> verifyOtp(String email, String otp) async {
+    try {
+      final response = await apiClient.post(ApiEndpoints.verifyOtp, {
+        'email': email,
+        'otp': otp,
+      });
+
+      final message = response.data['message'] ?? "Unexpected response";
+
+      if (response.statusCode == 200) {
+        return {
+          'success': true,
+          'message': message,
+        };
+      }
+
+      return {'success': false, 'message': message};
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print(e.response?.data["error"]);
+      }
+      return {'success': false, 'message': e.response?.data["message"]};
+    } catch (e) {
+      return {'success': false, 'message': e.toString()};
+    }
+  }
+
+  Future<Map<String, dynamic>> reset(String email, String otp, String newPassword) async {
+    try {
+      final response = await apiClient.post(ApiEndpoints.resetPassword, {
+        'email': email,
+        'otp': otp,
+        'password': newPassword,
+      });
+
+      final message = response.data['message'] ?? "Unexpected response";
+
+      if (response.statusCode == 200) {
+        return {
+          'success': true,
+          'data': response.data['data'],
+          'message': "Login Successful",
+        };
+      }
+
+      return {'success': false, 'message': message};
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print(e.response?.data["error"]);
+      }
+      return {'success': false, 'message': e.response?.data["message"]};
+    } catch (e) {
+      return {'success': false, 'message': e.toString()};
+    }
+  }
+
   Future<Map<String, dynamic>> login(String email, String password) async {
     try {
       final response = await apiClient.post(ApiEndpoints.login, {

@@ -180,7 +180,17 @@ class _VerifyOTPScreenState extends ConsumerState<VerifyOTPScreen> {
   }
 
   Future<void> _verifyOTP() async {
-    
+    // Check if the widget is still mounted before triggering UI updates
+    final result = await ref.read(authControllerProvider).verify();
+
+    if (mounted) {
+      if (result['success']) {
+        CustomSnackBar.showSuccess(result["message"]);
+        Navigator.pushReplacementNamed(context, '/reset');
+      } else {
+        CustomSnackBar.showError(result["message"]);
+      }
+    }
   }
 
 

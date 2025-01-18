@@ -54,7 +54,7 @@ class MyApp extends ConsumerWidget {
                 GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
           ),
           themeMode: themeMode,
-          initialRoute: '/verifyOTP',
+          initialRoute: '/reset',
           routes: {
             '/': (context) => SplashScreen(),
             '/login': (context) => LoginScreen(),
