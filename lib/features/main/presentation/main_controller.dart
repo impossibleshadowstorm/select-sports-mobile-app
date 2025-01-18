@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:select_sports/features/menus/presentation/menus_screen.dart';
 import '../../membership/presentation/membership_screen.dart';
 import '../../connections/presentation/connections_screen.dart';
 import '../../home/presentation/home_screen.dart';
 import '../../notifications/presentation/notifications_screen.dart';
-import '../../profile/presentation/profile_screen.dart';
 
 final mainControllerProvider =
     StateNotifierProvider<MainController, int>((ref) => MainController());
@@ -17,7 +17,7 @@ class MainController extends StateNotifier<int> {
     const ConnectionsScreen(),
     const HomeScreen(),
     const NotificationsScreen(),
-    const ProfileScreen(),
+    const MenusScreen(),
   ];
 
   final List<Map<String, dynamic>> navItems = [

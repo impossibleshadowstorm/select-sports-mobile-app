@@ -181,7 +181,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.pushReplacementNamed(
+                              Navigator.pushNamed(
                                   context, '/signup');
                             },
                             child: Text(
@@ -225,7 +225,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           SharedPreferencesKeys.authToken,
           result['data'],
         );
-        Navigator.pushReplacementNamed(context, '/main');
+        Navigator.pushNamed(context, '/main');
       } else {
         CustomSnackBar.showError(result["message"]);
       }

@@ -48,6 +48,7 @@ dependencies:
   toastification: ^2.3.0
   logger: ^2.5.0
   flutter_svg: ^2.0.16
+  syncfusion_flutter_gauges: ^28.1.37
 
 dev_dependencies:
   flutter_test:

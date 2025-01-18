@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
-import '../../../providers/theme_provider.dart';
 import 'main_controller.dart';
 
 class MainScreen extends ConsumerWidget {
@@ -11,7 +10,6 @@ class MainScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedIndex = ref.watch(mainControllerProvider);
-    final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
     final controller = ref.read(mainControllerProvider.notifier);
 
     return Scaffold(
