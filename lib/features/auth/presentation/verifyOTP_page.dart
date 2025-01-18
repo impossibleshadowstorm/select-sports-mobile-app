@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
-import 'package:select_sports/core/constants/shared_preferences_keys.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
-import 'package:select_sports/core/network/shared_preferences_helper.dart';
 import 'package:select_sports/core/widgets/custom_buttons.dart';
 import 'package:select_sports/core/widgets/custom_snackbar.dart';
 import 'package:select_sports/core/widgets/custom_textfields.dart';
@@ -13,14 +11,14 @@ import 'package:select_sports/features/auth/utils/validators.dart';
 
 import '../../../providers/theme_provider.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class VerifyOTPScreen extends ConsumerStatefulWidget {
+  const VerifyOTPScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _VerifyOTPScreenState createState() => _VerifyOTPScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _VerifyOTPScreenState extends ConsumerState<VerifyOTPScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -64,7 +62,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           width: 100.w,
                           child: Image(
                             image: AssetImage(
-                              Paths.loginFootballImage,
+                              Paths.loginTopImage,
                             ),
                           ),
                         ),
@@ -73,7 +71,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         height: 35.h,
                         width: 100.w,
                         decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.4),
+                          color: Colors.black.withOpacity(0.4),
                         ),
                       ),
                       Container(
@@ -84,20 +82,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Sign in to your",
+                              "Verify",
                               style: AppTextStyles.largeHeading.copyWith(
                                 color: AppColors.lightText,
                               ),
                             ),
                             Text(
-                              "Account",
+                              "OTP",
                               style: AppTextStyles.largeHeading.copyWith(
                                 color: AppColors.lightText,
                               ),
                             ),
                             SizedBox(height: 2.5.w),
                             Text(
-                              "Access your account at fingertips",
+                              "Enter the OTP sent to your email",
                               style: AppTextStyles.body.copyWith(
                                 color: AppColors.lightText,
                               ),
@@ -109,59 +107,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                 ),
                 Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.5.w),
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 2.5.h, vertical: 2.5.h),
                   child: Column(
                     children: [
                       SizedBox(height: 10.w),
                       CustomTextFields.outlined(
-                        controller: authController.emailController,
-                        hintText: "johndoe@gmail.com",
-                        labelText: "Email",
-                        validator: Validators.validateEmail,
+                        keyboardType: TextInputType.number,
+                        controller: authController.otpController,
+                        hintText: "Enter OTP",
+                        labelText: "OTP",
+                        validator: Validators.validateOTP,
                         ref: ref,
+                      
+                        
                       ),
-                      SizedBox(height: 5.w),
-                      CustomTextFields.outlinedWithIcon(
-                        controller: authController.passwordController,
-                        hintText: "**************",
-                        labelText: "Password",
-                        validator: Validators.validatePassword,
-                        ref: ref,
-                        obscureText: !authController.passwordVisible,
-                        isPrefix: false,
-                        icon: Icon(
-                          authController.passwordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: isDarkMode
-                              ? AppColors.lightText
-                              : AppColors.darkText,
-                        ),
-                        onIconPressed: () {
-                          setState(() {
-                            authController.togglePasswordVisibility();
-                          });
-                        },
-                      ),
-                      SizedBox(height: 5.w),
                       SizedBox(
-                        width: 100.w,
-                        child: Text(
-                          "Forgot Password?",
-                          textAlign: TextAlign.right,
-                          style: AppTextStyles.body.copyWith(
-                            color: isDarkMode
-                                ? AppColors.lightGreenColor
-                                : AppColors.darkGreenColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        height: 4.h,
                       ),
-                      SizedBox(height: 5.w),
                       CustomButtons.fullWidthFilledButton(
                         ref: ref,
-                        buttonText: "Login",
+                        buttonText: "Verify",
                         onClick: () {
                           _submitForm();
                         },
@@ -171,7 +137,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Don't Have an account? ",
+                            "Didn't receive the OTP? ",
                             textAlign: TextAlign.center,
                             style: AppTextStyles.body.copyWith(
                               color: isDarkMode
@@ -181,11 +147,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, '/signup');
+                              // _resendOTP();
                             },
                             child: Text(
-                              " Create here.",
+                              " Resend OTP",
                               textAlign: TextAlign.center,
                               style: AppTextStyles.body.copyWith(
                                 color: isDarkMode
@@ -210,25 +175,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
-      _login();
+      _verifyOTP();
     }
   }
 
-  Future<void> _login() async {
+  Future<void> _verifyOTP() async {
     // Check if the widget is still mounted before triggering UI updates
-    final result = await ref.read(authControllerProvider).login();
+    final result = await ref.read(authControllerProvider).verify();
 
     if (mounted) {
       if (result['success']) {
         CustomSnackBar.showSuccess(result["message"]);
-        SharedPreferencesHelper.set(
-          SharedPreferencesKeys.authToken,
-          result['data'],
-        );
-        Navigator.pushNamed(context, '/main');
+        Navigator.pushReplacementNamed(context, '/reset');
       } else {
         CustomSnackBar.showError(result["message"]);
       }
     }
   }
+
+
 }

@@ -47,8 +47,12 @@ Follow these steps to set up the app locally:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/select-sports.git
-   cd select-sports
+
+   git clone https://github.com/impossibleshadowstorm/select-sports-mobile-app
+                     or
+   git clone https://github.com/SaurHub123/select-sports-mobile-app
+
+   cd select-sports-mobile-app
    ```
 2. **Install Dependencies Ensure you have Flutter installed. Then, run:**
    ```bash
@@ -71,5 +75,5 @@ Follow these steps to set up the app locally:
 If you have any questions or feedback, feel free to reach out:
 
 * Developer: Sumit Saurav & Saurabh Kumar
-* Email: sumitsaurav1119@gmail.com
-* GitHub: github.com/impossibleshadowstorm
+* Email: sumitsaurav1119@gmail.com | Saurabhbadal7262@gmail.com
+* GitHub: github.com/impossibleshadowstorm | github.com/SaurHub123
