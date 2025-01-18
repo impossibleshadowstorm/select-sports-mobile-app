@@ -23,7 +23,8 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authController = ref.read(authControllerProvider);
+    final authController = ref.read(authControllerProvider.notifier);
+    final authState = ref.watch(authControllerProvider);
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
     return Scaffold(
@@ -124,10 +125,10 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
                       labelText: "New Password",
                       validator: Validators.validatePassword,
                       ref: ref,
-                      obscureText: !authController.passwordVisible,
+                      obscureText: !authState.newPasswordVisible,
                       isPrefix: false,
                       icon: Icon(
-                        authController.passwordVisible
+                        authState.newPasswordVisible
                             ? Icons.visibility
                             : Icons.visibility_off,
                         color: isDarkMode
@@ -135,9 +136,7 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
                             : AppColors.darkText,
                       ),
                       onIconPressed: () {
-                        setState(() {
-                          authController.togglePasswordVisibility();
-                        });
+                        authController.toggleNewPasswordVisibility();
                       },
                     ),
                     SizedBox(height: 2.5.h),
@@ -148,10 +147,10 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
                       validator: (value) => Validators.validateConfirmPassword(
                           value, authController.newPasswordController.text),
                       ref: ref,
-                      obscureText: !authController.passwordVisible,
+                      obscureText: !authState.confirmPasswordVisible,
                       isPrefix: false,
                       icon: Icon(
-                        authController.passwordVisible
+                        authState.confirmPasswordVisible
                             ? Icons.visibility
                             : Icons.visibility_off,
                         color: isDarkMode
@@ -159,9 +158,7 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
                             : AppColors.darkText,
                       ),
                       onIconPressed: () {
-                        setState(() {
-                          authController.togglePasswordVisibility();
-                        });
+                        authController.toggleConfirmPasswordVisibility();
                       },
                     ),
                     SizedBox(height: 5.w),
@@ -189,13 +186,13 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
   }
 
   Future<void> _resetPassword() async {
-    final result = await ref.read(authControllerProvider).reset();
+    final result = await ref.read(authControllerProvider.notifier).reset();
 
     if (result['success']) {
-        CustomSnackBar.showSuccess(result["message"]);
-        Navigator.pushReplacementNamed(context, '/login');
-      } else {
-        CustomSnackBar.showError(result["message"]);
-      }
+      CustomSnackBar.showSuccess(result["message"]);
+      Navigator.pushReplacementNamed(context, '/login');
+    } else {
+      CustomSnackBar.showError(result["message"]);
+    }
   }
 }

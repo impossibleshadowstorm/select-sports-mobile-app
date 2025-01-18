@@ -110,17 +110,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   Positioned(
                     top: 16.5.h,
                     left: 10.5.h,
-                    child: Container(
-                      height: 17.h,
-                      width: 25.h,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            Paths.profileImage,
+                    child: Hero(
+                      tag: "profile-icon",
+                      child: Container(
+                        height: 17.h,
+                        width: 25.h,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              Paths.profileImage,
+                            ),
+                            fit: BoxFit.cover,
                           ),
-                          fit: BoxFit.cover,
                         ),
                       ),
                     ),

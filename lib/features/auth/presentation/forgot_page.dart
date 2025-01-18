@@ -25,7 +25,7 @@ class _ForgotScreenState extends ConsumerState<ForgotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authController = ref.read(authControllerProvider);
+    final authController = ref.read(authControllerProvider.notifier);
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
     return Scaffold(
@@ -110,7 +110,9 @@ class _ForgotScreenState extends ConsumerState<ForgotScreen> {
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 2.5.h, vertical: 2.5.h),
+                        horizontal: 2.5.h,
+                        vertical: 2.5.h,
+                      ),
                       child: Column(
                         children: [
                           SizedBox(height: 10.w),
@@ -179,7 +181,7 @@ class _ForgotScreenState extends ConsumerState<ForgotScreen> {
 
   Future<void> _forgot() async {
     // Check if the widget is still mounted before triggering UI updates
-    final result = await ref.read(authControllerProvider).forgot();
+    final result = await ref.read(authControllerProvider.notifier).forgot();
 
     if (mounted) {
       if (result['success']) {

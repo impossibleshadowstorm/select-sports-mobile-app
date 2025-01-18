@@ -25,7 +25,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authController = ref.read(authControllerProvider);
+    final authController = ref.read(authControllerProvider.notifier);
+    final authState = ref.watch(authControllerProvider);
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
     return Scaffold(
@@ -128,10 +129,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         labelText: "Password",
                         validator: Validators.validatePassword,
                         ref: ref,
-                        obscureText: !authController.passwordVisible,
+                        obscureText: !authState.passwordVisible,
                         isPrefix: false,
                         icon: Icon(
-                          authController.passwordVisible
+                          authState.passwordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
                           color: isDarkMode
@@ -139,22 +140,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               : AppColors.darkText,
                         ),
                         onIconPressed: () {
-                          setState(() {
-                            authController.togglePasswordVisibility();
-                          });
+                          authController.togglePasswordVisibility();
                         },
                       ),
                       SizedBox(height: 5.w),
-                      SizedBox(
-                        width: 100.w,
-                        child: Text(
-                          "Forgot Password?",
-                          textAlign: TextAlign.right,
-                          style: AppTextStyles.body.copyWith(
-                            color: isDarkMode
-                                ? AppColors.lightGreenColor
-                                : AppColors.darkGreenColor,
-                            fontWeight: FontWeight.bold,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/forgot');
+                        },
+                        child: SizedBox(
+                          width: 100.w,
+                          child: Text(
+                            "Forgot Password?",
+                            textAlign: TextAlign.right,
+                            style: AppTextStyles.body.copyWith(
+                              color: isDarkMode
+                                  ? AppColors.lightGreenColor
+                                  : AppColors.darkGreenColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -181,8 +185,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, '/signup');
+                              Navigator.pushNamed(context, '/signup');
                             },
                             child: Text(
                               " Create here.",
@@ -216,7 +219,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _login() async {
     // Check if the widget is still mounted before triggering UI updates
-    final result = await ref.read(authControllerProvider).login();
+    final result = await ref.read(authControllerProvider.notifier).login();
 
     if (mounted) {
       if (result['success']) {

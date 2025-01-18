@@ -35,7 +35,6 @@ class AuthRepository {
     }
   }
 
-
   Future<Map<String, dynamic>> verifyOtp(String email, String otp) async {
     try {
       final response = await apiClient.post(ApiEndpoints.verifyOtp, {
@@ -63,12 +62,13 @@ class AuthRepository {
     }
   }
 
-  Future<Map<String, dynamic>> reset(String email, String otp, String newPassword) async {
+  Future<Map<String, dynamic>> reset(
+      String email, String otp, String newPassword) async {
     try {
       final response = await apiClient.post(ApiEndpoints.resetPassword, {
         'email': email,
         'otp': otp,
-        'password': newPassword,
+        'newPassword': newPassword,
       });
 
       final message = response.data['message'] ?? "Unexpected response";

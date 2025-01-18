@@ -39,13 +39,16 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                       context: context,
                       additionalHeight: 50,
                     ),
-                    Container(
-                      height: 15.h,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            Paths.profileImage,
+                    Hero(
+                      tag: "profile-icon",
+                      child: Container(
+                        height: 15.h,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              Paths.profileImage,
+                            ),
                           ),
                         ),
                       ),

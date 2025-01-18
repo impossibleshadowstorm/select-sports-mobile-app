@@ -15,7 +15,8 @@ class NotificationsScreen extends ConsumerStatefulWidget {
 class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
-    final authController = ref.read(authControllerProvider);
+    final authController = ref.read(authControllerProvider.notifier);
+    final authState = ref.read(authControllerProvider);
 
     // Check if the current theme mode is dark
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;

@@ -22,7 +22,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authController = ref.read(authControllerProvider);
+    final authController = ref.read(authControllerProvider.notifier);
+    final authState = ref.watch(authControllerProvider);
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
     return Scaffold(
@@ -126,12 +127,12 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                         controller: authController.passwordController,
                         hintText: "**************",
                         labelText: "Password",
-                        obscureText: !authController.passwordVisible,
+                        obscureText: !authState.passwordVisible,
                         validator: Validators.validatePassword,
                         ref: ref,
                         isPrefix: false,
                         icon: Icon(
-                          authController.passwordVisible
+                          authState.passwordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
                           color: isDarkMode
@@ -219,7 +220,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   }
 
   Future<void> _signup() async {
-    final result = await ref.read(authControllerProvider).signup();
+    final result = await ref.read(authControllerProvider.notifier).signup();
 
     if (mounted) {
       if (result['success']) {

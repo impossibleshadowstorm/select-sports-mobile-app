@@ -23,7 +23,8 @@ class _VerifyOTPScreenState extends ConsumerState<VerifyOTPScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authController = ref.read(authControllerProvider);
+    final authController = ref.read(authControllerProvider.notifier);
+    final authState = ref.watch(authControllerProvider);
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
     return Scaffold(
@@ -107,8 +108,8 @@ class _VerifyOTPScreenState extends ConsumerState<VerifyOTPScreen> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 2.5.h, vertical: 2.5.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 2.5.h, vertical: 2.5.h),
                   child: Column(
                     children: [
                       SizedBox(height: 10.w),
@@ -119,8 +120,6 @@ class _VerifyOTPScreenState extends ConsumerState<VerifyOTPScreen> {
                         labelText: "OTP",
                         validator: Validators.validateOTP,
                         ref: ref,
-                      
-                        
                       ),
                       SizedBox(
                         height: 4.h,
@@ -181,7 +180,7 @@ class _VerifyOTPScreenState extends ConsumerState<VerifyOTPScreen> {
 
   Future<void> _verifyOTP() async {
     // Check if the widget is still mounted before triggering UI updates
-    final result = await ref.read(authControllerProvider).verify();
+    final result = await ref.read(authControllerProvider.notifier).verify();
 
     if (mounted) {
       if (result['success']) {
@@ -192,6 +191,4 @@ class _VerifyOTPScreenState extends ConsumerState<VerifyOTPScreen> {
       }
     }
   }
-
-
 }
