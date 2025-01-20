@@ -9,6 +9,7 @@ import 'package:select_sports/core/widgets/custom_textfields.dart';
 import 'package:select_sports/features/auth/presentation/auth_controller.dart';
 import 'package:select_sports/features/auth/utils/validators.dart';
 
+import '../../../core/widgets/custom_slot_card.dart';
 import '../../../providers/theme_provider.dart';
 
 class VerifyOTPScreen extends ConsumerStatefulWidget {

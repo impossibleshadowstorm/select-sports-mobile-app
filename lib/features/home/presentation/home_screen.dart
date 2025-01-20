@@ -10,6 +10,7 @@ import 'package:select_sports/core/widgets/visibility_widgets.dart';
 import 'package:select_sports/core/widgets/frosted_glass.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 
+import '../../../core/widgets/custom_slot_card.dart';
 import '../../main/presentation/main_controller.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -34,8 +35,12 @@ class HomeScreen extends ConsumerWidget {
               SizedBox(height: 10.w),
               // Our Playgrounds Section
               _buildPlaygroundsSection(isDarkMode),
+              SizedBox(height:10.w),
+              // Upcoming Games Section
+              _buildUpcomingGamesSection(isDarkMode),
               // Box So that the data behind the bottom bar must be visible..
               VisibilityWidgets.bottomNavBarVisibleWidget(height: 150),
+              
             ],
           ),
         ),
@@ -205,6 +210,75 @@ class HomeScreen extends ConsumerWidget {
                       ),
                     ),
                     SizedBox(width: 5.w),
+                  ],
+                );
+              },
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUpcomingGamesSection(bool isDarkMode) {
+    return Container(
+      padding: EdgeInsets.only(left: 5.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            "Our Upcoming Games",
+            textAlign: TextAlign.start,
+            style: AppTextStyles.subheading.copyWith(
+              color: isDarkMode ? AppColors.lightText : AppColors.darkText,
+            ),
+          ),
+          SizedBox(height: 2.5.w),
+          SizedBox(
+            height: 340,
+            width: 100.w,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return Row(
+                  children: [
+                    Hero(
+                      tag: "Hero$index",
+                      // flightShuttleBuilder: (flightContext, animation,
+                      //     direction, fromContext, toContext) {
+                      //   return Center(child: CircularProgressIndicator());
+                      // },
+                      transitionOnUserGestures: true,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/playground-details');
+                        },
+                        child: CustomSlotCards.slotCard(
+                          venueID: 'CSVK01',
+                          venueName: 'Conscient Sport',
+                          venueLocation: 'Vasant kunj',
+                          gameDate: '26-01-2025',
+                          gameTime: '17:00',
+                          actualPrice: 299,
+                          asides: 9,
+                          onBookNowClick: () {
+                            print('Button Clicked');
+                          }),
+                      ),
+                    ),
+                    SizedBox(width: 5.w),
+                    CustomSlotCards.slotCard(
+                          venueID: 'CSVK01',
+                          venueName: 'Conscient Sport',
+                          venueLocation: 'Vasant kunj',
+                          gameDate: '26-01-2025',
+                          gameTime: '17:00',
+                          actualPrice: 299,
+                          asides: 9,
+                          onBookNowClick: () {
+                            print('Button Clicked');
+                          }),
                   ],
                 );
               },
