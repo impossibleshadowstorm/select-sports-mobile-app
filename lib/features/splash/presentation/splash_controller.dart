@@ -35,7 +35,7 @@ class SplashController {
     } else {
       // Navigate to login screen
       if (context.mounted) {
-        Navigator.pushNamed(context, '/main');
+        Navigator.pushNamed(context, '/login');
       }
     }
   }

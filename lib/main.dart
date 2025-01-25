@@ -14,6 +14,8 @@ import 'package:select_sports/features/main/presentation/main_screen.dart';
 import 'package:select_sports/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:select_sports/features/profile/presentation/profile_screen.dart';
 import 'package:select_sports/features/splash/presentation/splash_screen.dart';
+import 'package:select_sports/features/wallet/presentation/add_money_screen.dart';
+import 'package:select_sports/features/wallet/presentation/wallet_screen.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 import 'package:toastification/toastification.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -68,6 +70,8 @@ class MyApp extends ConsumerWidget {
             '/reset':(context) => ResetScreen(),
             '/profile': (context) => ProfileScreen(),
             '/playground-details': (context) => PlaygroundDetailsScreen(),
+            '/wallet':(context) => WalletScreen(),
+            '/addMoney':(context) => AddMoneyScreen(),
           },
         ),
       );

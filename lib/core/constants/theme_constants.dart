@@ -12,6 +12,10 @@ class AppColors {
   static const darkGreyColor = Color(0xFF35393D);
   static const lightestGreyColor = Color(0xFFFAFAFA);
 
+  static const cardColor = Color.fromARGB(0, 2, 71, 219);
+  static const redColor = Colors.red;
+  static const darkBlue = Colors.blueGrey;
+
   // Texts
   static const lightText = Colors.white;
 
@@ -34,7 +38,6 @@ class AppColors {
   static const mediumGreenColor = Color(0xFF19C965);
   // static const darkGreenColor = Color(0xFF4F6A29);
   static const darkGreenColor = Color(0xFF17633A);
-
 
   // Texts
   static const darkText = Colors.black;
