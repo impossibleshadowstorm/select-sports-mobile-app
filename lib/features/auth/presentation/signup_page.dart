@@ -185,6 +185,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                             ),
                           ),
                           InkWell(
+                            overlayColor: WidgetStatePropertyAll(Colors.transparent),
                             onTap: () {
                               Navigator.pushNamed(context, '/login');
                             },

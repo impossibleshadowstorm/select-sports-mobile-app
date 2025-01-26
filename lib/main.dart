@@ -8,6 +8,7 @@ import 'package:select_sports/features/auth/presentation/login_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:select_sports/features/auth/presentation/signup_page.dart';
 import 'package:select_sports/features/auth/presentation/verifyOTP_page.dart';
+import 'package:select_sports/features/available_slots/presentation/available_slots_screen.dart';
 import 'package:select_sports/features/home/presentation/home_screen.dart';
 import 'package:select_sports/features/home/presentation/playground_details_screen.dart';
 import 'package:select_sports/features/main/presentation/main_screen.dart';
@@ -56,13 +57,14 @@ class MyApp extends ConsumerWidget {
                 GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
           ),
           themeMode: themeMode,
-          initialRoute: '/verifyOTP',
+          initialRoute: '/',
           routes: {
             '/': (context) => SplashScreen(),
             '/login': (context) => LoginScreen(),
             '/signup': (context) => SignupScreen(),
             '/onboarding': (context) => OnboardingScreen(),
             '/main': (context) => MainScreen(),
+            '/join_a_game': (context) => AvailableSlotsScreen(),
             '/forgot':(context) => ForgotScreen(),
             '/verifyOTP':(context) => VerifyOTPScreen(), 
             '/reset':(context) => ResetScreen(),

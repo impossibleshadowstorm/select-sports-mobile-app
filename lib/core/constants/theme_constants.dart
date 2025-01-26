@@ -11,6 +11,8 @@ class AppColors {
   static const mediumGreyColor = Color(0xFF6C7278);
   static const darkGreyColor = Color(0xFF35393D);
   static const lightestGreyColor = Color(0xFFFAFAFA);
+  static const lightestGreyColorV2 = Color(0xFFF5F5F5);
+  static const lightestGreyColorV3 = Color(0xFFE5E5E5);
 
   // Texts
   static const lightText = Colors.white;
@@ -20,6 +22,7 @@ class AppColors {
   * */
   // Backgrounds
   static const darkestBackground = Color(0xFF0D1C2C);
+  static const darkestBackgroundV2 = Color(0xFF1D1D1D);
   static const darkMediumBackground = Color(0xFF162534);
   static const darkLightBackground = Color(0xFF1F2E3B);
 
@@ -32,12 +35,16 @@ class AppColors {
   // original light green static const lightGreenColor = Color(0xFFC0E863);
   static const lightGreenColor = Color(0xFF19C965);
   static const mediumGreenColor = Color(0xFF19C965);
+
   // static const darkGreenColor = Color(0xFF4F6A29);
   static const darkGreenColor = Color(0xFF17633A);
 
-
   // Texts
   static const darkText = Colors.black;
+}
+
+class AppCommonTexts {
+  static const String rupeeIcon = "₹";
 }
 
 class AppTextStyles {

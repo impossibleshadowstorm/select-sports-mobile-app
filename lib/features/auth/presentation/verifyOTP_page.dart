@@ -146,6 +146,7 @@ class _VerifyOTPScreenState extends ConsumerState<VerifyOTPScreen> {
                             ),
                           ),
                           InkWell(
+                            overlayColor: WidgetStatePropertyAll(Colors.transparent),
                             onTap: () {
                               // _resendOTP();
                             },
@@ -179,7 +180,7 @@ class _VerifyOTPScreenState extends ConsumerState<VerifyOTPScreen> {
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 child: Image.network(
-                  'https://example.com/image.jpg', // Replace with your image URL
+                  Paths.homeFootballPlayerIcon, // Replace with your image URL
                   height: 150,
                   width: double.infinity,
                   fit: BoxFit.cover,

@@ -30,7 +30,7 @@ class SplashController {
     if (isTokenValid) {
       // Navigate to home screen
       if (context.mounted) {
-        Navigator.pushNamed(context, '/main');
+        Navigator.pushNamed(context, '/login');
       }
     } else {
       // Navigate to login screen

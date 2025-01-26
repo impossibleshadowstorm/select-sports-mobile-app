@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
@@ -143,32 +144,70 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                               ),
                             ),
                             SizedBox(height: 5.w),
-                            Column(
-                              children: [
-                                Container(
-                                  height: 30.h,
-                                  width: 100.w,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue,
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5.w,
+                                vertical: 5.w,
+                              ),
+                              child: Column(
+                                children: [
+                                  _buildActions(
+                                    Paths.profileTouchesImage,
+                                    "Position",
+                                    "GOALKEEPER",
+                                    isTotal: false,
                                   ),
-                                ),
-                                Container(
-                                  height: 10.h,
-                                  width: 100.w,
-                                  decoration: BoxDecoration(
-                                    color: Colors.yellow,
+                                  SizedBox(height: 2.5.w),
+                                  _buildActions(
+                                    Paths.profileTouchesImage,
+                                    "Skill Level",
+                                    "INTERMEDIATE",
+                                    isTotal: false,
                                   ),
-                                ),
-                                Container(
-                                  height: 10.h,
-                                  width: 100.w,
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
+                                  SizedBox(height: 2.5.w),
+                                  _buildActions(
+                                    Paths.profileTouchesImage,
+                                    "Preferred Foot",
+                                    "RIGHT",
+                                    isTotal: false,
                                   ),
-                                ),
-                                VisibilityWidgets.bottomNavBarVisibleWidget(
-                                    height: 140),
-                              ],
+                                  SizedBox(height: 2.5.w),
+                                  _buildActions(
+                                    Paths.profileShotsImage,
+                                    "Shots",
+                                    9,
+                                  ),
+                                  SizedBox(height: 2.5.w),
+                                  _buildActions(
+                                    Paths.profilePassesImage,
+                                    "Passes",
+                                    9,
+                                  ),
+                                  SizedBox(height: 2.5.w),
+                                  _buildActions(
+                                    Paths.profileTouchesImage,
+                                    "Touches",
+                                    9,
+                                  ),
+                                  SizedBox(height: 2.5.w),
+                                  Container(
+                                    height: 10.h,
+                                    width: 100.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.yellow,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 10.h,
+                                    width: 100.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                  VisibilityWidgets.bottomNavBarVisibleWidget(
+                                      height: 140),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -205,6 +244,72 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildActions(String icon, String title, var totalValue,
+      {bool isTotal = true}) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: 2.5.w,
+        horizontal: 2.5.w,
+      ),
+      width: 100.w,
+      decoration: BoxDecoration(
+        color: AppColors.darkGreyColor,
+        borderRadius: BorderRadius.circular(2.5.w),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Container(
+                height: 60,
+                width: 60,
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(2.5.w),
+                ),
+                child: Center(
+                  child: SvgPicture.asset(
+                    icon,
+                    color: AppColors.lightText,
+                  ),
+                ),
+              ),
+              SizedBox(width: 5.w),
+              Text(
+                title.toUpperCase(),
+                style: AppTextStyles.subheading
+                    .copyWith(color: AppColors.lightText),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              isTotal
+                  ? Text(
+                      "Total: ",
+                      style: AppTextStyles.body
+                          .copyWith(color: AppColors.lightGreyColor),
+                    )
+                  : SizedBox(),
+              SizedBox(width: 1.w),
+              Text(
+                totalValue.toString(),
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.lightText,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(width: 2.5.w),
+            ],
+          ),
+        ],
       ),
     );
   }

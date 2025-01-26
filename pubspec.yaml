@@ -49,6 +49,7 @@ dependencies:
   logger: ^2.5.0
   flutter_svg: ^2.0.16
   syncfusion_flutter_gauges: ^28.1.37
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
@@ -83,6 +84,7 @@ flutter:
     - assets/images/
     - assets/images/auth/
     - assets/images/home/
+    - assets/images/profile/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
