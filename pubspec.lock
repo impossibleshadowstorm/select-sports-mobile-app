@@ -30,6 +30,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.3"
+  animate_do:
+    dependency: "direct main"
+    description:
+      name: animate_do
+      sha256: "7a3162729f0ea042f9dd84da217c5bde5472ad9cef644079929d4304a5dc4ca0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.4"
   archive:
     dependency: transitive
     description:
@@ -62,6 +70,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  bouncing_widget:
+    dependency: "direct main"
+    description:
+      name: bouncing_widget
+      sha256: "94d30908780fa0e82ada38ef90963d0760419a42c5d05289f85fae745981da99"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   build:
     dependency: "direct dev"
     description:
@@ -315,6 +331,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_advanced_drawer:
+    dependency: "direct main"
+    description:
+      name: flutter_advanced_drawer
+      sha256: "2554e024bc086677a0282fda3bcce6b9f97262a20b77a317559fcdc0b85bb449"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.7"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -437,6 +461,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.1"
+  iconsax:
+    dependency: "direct main"
+    description:
+      name: iconsax
+      sha256: fb0144c61f41f3f8a385fadc27783ea9f5359670be885ed7f35cef32565d5228
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.8"
   iconsax_flutter:
     dependency: transitive
     description:
@@ -653,6 +685,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  pattern_formatter:
+    dependency: "direct main"
+    description:
+      name: pattern_formatter
+      sha256: e870e12352f4d5537b8822826a0b1e3912ba91c504d79450dcaed4db79c211d3
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   pausable_timer:
     dependency: transitive
     description:
