@@ -108,7 +108,7 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             Paths.menuWalletIcon,
                             "Wallet",
                             () {
-                              // Navigator.pushNamed(context, "/main");
+                              Navigator.pushNamed(context, "/wallet");
                             },
                           ),
                           Divider(
@@ -175,7 +175,7 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                           ),
                           _buildOptionTile(
                             isDarkMode,
-                            Paths.menuBookingIcon,
+                            Paths.menuOurHostsIcons,
                             "Our Hosts",
                             () {
                               // Navigator.pushNamed(context, "/main");
@@ -209,7 +209,33 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             Paths.menuSettingIcon,
                             "Settings",
                             () {
-                              // Navigator.pushNamed(context, "/main");
+                              Navigator.pushNamed(context, "/settings");
+                            },
+                          ),
+                          Divider(
+                            color: isDarkMode
+                                ? AppColors.darkGreyColor
+                                : AppColors.lightestGreyColorV3,
+                          ),
+                          _buildOptionTile(
+                            isDarkMode,
+                            Paths.settingsAboutUsIcon,
+                            "About Us",
+                            () {
+                              Navigator.pushNamed(context, "/settings");
+                            },
+                          ),
+                          Divider(
+                            color: isDarkMode
+                                ? AppColors.darkGreyColor
+                                : AppColors.lightestGreyColorV3,
+                          ),
+                          _buildOptionTile(
+                            isDarkMode,
+                            Paths.settingsTermsAndConditionsIcon,
+                            "Terms & Conditions",
+                            () {
+                              Navigator.pushNamed(context, "/settings");
                             },
                           ),
                         ],

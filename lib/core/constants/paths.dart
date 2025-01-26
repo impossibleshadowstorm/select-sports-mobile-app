@@ -23,8 +23,14 @@ class Paths {
   static String menuUpcomingIcon = 'assets/images/profile/upcoming_booking_menu.svg';
   static String menuRewardsIcon = 'assets/images/profile/reward_menu.svg';
   static String menuManageTeamsIcon = 'assets/images/profile/manage_teams_menu.svg';
+  static String menuOurHostsIcons = 'assets/images/profile/our_hosts_menu.svg';
   static String menuNeedHelpIcon = 'assets/images/profile/need_help_menu.svg';
   static String menuSettingIcon = 'assets/images/profile/setting_menu.svg';
+
+  // Setting Icons
+  static String settingsProfileIcon = 'assets/images/profile/settings_profile.svg';
+  static String settingsAboutUsIcon = 'assets/images/profile/settings_about_us.svg';
+  static String settingsTermsAndConditionsIcon = 'assets/images/profile/settings_tncs.svg';
 
   // Available Slots Images
   static String availableSlotsIcon = 'assets/images/profile/setting_menu.svg';

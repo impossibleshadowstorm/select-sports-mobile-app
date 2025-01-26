@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class WalletState {
   final String amount;
   final String paymentMode;
-  
 
   WalletState({this.amount = '', this.paymentMode = ''});
 
@@ -20,9 +19,7 @@ class WalletState {
 // Define WalletController extending StateNotifier
 class WalletController extends StateNotifier<WalletState> {
   WalletController() : super(WalletState());
-    
 
-  
   final TextEditingController amountController = TextEditingController();
   final TextEditingController paymentModeController = TextEditingController();
 

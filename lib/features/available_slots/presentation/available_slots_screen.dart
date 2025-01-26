@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
+import 'package:select_sports/core/widgets/common_appbar.dart';
 import 'package:select_sports/core/widgets/visibility_widgets.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 
@@ -29,37 +30,15 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
           ? AppColors.darkScaffoldBackground
           : AppColors.lightestGreyColorV2,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5.w),
         child: Column(
           children: [
             VisibilityWidgets.statusBarVisibleWidget(context: context),
-            Container(
-              width: 100.w,
-              padding: EdgeInsets.symmetric(vertical: 5.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    overlayColor: WidgetStatePropertyAll(Colors.transparent),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(
-                      Icons.arrow_back_sharp,
-                      color:
-                          isDarkMode ? AppColors.lightText : AppColors.darkText,
-                    ),
-                  ),
-                  Text(
-                    "Available Games Slot",
-                    style: AppTextStyles.subheading.copyWith(
-                      color:
-                          isDarkMode ? AppColors.lightText : AppColors.darkText,
-                      fontSize: 15.sp,
-                    ),
-                  ),
-                  SizedBox(),
-                ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5.w),
+              child: CommonAppbar.appbarWithoutLeading(
+                context,
+                isDarkMode,
+                "Available Games slot",
               ),
             ),
             Expanded(
@@ -68,23 +47,26 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      _buildSlotSection(
-                        isDarkMode: isDarkMode,
-                        venueName: 'Conscient Sport',
-                        venueLocation:
-                            '163 Yulara Dr, Yulara NT 0872, Australia',
-                        gameDate: 'Sun 26 Jan',
-                        gameTime: '17:00PM',
-                        actualPrice: 399.00,
-                        discountedPrice: 329.00,
-                        onClick: () {
-                          // TODO: Open Playground details screen
-                        },
-                      ),
-                      SizedBox(height: 5.w),
-                    ],
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                    child: Column(
+                      children: [
+                        _buildSlotSection(
+                          isDarkMode: isDarkMode,
+                          venueName: 'Conscient Sport',
+                          venueLocation:
+                              '163 Yulara Dr, Yulara NT 0872, Australia',
+                          gameDate: 'Sun 26 Jan',
+                          gameTime: '17:00PM',
+                          actualPrice: 399.00,
+                          discountedPrice: 329.00,
+                          onClick: () {
+                            // TODO: Open Playground details screen
+                          },
+                        ),
+                        SizedBox(height: 5.w),
+                      ],
+                    ),
                   );
                 },
               ),
@@ -116,6 +98,27 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
         color: isDarkMode
             ? AppColors.darkestBackgroundV2
             : AppColors.lightBackground,
+        boxShadow: [
+          isDarkMode
+              ? BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.1),
+                  blurRadius: 12,
+                  spreadRadius: 0,
+                  offset: Offset(
+                    0,
+                    4,
+                  ),
+                )
+              : BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.3),
+                  blurRadius: 7,
+                  spreadRadius: -3,
+                  offset: Offset(
+                    0,
+                    3,
+                  ),
+                ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

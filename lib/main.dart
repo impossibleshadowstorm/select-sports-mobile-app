@@ -14,6 +14,9 @@ import 'package:select_sports/features/home/presentation/playground_details_scre
 import 'package:select_sports/features/main/presentation/main_screen.dart';
 import 'package:select_sports/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:select_sports/features/profile/presentation/profile_screen.dart';
+import 'package:select_sports/features/settings/presentation/delete_account/delete_account_screen.dart';
+import 'package:select_sports/features/settings/presentation/notification_preferences_screen.dart';
+import 'package:select_sports/features/settings/presentation/settings_screen.dart';
 import 'package:select_sports/features/splash/presentation/splash_screen.dart';
 import 'package:select_sports/features/wallet/presentation/add_money_screen.dart';
 import 'package:select_sports/features/wallet/presentation/wallet_screen.dart';
@@ -67,13 +70,16 @@ class MyApp extends ConsumerWidget {
             '/onboarding': (context) => OnboardingScreen(),
             '/main': (context) => MainScreen(),
             '/join_a_game': (context) => AvailableSlotsScreen(),
-            '/forgot':(context) => ForgotScreen(),
-            '/verifyOTP':(context) => VerifyOTPScreen(), 
-            '/reset':(context) => ResetScreen(),
+            '/forgot': (context) => ForgotScreen(),
+            '/verifyOTP': (context) => VerifyOTPScreen(),
+            '/reset': (context) => ResetScreen(),
             '/profile': (context) => ProfileScreen(),
             '/playground-details': (context) => PlaygroundDetailsScreen(),
-            '/wallet':(context) => WalletScreen(),
-            '/addMoney':(context) => AddMoneyScreen(),
+            '/wallet': (context) => WalletScreen(),
+            '/addMoney': (context) => AddMoneyScreen(),
+            '/settings': (context) => SettingsScreen(),
+            '/notification_preferences': (context) => NotificationPreferencesScreen(),
+            '/delete_account': (context) => DeleteAccountScreen(),
           },
         ),
       );
