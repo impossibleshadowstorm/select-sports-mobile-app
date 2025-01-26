@@ -147,6 +147,7 @@ class _ForgotScreenState extends ConsumerState<ForgotScreen> {
                                 ),
                               ),
                               InkWell(
+                                overlayColor: WidgetStatePropertyAll(Colors.transparent),
                                 onTap: () {
                                   Navigator.pushReplacementNamed(
                                       context, '/signup');

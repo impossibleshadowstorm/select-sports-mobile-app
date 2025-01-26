@@ -190,7 +190,7 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
 
     if (result['success']) {
       CustomSnackBar.showSuccess(result["message"]);
-      Navigator.pushReplacementNamed(context, '/login');
+      Navigator.pushNamed(context, '/login');
     } else {
       CustomSnackBar.showError(result["message"]);
     }
