@@ -14,6 +14,7 @@ import 'package:select_sports/features/home/presentation/playground_details_scre
 import 'package:select_sports/features/main/presentation/main_screen.dart';
 import 'package:select_sports/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:select_sports/features/profile/presentation/profile_screen.dart';
+import 'package:select_sports/features/rewards/presentation/reward_screen.dart';
 import 'package:select_sports/features/settings/presentation/delete_account/delete_account_screen.dart';
 import 'package:select_sports/features/settings/presentation/notification_preferences_screen.dart';
 import 'package:select_sports/features/settings/presentation/settings_screen.dart';
@@ -80,6 +81,7 @@ class MyApp extends ConsumerWidget {
             '/settings': (context) => SettingsScreen(),
             '/notification_preferences': (context) => NotificationPreferencesScreen(),
             '/delete_account': (context) => DeleteAccountScreen(),
+            '/reward':(context) => RewardScreen(),
           },
         ),
       );
