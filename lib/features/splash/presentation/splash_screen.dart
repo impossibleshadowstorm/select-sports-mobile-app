@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/features/splash/presentation/splash_controller.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -43,7 +44,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Lottie.asset(
-            "assets/lottie_jsons/splash_logo.json",
+            Paths.lottieSplashLogoJson,
             animate: true,
           ),
           Text(

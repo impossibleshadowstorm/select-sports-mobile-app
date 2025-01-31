@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/network/shared_preferences_helper.dart';
+import 'package:select_sports/features/about_us/presentation/about_us_screen.dart';
 import 'package:select_sports/features/auth/presentation/Reset_page.dart';
 import 'package:select_sports/features/auth/presentation/forgot_page.dart';
 import 'package:select_sports/features/auth/presentation/login_page.dart';
@@ -9,15 +10,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:select_sports/features/auth/presentation/signup_page.dart';
 import 'package:select_sports/features/auth/presentation/verifyOTP_page.dart';
 import 'package:select_sports/features/available_slots/presentation/available_slots_screen.dart';
-import 'package:select_sports/features/home/presentation/home_screen.dart';
-import 'package:select_sports/features/home/presentation/playground_details_screen.dart';
 import 'package:select_sports/features/main/presentation/main_screen.dart';
+import 'package:select_sports/features/manage_teams/presentation/manage_teams_screen.dart';
 import 'package:select_sports/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:select_sports/features/profile/presentation/profile_screen.dart';
 import 'package:select_sports/features/settings/presentation/delete_account/delete_account_screen.dart';
 import 'package:select_sports/features/settings/presentation/notification_preferences_screen.dart';
 import 'package:select_sports/features/settings/presentation/settings_screen.dart';
 import 'package:select_sports/features/splash/presentation/splash_screen.dart';
+import 'package:select_sports/features/terms_and_conditions/presentation/terms_and_conditions_screen.dart';
 import 'package:select_sports/features/wallet/presentation/add_money_screen.dart';
 import 'package:select_sports/features/wallet/presentation/wallet_screen.dart';
 import 'package:select_sports/providers/theme_provider.dart';
@@ -74,10 +75,12 @@ class MyApp extends ConsumerWidget {
             '/verifyOTP': (context) => VerifyOTPScreen(),
             '/reset': (context) => ResetScreen(),
             '/profile': (context) => ProfileScreen(),
-            '/playground-details': (context) => PlaygroundDetailsScreen(),
             '/wallet': (context) => WalletScreen(),
             '/addMoney': (context) => AddMoneyScreen(),
             '/settings': (context) => SettingsScreen(),
+            '/manage_teams': (context) => ManageTeamsScreen(),
+            '/about_us': (context) => AboutUsScreen(),
+            '/terms_and_conditions': (context) => TermsAndConditionsScreen(),
             '/notification_preferences': (context) => NotificationPreferencesScreen(),
             '/delete_account': (context) => DeleteAccountScreen(),
           },

@@ -165,7 +165,7 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             Paths.menuManageTeamsIcon,
                             "Manage Teams",
                             () {
-                              // Navigator.pushNamed(context, "/main");
+                              Navigator.pushNamed(context, "/manage_teams");
                             },
                           ),
                           Divider(
@@ -222,7 +222,7 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             Paths.settingsAboutUsIcon,
                             "About Us",
                             () {
-                              Navigator.pushNamed(context, "/settings");
+                              Navigator.pushNamed(context, "/about_us");
                             },
                           ),
                           Divider(
@@ -235,7 +235,7 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             Paths.settingsTermsAndConditionsIcon,
                             "Terms & Conditions",
                             () {
-                              Navigator.pushNamed(context, "/settings");
+                              Navigator.pushNamed(context, "/terms_and_conditions");
                             },
                           ),
                         ],

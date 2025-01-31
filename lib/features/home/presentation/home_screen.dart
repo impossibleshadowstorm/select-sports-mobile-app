@@ -7,6 +7,7 @@ import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/widgets/visibility_widgets.dart';
 import 'package:select_sports/core/widgets/frosted_glass.dart';
+import 'package:select_sports/features/home/presentation/playground_details_screen.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 import '../../main/presentation/main_controller.dart';
 
@@ -64,6 +65,7 @@ class HomeScreen extends ConsumerWidget {
             width: 100.w,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
+              itemCount: 2,
               itemBuilder: (context, index) {
                 return Row(
                   children: [
@@ -76,7 +78,14 @@ class HomeScreen extends ConsumerWidget {
                       transitionOnUserGestures: true,
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, '/playground-details');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PlaygroundDetailsScreen(
+                                playgroundId: index.toString(),
+                              ),
+                            ),
+                          );
                         },
                         child: Container(
                           height: 320,

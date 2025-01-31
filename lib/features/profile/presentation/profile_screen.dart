@@ -153,14 +153,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 children: [
                                   _buildActions(
                                     Paths.profileTouchesImage,
-                                    "Position",
+                                    "Preferred",
                                     "GOALKEEPER",
                                     isTotal: false,
                                   ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
                                     Paths.profileTouchesImage,
-                                    "Skill Level",
+                                    "Experience",
                                     "INTERMEDIATE",
                                     isTotal: false,
                                   ),
@@ -173,20 +173,26 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                   ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
+                                    Paths.profileTouchesImage,
+                                    "Total Matches",
+                                    9,
+                                  ),
+                                  SizedBox(height: 2.5.w),
+                                  _buildActions(
                                     Paths.profileShotsImage,
-                                    "Shots",
+                                    "Winnings",
                                     9,
                                   ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
                                     Paths.profilePassesImage,
-                                    "Passes",
+                                    "Draws",
                                     9,
                                   ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
-                                    Paths.profileTouchesImage,
-                                    "Touches",
+                                    Paths.profilePassesImage,
+                                    "Loses",
                                     9,
                                   ),
                                   SizedBox(height: 2.5.w),
