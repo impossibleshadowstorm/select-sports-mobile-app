@@ -55,6 +55,7 @@ dependencies:
   bouncing_widget: ^2.0.0
   pattern_formatter: ^4.0.0
   cached_network_image: ^3.4.1
+  dotted_line: ^3.2.3
 
 dev_dependencies:
   flutter_test:
