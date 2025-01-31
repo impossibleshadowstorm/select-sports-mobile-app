@@ -121,7 +121,7 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             Paths.menuUpcomingIcon,
                             "Upcoming Bookings",
                             () {
-                              // Navigator.pushNamed(context, "/main");
+                              Navigator.pushNamed(context, "/upcoming_bookings");
                             },
                           ),
                           Divider(
@@ -134,7 +134,7 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             Paths.menuBookingIcon,
                             "Bookings",
                             () {
-                              // Navigator.pushNamed(context, "/main");
+                              Navigator.pushNamed(context, "/bookings");
                             },
                           ),
                           Divider(
@@ -147,7 +147,7 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             Paths.menuRewardsIcon,
                             "Rewards",
                             () {
-                              // Navigator.pushNamed(context, "/main");
+                              Navigator.pushNamed(context, "/rewards");
                             },
                           ),
                           //

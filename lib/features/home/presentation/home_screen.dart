@@ -69,6 +69,7 @@ class HomeScreen extends ConsumerWidget {
               itemBuilder: (context, index) {
                 return Row(
                   children: [
+                    SizedBox(width: index == 0 ? 2.5.w : 0),
                     Hero(
                       tag: "Hero$index",
                       // flightShuttleBuilder: (flightContext, animation,
@@ -88,7 +89,7 @@ class HomeScreen extends ConsumerWidget {
                           );
                         },
                         child: Container(
-                          height: 320,
+                          height: 300,
                           width: 75.w,
                           decoration: BoxDecoration(
                             color: isDarkMode
@@ -130,7 +131,7 @@ class HomeScreen extends ConsumerWidget {
                                 child: Container(
                                   width: 100.w,
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: 2.5.w,
+                                    horizontal: 3.5.w,
                                     vertical: 2.5.w,
                                   ),
                                   child: Column(
@@ -187,10 +188,11 @@ class HomeScreen extends ConsumerWidget {
                                                 ? AppColors.lightText
                                                 : AppColors.mediumGreyColor,
                                           ),
-                                          SizedBox(width: 1.5.w),
+                                          SizedBox(width: 2.5.w),
                                           Expanded(
                                             child: Text(
                                               "The Heritage School, D-2, Pocket 2, Vasant Kunj, Delhi",
+                                              maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.start,
                                               style:

@@ -10,16 +10,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:select_sports/features/auth/presentation/signup_page.dart';
 import 'package:select_sports/features/auth/presentation/verifyOTP_page.dart';
 import 'package:select_sports/features/available_slots/presentation/available_slots_screen.dart';
+import 'package:select_sports/features/bookings/presentation/bookings_screen.dart';
 import 'package:select_sports/features/main/presentation/main_screen.dart';
 import 'package:select_sports/features/manage_teams/presentation/manage_teams_screen.dart';
 import 'package:select_sports/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:select_sports/features/profile/presentation/profile_screen.dart';
-import 'package:select_sports/features/rewards/presentation/reward_screen.dart';
+import 'package:select_sports/features/rewards/presentation/rewards_screen.dart';
 import 'package:select_sports/features/settings/presentation/delete_account/delete_account_screen.dart';
 import 'package:select_sports/features/settings/presentation/notification_preferences_screen.dart';
 import 'package:select_sports/features/settings/presentation/settings_screen.dart';
 import 'package:select_sports/features/splash/presentation/splash_screen.dart';
 import 'package:select_sports/features/terms_and_conditions/presentation/terms_and_conditions_screen.dart';
+import 'package:select_sports/features/upcoming_bookings/presentation/upcoming_bookings_screen.dart';
 import 'package:select_sports/features/wallet/presentation/add_money_screen.dart';
 import 'package:select_sports/features/wallet/presentation/wallet_screen.dart';
 import 'package:select_sports/providers/theme_provider.dart';
@@ -77,6 +79,8 @@ class MyApp extends ConsumerWidget {
             '/reset': (context) => ResetScreen(),
             '/profile': (context) => ProfileScreen(),
             '/wallet': (context) => WalletScreen(),
+            '/upcoming_bookings': (context) => UpcomingBookingsScreen(),
+            '/bookings': (context) => BookingsScreen(),
             '/addMoney': (context) => AddMoneyScreen(),
             '/settings': (context) => SettingsScreen(),
             '/manage_teams': (context) => ManageTeamsScreen(),
@@ -84,7 +88,7 @@ class MyApp extends ConsumerWidget {
             '/terms_and_conditions': (context) => TermsAndConditionsScreen(),
             '/notification_preferences': (context) => NotificationPreferencesScreen(),
             '/delete_account': (context) => DeleteAccountScreen(),
-            '/reward':(context) => RewardScreen(),
+            '/rewards':(context) => RewardsScreen(),
           },
         ),
       );

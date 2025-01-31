@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
+import 'package:select_sports/core/widgets/custom_buttons.dart';
 import 'package:select_sports/core/widgets/visibility_widgets.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:select_sports/providers/theme_provider.dart';
@@ -197,17 +198,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                   ),
                                   SizedBox(height: 2.5.w),
                                   Container(
-                                    height: 10.h,
                                     width: 100.w,
-                                    decoration: BoxDecoration(
-                                      color: Colors.yellow,
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 10.h,
-                                    width: 100.w,
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
+                                    padding: EdgeInsets.symmetric(horizontal: 1.5.w),
+                                    child: CustomButtons.fullWidthFilledButton(
+                                      buttonText: "Update Profile",
+                                      ref: ref,
+                                      onClick: () {},
                                     ),
                                   ),
                                   VisibilityWidgets.bottomNavBarVisibleWidget(
@@ -220,6 +216,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ),
                     ),
                   ),
+                  // Back Arrow Button
                   Positioned(
                     top: 2.5.w,
                     left: 5.w,

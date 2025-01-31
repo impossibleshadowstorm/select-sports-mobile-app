@@ -42,11 +42,8 @@ class SplashController {
       if (context.mounted) {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => LoginScreen()),
-              (route) => false,
+          (route) => false,
         );
-
-        Navigator.pushNamed(context, '/reward');
-
       }
     }
   }
