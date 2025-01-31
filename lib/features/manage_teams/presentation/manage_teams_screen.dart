@@ -25,6 +25,7 @@ class _ManageTeamsScreenState extends ConsumerState<ManageTeamsScreen> {
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
     return Scaffold(
+      backgroundColor: isDarkMode ? Colors.transparent: Color(0xFFEBF0EA),
       body: SizedBox(
         height: 100.h,
         width: 100.w,

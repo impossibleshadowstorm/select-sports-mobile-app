@@ -108,7 +108,7 @@ class _TermsAndConditionsScreenState
           "For any questions or concerns regarding these Terms and Conditions, please reach out to us at:",
           textAlign: TextAlign.start,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -117,7 +117,7 @@ class _TermsAndConditionsScreenState
           "📧 Email: support@selectsports.com",
           textAlign: TextAlign.start,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -126,7 +126,7 @@ class _TermsAndConditionsScreenState
           "📞 Phone: +91 XXXXXXXXXX",
           textAlign: TextAlign.start,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -135,7 +135,7 @@ class _TermsAndConditionsScreenState
           "🌐 Website: http://selectsports.in",
           textAlign: TextAlign.start,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -146,7 +146,7 @@ class _TermsAndConditionsScreenState
           style: AppTextStyles.heading.copyWith(
             color: isDarkMode
                 ? AppColors.lightGreyColor
-                : AppColors.darkText,
+                : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -164,7 +164,7 @@ class _TermsAndConditionsScreenState
           "> Select Sports reserves the right to update these Terms and Conditions at any time.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -172,7 +172,7 @@ class _TermsAndConditionsScreenState
           "> Users will be notified of any major changes through our website or mobile app.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -190,7 +190,7 @@ class _TermsAndConditionsScreenState
           "> Select Sports collects and stores personal data for booking purposes only.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -198,7 +198,7 @@ class _TermsAndConditionsScreenState
           "> We do not share user data with third parties without consent.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -206,7 +206,7 @@ class _TermsAndConditionsScreenState
           "> Users can request data deletion at any time by contacting our support team.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -224,7 +224,7 @@ class _TermsAndConditionsScreenState
           "> Players acknowledge that participating in sports activities involves a risk of injury.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -232,7 +232,7 @@ class _TermsAndConditionsScreenState
           "> Select Sports is not liable for any injuries, accidents, or health issues arising during gameplay.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -240,7 +240,7 @@ class _TermsAndConditionsScreenState
           "> It is recommended that players wear proper sports gear and follow safety guidelines.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -258,7 +258,7 @@ class _TermsAndConditionsScreenState
           "> Players must use the facilities responsibly and adhere to the rules and guidelines set by Select Sports.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -266,7 +266,7 @@ class _TermsAndConditionsScreenState
           "> Any damage to the property or equipment due to negligence will be charged to the responsible individual/team.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -274,7 +274,7 @@ class _TermsAndConditionsScreenState
           "> Select Sports is not responsible for lost or stolen belongings.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -292,7 +292,7 @@ class _TermsAndConditionsScreenState
           "> Players must respect fellow participants, staff, and spectators.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -300,7 +300,7 @@ class _TermsAndConditionsScreenState
           "> Any form of abusive language, violence, or misconduct will result in an immediate ban from Select Sports facilities.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -308,7 +308,7 @@ class _TermsAndConditionsScreenState
           "> Alcohol, drugs, and smoking are strictly prohibited within the premises.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -333,7 +333,7 @@ class _TermsAndConditionsScreenState
               "Booking Process:",
               textAlign: TextAlign.justify,
               style: AppTextStyles.heading.copyWith(
-                color: isDarkMode ? AppColors.lightText : AppColors.darkText,
+                color: isDarkMode ? AppColors.lightText : AppColors.darkGreyColor,
                 fontSize: 16.sp,
               ),
             ),
@@ -345,7 +345,7 @@ class _TermsAndConditionsScreenState
             "> Users can book football slots via the Select Sports Mobile App or website.",
             textAlign: TextAlign.justify,
             style: AppTextStyles.heading.copyWith(
-              color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+              color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
               fontSize: 15.sp,
             ),
           ),
@@ -356,7 +356,7 @@ class _TermsAndConditionsScreenState
             "> Payment must be made at the time of booking to confirm the slot.",
             textAlign: TextAlign.justify,
             style: AppTextStyles.heading.copyWith(
-              color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+              color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
               fontSize: 15.sp,
             ),
           ),
@@ -372,7 +372,7 @@ class _TermsAndConditionsScreenState
               "Cancellation & Refund:",
               textAlign: TextAlign.justify,
               style: AppTextStyles.heading.copyWith(
-                color: isDarkMode ? AppColors.lightText : AppColors.darkText,
+                color: isDarkMode ? AppColors.lightText : AppColors.darkGreyColor,
                 fontSize: 16.sp,
               ),
             ),
@@ -384,7 +384,7 @@ class _TermsAndConditionsScreenState
             "> Cancellations made 24 hours prior to the booking time are eligible for a full refund.",
             textAlign: TextAlign.justify,
             style: AppTextStyles.heading.copyWith(
-              color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+              color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
               fontSize: 15.sp,
             ),
           ),
@@ -395,7 +395,7 @@ class _TermsAndConditionsScreenState
             "> Cancellations made less than 24 hours before the game are non-refundable.",
             textAlign: TextAlign.justify,
             style: AppTextStyles.heading.copyWith(
-              color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+              color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
               fontSize: 15.sp,
             ),
           ),
@@ -411,7 +411,7 @@ class _TermsAndConditionsScreenState
               "Late Arrivals & No-Shows:",
               textAlign: TextAlign.justify,
               style: AppTextStyles.heading.copyWith(
-                color: isDarkMode ? AppColors.lightText : AppColors.darkText,
+                color: isDarkMode ? AppColors.lightText : AppColors.darkGreyColor,
                 fontSize: 16.sp,
               ),
             ),
@@ -423,7 +423,7 @@ class _TermsAndConditionsScreenState
             "> Booked slots will be held for 15 minutes from the scheduled time.",
             textAlign: TextAlign.justify,
             style: AppTextStyles.heading.copyWith(
-              color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+              color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
               fontSize: 15.sp,
             ),
           ),
@@ -434,7 +434,7 @@ class _TermsAndConditionsScreenState
             "> If a player or team does not show up within this period, the booking will be canceled without a refund.",
             textAlign: TextAlign.justify,
             style: AppTextStyles.heading.copyWith(
-              color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+              color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
               fontSize: 15.sp,
             ),
           ),
@@ -453,7 +453,7 @@ class _TermsAndConditionsScreenState
           "> Eligibility: Users must be at least 18 years old to book slots. Minors can participate under the supervision of a legal guardian.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -461,7 +461,7 @@ class _TermsAndConditionsScreenState
           "> Account Registration: Users must provide accurate information when registering on our mobile app.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -469,7 +469,7 @@ class _TermsAndConditionsScreenState
           "> Fair Play: Players must adhere to fair play and maintain sportsmanship during matches.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -477,7 +477,7 @@ class _TermsAndConditionsScreenState
           "> Right to Refuse Service: Select Sports reserves the right to refuse access to users violating these terms.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
@@ -495,7 +495,7 @@ class _TermsAndConditionsScreenState
           "Welcome to Select Sports! By accessing our services, including our website, mobile app, and football playgrounds, you agree to abide by the following Terms and Conditions. Please read them carefully before making a booking or using our facilities.",
           textAlign: TextAlign.justify,
           style: AppTextStyles.heading.copyWith(
-            color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            color: isDarkMode ? AppColors.lightGreyColor : AppColors.mediumGreyColor,
             fontSize: 15.sp,
           ),
         ),
