@@ -6,26 +6,24 @@ import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/widgets/custom_buttons.dart';
 import 'package:select_sports/core/widgets/custom_snackbar.dart';
 import 'package:select_sports/core/widgets/custom_textfields.dart';
-import 'package:select_sports/features/auth/presentation/auth_controller.dart';
 import 'package:select_sports/features/auth/utils/validators.dart';
+import 'package:select_sports/features/settings/presentation/setting_controller.dart';
 
-import '../../../providers/theme_provider.dart';
-
-class ResetScreen extends ConsumerStatefulWidget {
-  const ResetScreen({super.key});
+class UpdateMobileScreen extends ConsumerStatefulWidget {
+  const UpdateMobileScreen({super.key});
 
   @override
-  _ResetScreenState createState() => _ResetScreenState();
+  _UpdateMobileScreenState createState() => _UpdateMobileScreenState();
 }
 
-class _ResetScreenState extends ConsumerState<ResetScreen> {
+class _UpdateMobileScreenState extends ConsumerState<UpdateMobileScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final authController = ref.read(authControllerProvider.notifier);
-    final authState = ref.watch(authControllerProvider);
-    final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
+    final settingController = ref.read(settingControllerProvider.notifier);
+    // final settingState = ref.watch(settingControllerProvider);
+    // final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
     return Scaffold(
       body: SizedBox(
@@ -81,20 +79,20 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Reset",
+                            "Update",
                             style: AppTextStyles.largeHeading.copyWith(
                               color: AppColors.lightText,
                             ),
                           ),
                           Text(
-                            "Password",
+                            "Contact",
                             style: AppTextStyles.largeHeading.copyWith(
                               color: AppColors.lightText,
                             ),
                           ),
                           SizedBox(height: 2.5.w),
                           Text(
-                            "Enter a new password to reset it.",
+                            "Enter a new Contact to update it.",
                             style: AppTextStyles.body.copyWith(
                               color: AppColors.lightText,
                             ),
@@ -111,60 +109,26 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
                 child: Column(
                   children: [
                     CustomTextFields.outlined(
-                      keyboardType: TextInputType.number,
-                      controller: authController.otpController,
-                      hintText: "Enter OTP",
-                      labelText: "OTP",
-                      validator: Validators.validateOTP,
+                      controller: settingController.phoneController,
+                      hintText: "Enter current mobile number",
+                      labelText: "Current Mobile",
+                      keyboardType: TextInputType.phone,
+                      validator: Validators.validatePhone,
                       ref: ref,
                     ),
-                    SizedBox(height: 5.w),
-                    CustomTextFields.outlinedWithIcon(
-                      controller: authController.newPasswordController,
-                      hintText: "Enter new password",
-                      labelText: "New Password",
-                      validator: Validators.validatePassword,
+                    SizedBox(height: 3.h),
+                    CustomTextFields.outlined(
+                      controller: settingController.newPhoneController,
+                      hintText: "Enter new mobile number",
+                      labelText: "New Mobile",
+                      keyboardType: TextInputType.phone,
+                      validator: Validators.validatePhone,
                       ref: ref,
-                      obscureText: !authState.newPasswordVisible,
-                      isPrefix: false,
-                      icon: Icon(
-                        authState.newPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: isDarkMode
-                            ? AppColors.lightText
-                            : AppColors.darkText,
-                      ),
-                      onIconPressed: () {
-                        authController.toggleNewPasswordVisibility();
-                      },
                     ),
-                    SizedBox(height: 2.5.h),
-                    CustomTextFields.outlinedWithIcon(
-                      controller: authController.confirmPasswordController,
-                      hintText: "Confirm new password",
-                      labelText: "Confirm Password",
-                      validator: (value) => Validators.validateConfirmPassword(
-                          value, authController.newPasswordController.text),
-                      ref: ref,
-                      obscureText: !authState.confirmPasswordVisible,
-                      isPrefix: false,
-                      icon: Icon(
-                        authState.confirmPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: isDarkMode
-                            ? AppColors.lightText
-                            : AppColors.darkText,
-                      ),
-                      onIconPressed: () {
-                        authController.toggleConfirmPasswordVisibility();
-                      },
-                    ),
-                    SizedBox(height: 5.w),
+                    SizedBox(height: 5.h),
                     CustomButtons.fullWidthFilledButton(
                       ref: ref,
-                      buttonText: "Reset Password",
+                      buttonText: "Update Mobile Number",
                       onClick: () {
                         _submitForm();
                       },
@@ -181,16 +145,18 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
 
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
-      _resetPassword();
+      _updateMobileNumber();
     }
   }
 
-  Future<void> _resetPassword() async {
-    final result = await ref.read(authControllerProvider.notifier).reset();
+  Future<void> _updateMobileNumber() async {
+    final result = await ref
+        .read(settingControllerProvider.notifier)
+        .updateContact(); 
 
     if (result['success']) {
       CustomSnackBar.showSuccess(result["message"]);
-      Navigator.pushNamed(context, '/login');
+      Navigator.pushNamed(context, '/profile');
     } else {
       CustomSnackBar.showError(result["message"]);
     }
