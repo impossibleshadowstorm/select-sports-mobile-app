@@ -42,7 +42,7 @@ dependencies:
   dio: ^5.7.0
   shared_preferences: ^2.3.4
   fluttertoast: ^8.2.10
-  lottie: ^3.3.0
+  lottie: ^3.3.1
   responsive_sizer: ^3.3.1
   google_fonts: ^6.2.1
   toastification: ^2.3.0
@@ -91,6 +91,7 @@ flutter:
     - assets/images/auth/
     - assets/images/home/
     - assets/images/profile/
+    - assets/images/venue/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

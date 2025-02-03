@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class AppColors {
   /*
@@ -49,10 +50,6 @@ class AppColors {
   static const darkText = Colors.black;
 }
 
-class AppCommonTexts {
-  static const String rupeeIcon = "₹";
-}
-
 class AppTextStyles {
   static const largeHeading = TextStyle(
     fontSize: 32,
@@ -70,4 +67,21 @@ class AppTextStyles {
     fontSize: 15,
     fontWeight: FontWeight.normal,
   );
+}
+
+class CommonAppText {
+  static const String rupeeIcon = "₹";
+  static const String orgName = "Select Sports";
+
+  static Widget detailHeading(String title, bool isDarkMode) {
+    return Text(
+      title,
+      style: AppTextStyles.subheading.copyWith(
+        color:
+            isDarkMode ? AppColors.lightestGreyColor : AppColors.darkGreyColor,
+        fontWeight: FontWeight.bold,
+        fontSize: 17.sp,
+      ),
+    );
+  }
 }

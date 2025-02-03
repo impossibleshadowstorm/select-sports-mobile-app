@@ -44,8 +44,6 @@ class SplashController {
           MaterialPageRoute(builder: (context) => LoginScreen()),
           (route) => false,
         );
-
-        Navigator.pushNamed(context, '/login');
       }
     }
   }

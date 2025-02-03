@@ -10,6 +10,8 @@ class CustomButtons {
     required String buttonText,
     required WidgetRef ref,
     required Function onClick,
+    Color? customDarkColor,
+    Color? customLightColor,
   }) {
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
@@ -28,8 +30,8 @@ class CustomButtons {
         ),
         decoration: BoxDecoration(
           color: isDarkMode
-              ? AppColors.lightGreyBackground
-              : AppColors.lightGreenColor,
+              ? (customDarkColor ?? AppColors.darkGreyColor)
+              : (customLightColor ?? AppColors.lightGreenColor),
           borderRadius: BorderRadius.circular(2.5.w),
         ),
         child: Center(

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
+import 'package:select_sports/core/widgets/custom_buttons.dart';
 import 'package:select_sports/core/widgets/visibility_widgets.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:select_sports/providers/theme_provider.dart';
@@ -153,14 +154,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 children: [
                                   _buildActions(
                                     Paths.profileTouchesImage,
-                                    "Position",
+                                    "Preferred",
                                     "GOALKEEPER",
                                     isTotal: false,
                                   ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
                                     Paths.profileTouchesImage,
-                                    "Skill Level",
+                                    "Experience",
                                     "INTERMEDIATE",
                                     isTotal: false,
                                   ),
@@ -173,35 +174,36 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                   ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
+                                    Paths.profileTouchesImage,
+                                    "Total Matches",
+                                    9,
+                                  ),
+                                  SizedBox(height: 2.5.w),
+                                  _buildActions(
                                     Paths.profileShotsImage,
-                                    "Shots",
+                                    "Winnings",
                                     9,
                                   ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
                                     Paths.profilePassesImage,
-                                    "Passes",
+                                    "Draws",
                                     9,
                                   ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
-                                    Paths.profileTouchesImage,
-                                    "Touches",
+                                    Paths.profilePassesImage,
+                                    "Loses",
                                     9,
                                   ),
                                   SizedBox(height: 2.5.w),
                                   Container(
-                                    height: 10.h,
                                     width: 100.w,
-                                    decoration: BoxDecoration(
-                                      color: Colors.yellow,
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 10.h,
-                                    width: 100.w,
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
+                                    padding: EdgeInsets.symmetric(horizontal: 1.5.w),
+                                    child: CustomButtons.fullWidthFilledButton(
+                                      buttonText: "Update Profile",
+                                      ref: ref,
+                                      onClick: () {},
                                     ),
                                   ),
                                   VisibilityWidgets.bottomNavBarVisibleWidget(
@@ -214,6 +216,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       ),
                     ),
                   ),
+                  // Back Arrow Button
                   Positioned(
                     top: 2.5.w,
                     left: 5.w,

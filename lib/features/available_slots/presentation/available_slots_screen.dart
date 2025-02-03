@@ -22,14 +22,13 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
     // Check if the current theme mode is dark
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
-    // Access ThemeNotifier for toggling the theme
-    final themeNotifier = ref.read(themeProvider.notifier);
-
     return Scaffold(
       backgroundColor: isDarkMode
           ? AppColors.darkScaffoldBackground
           : AppColors.lightestGreyColorV2,
-      body: Container(
+      body: SizedBox(
+        height: 100.h,
+        width: 100.w,
         child: Column(
           children: [
             VisibilityWidgets.statusBarVisibleWidget(context: context),
@@ -194,7 +193,7 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "${AppCommonTexts.rupeeIcon} ${discountedPrice.toString()}",
+                          "${CommonAppText.rupeeIcon} ${discountedPrice.toString()}",
                           style: AppTextStyles.body.copyWith(
                             color: isDarkMode
                                 ? AppColors.lightText
@@ -204,7 +203,7 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
                           ),
                         ),
                         Text(
-                          "${AppCommonTexts.rupeeIcon} ${actualPrice.toString()}",
+                          "${CommonAppText.rupeeIcon} ${actualPrice.toString()}",
                           style: AppTextStyles.body.copyWith(
                             decoration: TextDecoration.lineThrough,
                             color: isDarkMode
