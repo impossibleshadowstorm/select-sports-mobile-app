@@ -11,7 +11,7 @@ class AuthRepository {
 
   Future<Map<String, dynamic>> forgot(String email) async {
     try {
-      final response = await apiClient.post(ApiEndpoints.fogrot, {
+      final response = await apiClient.post(ApiEndpoints.forgot, {
         'email': email,
       });
 

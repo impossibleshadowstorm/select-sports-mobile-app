@@ -6,8 +6,11 @@ import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/widgets/custom_buttons.dart';
 import 'package:select_sports/core/widgets/visibility_widgets.dart';
+import 'package:select_sports/features/profile/presentation/profile_controller.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:select_sports/providers/theme_provider.dart';
+
+import '../../../core/widgets/common_dropdowns.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -21,6 +24,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     // Check if the current theme mode is dark
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
+    final profileState = ref.watch(profileControllerProvider);
+    final profileNotifier = ref.read(profileControllerProvider.notifier);
+
+    if (profileState.isLoading) {
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
 
     return Scaffold(
       body: SizedBox(
@@ -152,58 +165,107 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                               ),
                               child: Column(
                                 children: [
-                                  _buildActions(
-                                    Paths.profileTouchesImage,
-                                    "Preferred",
-                                    "GOALKEEPER",
-                                    isTotal: false,
-                                  ),
+                                  !profileState.isEditing
+                                      ? _buildActions(
+                                          Paths.profileTouchesImage,
+                                          "Position",
+                                          profileState.preferredPosition,
+                                          isTotal: false,
+                                        )
+                                      : Consumer(
+                                          builder: (context, ref, child) {
+                                            return _buildActionsWithDropdown(
+                                              Paths.profileTouchesImage,
+                                              "Position",
+                                              profileState.preferredPosition,
+                                              profileState
+                                                  .preferredPositionOptions,
+                                              (value) => profileNotifier
+                                                  .updatePreferredPosition(
+                                                      value!),
+                                            );
+                                          },
+                                        ),
                                   SizedBox(height: 2.5.w),
-                                  _buildActions(
-                                    Paths.profileTouchesImage,
-                                    "Experience",
-                                    "INTERMEDIATE",
-                                    isTotal: false,
-                                  ),
+                                  !profileState.isEditing
+                                      ? _buildActions(
+                                          Paths.profileTouchesImage,
+                                          "Experience",
+                                          profileState.experienceLevel,
+                                          isTotal: false,
+                                        )
+                                      : Consumer(
+                                          builder: (context, ref, child) {
+                                            return _buildActionsWithDropdown(
+                                              Paths.profileTouchesImage,
+                                              "Experience",
+                                              profileState.experienceLevel,
+                                              profileState
+                                                  .experienceLevelOptions,
+                                              (value) => profileNotifier
+                                                  .updateExperienceLevel(
+                                                      value!),
+                                            );
+                                          },
+                                        ),
                                   SizedBox(height: 2.5.w),
-                                  _buildActions(
-                                    Paths.profileTouchesImage,
-                                    "Preferred Foot",
-                                    "RIGHT",
-                                    isTotal: false,
-                                  ),
+                                  !profileState.isEditing
+                                      ? _buildActions(
+                                          Paths.profileTouchesImage,
+                                          "Preferred Foot",
+                                          profileState.preferredFoot,
+                                          isTotal: false,
+                                        )
+                                      : Consumer(
+                                          builder: (context, ref, child) {
+                                            return _buildActionsWithDropdown(
+                                              Paths.profileTouchesImage,
+                                              "Preferred Foot",
+                                              profileState.preferredFoot,
+                                              profileState.preferredFootOptions,
+                                              (value) => profileNotifier
+                                                  .updatePreferredFoot(value!),
+                                            );
+                                          },
+                                        ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
                                     Paths.profileTouchesImage,
                                     "Total Matches",
-                                    9,
+                                    profileState.totalMatches,
                                   ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
                                     Paths.profileShotsImage,
                                     "Winnings",
-                                    9,
+                                    profileState.winnings,
                                   ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
                                     Paths.profilePassesImage,
                                     "Draws",
-                                    9,
+                                    profileState.draws,
                                   ),
                                   SizedBox(height: 2.5.w),
                                   _buildActions(
                                     Paths.profilePassesImage,
                                     "Loses",
-                                    9,
+                                    profileState.loses,
                                   ),
                                   SizedBox(height: 2.5.w),
                                   Container(
                                     width: 100.w,
-                                    padding: EdgeInsets.symmetric(horizontal: 1.5.w),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 1.5.w),
                                     child: CustomButtons.fullWidthFilledButton(
                                       buttonText: "Update Profile",
                                       ref: ref,
-                                      onClick: () {},
+                                      onClick: () {
+                                        ref
+                                            .read(profileControllerProvider
+                                                .notifier)
+                                            .toggleEditMode();
+                                      },
                                     ),
                                   ),
                                   VisibilityWidgets.bottomNavBarVisibleWidget(
@@ -308,6 +370,65 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+              SizedBox(width: 2.5.w),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionsWithDropdown(
+      String icon,
+      String title,
+      String selectedValue,
+      List<String> options,
+      ValueChanged<String?> onChanged) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: 2.5.w,
+        horizontal: 2.5.w,
+      ),
+      width: 100.w,
+      decoration: BoxDecoration(
+        color: AppColors.darkGreyColor,
+        borderRadius: BorderRadius.circular(2.5.w),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Container(
+                height: 60,
+                width: 60,
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(2.5.w),
+                ),
+                child: Center(
+                  child: SvgPicture.asset(
+                    icon,
+                    color: AppColors.lightText,
+                  ),
+                ),
+              ),
+              SizedBox(width: 5.w),
+              Text(
+                title.toUpperCase(),
+                style: AppTextStyles.subheading
+                    .copyWith(color: AppColors.lightText),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              CommonDropdown(
+                items: options,
+                selectedValue: selectedValue,
+                onChanged: onChanged,
               ),
               SizedBox(width: 2.5.w),
             ],

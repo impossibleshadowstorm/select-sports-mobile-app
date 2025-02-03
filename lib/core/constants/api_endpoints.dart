@@ -5,7 +5,9 @@ class ApiEndpoints {
   static const String login = "/auth/login";
   static const String signup = "/auth/register";
   static const String me = "/auth/me";
-  static const String fogrot = "/auth/forgot-password";
+  static const String forgot = "/auth/forgot-password";
   static const String resetPassword = "/auth/reset-password";
   static const String verifyOtp = "/auth/verify-account";
+  static const String userProfile = "/user/sports-profile";
+  static const String sportsProfileOptions = "/user/sports-profile-options";
 }
