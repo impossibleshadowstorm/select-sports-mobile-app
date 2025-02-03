@@ -52,121 +52,121 @@ class _UpdateMobileScreenState extends ConsumerState<UpdateMobileScreen> {
                 child: Stack(
                   clipBehavior: Clip.hardEdge,
                   children: [
-                  Positioned(
-                  top: 0.h,
-                  left: 20.w,
-                  child: SizedBox(
-                    height: 35.h,
-                    width: 100.w,
-                    child: Image(
-                      image: AssetImage(
-                        Paths.loginFootballImage,
+                    Positioned(
+                      top: 0.h,
+                      left: 20.w,
+                      child: SizedBox(
+                        height: 35.h,
+                        width: 100.w,
+                        child: Image(
+                          image: AssetImage(
+                            Paths.loginFootballImage,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                Container(
-                  height: 35.h,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.4),
-                  ),
-                ),
-                Container(
-                  padding:
-                  EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Update",
-                        style: AppTextStyles.largeHeading.copyWith(
-                          color: AppColors.lightText,
-                        ),
-                      ),
-                      Text(
-                        "Contact",
-                        style: AppTextStyles.largeHeading.copyWith(
-                          color: AppColors.lightText,
-                        ),
-                      ),
-                      SizedBox(height: 2.5.w),
-                      Text(
-                        "Enter a new Contact to update it.",
-                        style: AppTextStyles.body.copyWith(
-                          color: AppColors.lightText,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: 7.5.h,
-                  left: 5.w,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 2.5.w,
-                        vertical: 2.5.w,
-                      ),
+                    Container(
+                      height: 35.h,
+                      width: 100.w,
                       decoration: BoxDecoration(
-                          color: AppColors.lightGreenColor,
-                          borderRadius: BorderRadius.circular(2.5.w),
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: AppColors.darkText,
+                        color: Colors.black.withOpacity(0.4),
                       ),
                     ),
-                  ),
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Update",
+                            style: AppTextStyles.largeHeading.copyWith(
+                              color: AppColors.lightText,
+                            ),
+                          ),
+                          Text(
+                            "Contact",
+                            style: AppTextStyles.largeHeading.copyWith(
+                              color: AppColors.lightText,
+                            ),
+                          ),
+                          SizedBox(height: 2.5.w),
+                          Text(
+                            "Enter a new Contact to update it.",
+                            style: AppTextStyles.body.copyWith(
+                              color: AppColors.lightText,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 7.5.h,
+                      left: 5.w,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 2.5.w,
+                            vertical: 2.5.w,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.lightGreenColor,
+                            borderRadius: BorderRadius.circular(2.5.w),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: AppColors.darkText,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.w),
+                child: Column(
+                  children: [
+                    CustomTextFields.outlined(
+                      controller: settingController.phoneController,
+                      hintText: "Enter current mobile number",
+                      labelText: "Current Mobile",
+                      keyboardType: TextInputType.phone,
+                      validator: Validators.validatePhone,
+                      ref: ref,
+                    ),
+                    SizedBox(height: 3.h),
+                    CustomTextFields.outlined(
+                      controller: settingController.newPhoneController,
+                      hintText: "Enter new mobile number",
+                      labelText: "New Mobile",
+                      keyboardType: TextInputType.phone,
+                      validator: Validators.validatePhone,
+                      ref: ref,
+                    ),
+                    SizedBox(height: 5.h),
+                    CustomButtons.fullWidthFilledButton(
+                      ref: ref,
+                      buttonText: "Update Mobile Number",
+                      onClick: () {
+                        _submitForm();
+                      },
+                      customDarkColor: AppColors.lightGreenColor,
+                      customLightColor: AppColors.lightGreenColor,
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.w),
-          child: Column(
-            children: [
-              CustomTextFields.outlined(
-                controller: settingController.phoneController,
-                hintText: "Enter current mobile number",
-                labelText: "Current Mobile",
-                keyboardType: TextInputType.phone,
-                validator: Validators.validatePhone,
-                ref: ref,
-              ),
-              SizedBox(height: 3.h),
-              CustomTextFields.outlined(
-                controller: settingController.newPhoneController,
-                hintText: "Enter new mobile number",
-                labelText: "New Mobile",
-                keyboardType: TextInputType.phone,
-                validator: Validators.validatePhone,
-                ref: ref,
-              ),
-              SizedBox(height: 5.h),
-              CustomButtons.fullWidthFilledButton(
-                ref: ref,
-                buttonText: "Update Mobile Number",
-                onClick: () {
-                  _submitForm();
-                },
-                customDarkColor: AppColors.lightGreenColor,
-                customLightColor: AppColors.lightGreenColor,
-              ),
-            ],
-          ),
-        ),
-        ],
       ),
-    ),)
-    ,
     );
   }
 
@@ -178,7 +178,7 @@ class _UpdateMobileScreenState extends ConsumerState<UpdateMobileScreen> {
 
   Future<void> _updateMobileNumber() async {
     final result =
-    await ref.read(settingControllerProvider.notifier).updateContact();
+        await ref.read(settingControllerProvider.notifier).updateContact();
 
     if (result['success']) {
       CustomSnackBar.showSuccess(result["message"]);

@@ -6,6 +6,7 @@ import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/widgets/common_appbar.dart';
 import 'package:select_sports/core/widgets/visibility_widgets.dart';
+import 'package:select_sports/features/home/presentation/playground_details_screen.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 
 class AvailableSlotsScreen extends ConsumerStatefulWidget {
@@ -50,18 +51,30 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 5.w),
                     child: Column(
                       children: [
-                        _buildSlotSection(
-                          isDarkMode: isDarkMode,
-                          venueName: 'Conscient Sport',
-                          venueLocation:
-                              '163 Yulara Dr, Yulara NT 0872, Australia',
-                          gameDate: 'Sun 26 Jan',
-                          gameTime: '17:00PM',
-                          actualPrice: 399.00,
-                          discountedPrice: 329.00,
-                          onClick: () {
-                            // TODO: Open Playground details screen
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PlaygroundDetailsScreen(
+                                  playgroundId: index.toString(),
+                                ),
+                              ),
+                            );
                           },
+                          child: _buildSlotSection(
+                            isDarkMode: isDarkMode,
+                            venueName: 'Conscient Sport',
+                            venueLocation:
+                                '163 Yulara Dr, Yulara NT 0872, Australia',
+                            gameDate: 'Sun 26 Jan',
+                            gameTime: '17:00PM',
+                            actualPrice: 399.00,
+                            discountedPrice: 329.00,
+                            onClick: () {
+                              // TODO: Open Playground details screen
+                            },
+                          ),
                         ),
                         SizedBox(height: 5.w),
                       ],

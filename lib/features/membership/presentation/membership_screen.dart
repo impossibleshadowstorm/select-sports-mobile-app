@@ -1,18 +1,86 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lottie/lottie.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:select_sports/core/constants/paths.dart';
+import 'package:select_sports/core/constants/theme_constants.dart';
+import 'package:select_sports/core/widgets/common_appbar.dart';
+import 'package:select_sports/core/widgets/visibility_widgets.dart';
+import 'package:select_sports/providers/theme_provider.dart';
 
-class MembershipScreen extends StatefulWidget {
+class MembershipScreen extends ConsumerStatefulWidget {
   const MembershipScreen({super.key});
 
   @override
-  State<MembershipScreen> createState() => _MembershipScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _MembershipScreenState();
 }
 
-class _MembershipScreenState extends State<MembershipScreen> {
+class _MembershipScreenState extends ConsumerState<MembershipScreen> {
   @override
   Widget build(BuildContext context) {
+    // Check if the current theme mode is dark
+    final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Membership')),
-      body: const Center(child: Text('Membership Screen')),
+      backgroundColor: isDarkMode ? Colors.transparent : Color(0xFFEBF0EA),
+      body: SizedBox(
+        height: 100.h,
+        width: 100.w,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            VisibilityWidgets.statusBarVisibleWidget(context: context),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 5.w),
+            //   child: CommonAppbar.appbarWithoutLeading(
+            //     context,
+            //     isDarkMode,
+            //     "Manage Teams",
+            //   ),
+            // ),
+            SizedBox(height: 10.h),
+            Lottie.asset(
+              isDarkMode ? Paths.lottieDarkCodingJson : Paths.lottieCodingJson,
+              animate: true,
+            ),
+            SizedBox(height: 2.5.w),
+            Center(
+              child: Text(
+                "We are still working on it!",
+                textAlign: TextAlign.center,
+                style: AppTextStyles.body.copyWith(
+                  color: isDarkMode ? Color(0xFF26D6B6) : AppColors.darkText,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.notifications_active_outlined,
+                  color: isDarkMode ? AppColors.lightText : AppColors.darkText,
+                ),
+                SizedBox(width: 2.5.w),
+                Text(
+                  "Stay Tuned!",
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.body.copyWith(
+                    color:
+                        isDarkMode ? AppColors.lightText : AppColors.darkText,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 5.h),
+          ],
+        ),
+      ),
     );
   }
 }

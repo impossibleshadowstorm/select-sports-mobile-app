@@ -42,4 +42,7 @@ class Paths {
 
   // Available Slots Images
   static String availableSlotsIcon = 'assets/images/profile/setting_menu.svg';
+
+  // Notification Images
+  static String notificationIcon = 'assets/images/home/notification.svg';
 }

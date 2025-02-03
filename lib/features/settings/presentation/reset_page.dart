@@ -102,6 +102,32 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
                         ],
                       ),
                     ),
+                    // Arrow Back button
+                    Positioned(
+                      top: 7.5.h,
+                      left: 5.w,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 2.5.w,
+                            vertical: 2.5.w,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.lightGreenColor,
+                            borderRadius: BorderRadius.circular(2.5.w),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: AppColors.darkText,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -180,6 +206,8 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
                       onClick: () {
                         _submitForm();
                       },
+                      customDarkColor: AppColors.lightGreenColor,
+                      customLightColor: AppColors.lightGreenColor,
                     ),
                   ],
                 ),

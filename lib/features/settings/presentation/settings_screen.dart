@@ -66,6 +66,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             _buildActionTile(
               isDarkMode,
               Paths.menuSettingIcon,
+              "Change Password",
+              "Change your password at ease",
+              () {
+                Navigator.pushNamed(context, "/reset");
+              },
+            ),
+            SizedBox(height: 5.w),
+            _buildActionTile(
+              isDarkMode,
+              Paths.menuSettingIcon,
               "Account Settings",
               "Delete you Account Permanently",
               () {
