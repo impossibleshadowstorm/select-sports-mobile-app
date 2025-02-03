@@ -15,7 +15,7 @@ class ResetScreen extends ConsumerStatefulWidget {
   const ResetScreen({super.key});
 
   @override
-  _ResetScreenState createState() => _ResetScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ResetScreenState();
 }
 
 class _ResetScreenState extends ConsumerState<ResetScreen> {
@@ -25,7 +25,7 @@ class _ResetScreenState extends ConsumerState<ResetScreen> {
   Widget build(BuildContext context) {
     final authController = ref.read(authControllerProvider.notifier);
     final authState = ref.watch(authControllerProvider);
-    final isDarkMode = ref.watch(themeProvider) == ThemeMode.light;
+    final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
     return Scaffold(
       body: SizedBox(

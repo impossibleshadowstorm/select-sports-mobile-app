@@ -46,6 +46,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             _buildActionTile(
               isDarkMode,
               Paths.menuSettingIcon,
+              "Change Mobile Number",
+              "change your Phone number at ease",
+                  () {
+                Navigator.pushNamed(context, "/update_mobile");
+              },
+            ),
+            SizedBox(height: 5.w),
+            _buildActionTile(
+              isDarkMode,
+              Paths.menuSettingIcon,
               "Notification Preferences",
               "Define what alerts and notifications you want to see",
               () {

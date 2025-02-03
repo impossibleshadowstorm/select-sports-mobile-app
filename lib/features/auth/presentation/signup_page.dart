@@ -8,13 +8,13 @@ import 'package:select_sports/core/widgets/custom_snackbar.dart';
 import 'package:select_sports/core/widgets/custom_textfields.dart';
 import 'package:select_sports/features/auth/presentation/auth_controller.dart';
 import 'package:select_sports/features/auth/utils/validators.dart';
-import '../../../providers/theme_provider.dart';
+import 'package:select_sports/providers/theme_provider.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
 
   @override
-  _SignupScreenState createState() => _SignupScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignupScreenState();
 }
 
 class _SignupScreenState extends ConsumerState<SignupScreen> {

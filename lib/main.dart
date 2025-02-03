@@ -3,7 +3,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/network/shared_preferences_helper.dart';
 import 'package:select_sports/features/about_us/presentation/about_us_screen.dart';
-import 'package:select_sports/features/auth/presentation/Reset_page.dart';
 import 'package:select_sports/features/auth/presentation/forgot_page.dart';
 import 'package:select_sports/features/auth/presentation/login_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,8 +14,7 @@ import 'package:select_sports/features/main/presentation/main_screen.dart';
 import 'package:select_sports/features/manage_teams/presentation/manage_teams_screen.dart';
 import 'package:select_sports/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:select_sports/features/profile/presentation/profile_screen.dart';
-import 'package:select_sports/features/rewards/presentation/reward_screen.dart';
-import 'package:select_sports/features/settings/presentation/Reset_page.dart';
+import 'package:select_sports/features/settings/presentation/reset_page.dart';
 import 'package:select_sports/features/rewards/presentation/rewards_screen.dart';
 import 'package:select_sports/features/settings/presentation/delete_account/delete_account_screen.dart';
 import 'package:select_sports/features/settings/presentation/notification_preferences_screen.dart';
@@ -89,10 +87,11 @@ class MyApp extends ConsumerWidget {
             '/manage_teams': (context) => ManageTeamsScreen(),
             '/about_us': (context) => AboutUsScreen(),
             '/terms_and_conditions': (context) => TermsAndConditionsScreen(),
-            '/notification_preferences': (context) => NotificationPreferencesScreen(),
+            '/notification_preferences': (context) =>
+                NotificationPreferencesScreen(),
             '/delete_account': (context) => DeleteAccountScreen(),
-            '/updatecontact' :(context) => UpdateMobileScreen()
-            '/rewards':(context) => RewardsScreen(),
+            '/update_mobile': (context) => UpdateMobileScreen(),
+            '/rewards': (context) => RewardsScreen(),
           },
         ),
       );
