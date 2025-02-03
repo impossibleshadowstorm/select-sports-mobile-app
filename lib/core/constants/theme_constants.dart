@@ -14,6 +14,8 @@ class AppColors {
   static const lightestGreyColor = Color(0xFFFAFAFA);
   static const lightestGreyColorV2 = Color(0xFFF5F5F5);
   static const lightestGreyColorV3 = Color(0xFFE5E5E5);
+  static const lightestBackground = Color(0X00f5f5f5);
+  static const lightMediumBackground = Color(0X00e0e0e0);
 
   static const cardColor = Color.fromARGB(0, 2, 71, 219);
   static const redColor = Colors.red;
