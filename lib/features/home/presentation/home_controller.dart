@@ -1,14 +1,26 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:select_sports/core/models/venue_model.dart';
+import 'package:select_sports/features/home/data/home_repository.dart';
 
 // A StateNotifier to manage currentImage and previousImage states
 class HomeController extends StateNotifier<HomeControllerState> {
-  HomeController() : super(HomeControllerState());
+  final HomeRepository homeRepository;
+
+  HomeController(this.homeRepository) : super(HomeControllerState());
 
   void updateCurrentImage(int index) {
     state = HomeControllerState(
       currentImage: index,
       previousImage: state.currentImage,
     );
+  }
+
+  Future<List<Venue>> fetchVenues() async {
+    return await homeRepository.getVenues();
+  }
+
+  Future<Venue?> fetchVenueDetail(String id) async {
+    return await homeRepository.getVenueDetail(id);
   }
 
   // Getter to determine if swipe direction is to the right
@@ -28,5 +40,6 @@ class HomeControllerState {
 
 final homeControllerProvider =
     StateNotifierProvider<HomeController, HomeControllerState>((ref) {
-  return HomeController();
+  final homeRepository = ref.read(homeRepositoryProvider);
+  return HomeController(homeRepository);
 });

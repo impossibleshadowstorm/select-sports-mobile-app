@@ -9,5 +9,7 @@ class ApiEndpoints {
   static const String resetPassword = "/auth/reset-password";
   static const String verifyOtp = "/auth/verify-account";
   static const String userProfile = "/user/sports-profile";
+  static const String availableSlots = "/slots";
+  static const String venues = "/venues";
   static const String sportsProfileOptions = "/user/sports-profile-options";
 }

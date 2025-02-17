@@ -5,17 +5,34 @@ import 'package:flutter_svg/svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
+import 'package:select_sports/core/models/venue_model.dart';
 import 'package:select_sports/core/widgets/visibility_widgets.dart';
 import 'package:select_sports/core/widgets/frosted_glass.dart';
+import 'package:select_sports/features/home/presentation/home_controller.dart';
 import 'package:select_sports/features/home/presentation/playground_details_screen.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 import '../../main/presentation/main_controller.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  late Future<List<Venue>> _venuesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    print("hii");
+    final homeController = ref.read(homeControllerProvider.notifier);
+    _venuesFuture = homeController.fetchVenues();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
     return Scaffold(
@@ -63,164 +80,195 @@ class HomeScreen extends ConsumerWidget {
           SizedBox(
             height: 340,
             width: 100.w,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 2,
-              itemBuilder: (context, index) {
-                return Row(
-                  children: [
-                    SizedBox(width: index == 0 ? 2.5.w : 0),
-                    Hero(
-                      tag: "Hero$index",
-                      // flightShuttleBuilder: (flightContext, animation,
-                      //     direction, fromContext, toContext) {
-                      //   return Center(child: CircularProgressIndicator());
-                      // },
-                      transitionOnUserGestures: true,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PlaygroundDetailsScreen(
-                                playgroundId: index.toString(),
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          height: 300,
-                          width: 75.w,
-                          decoration: BoxDecoration(
-                            color: isDarkMode
-                                ? AppColors.darkScaffoldBackground
-                                : Color(0xFFF9F9F9),
-                            borderRadius: BorderRadius.circular(2.5.w),
-                            boxShadow: [
-                              BoxShadow(
-                                color: isDarkMode
-                                    ? AppColors.lightGreenColor
-                                        .withValues(alpha: 0.15)
-                                    : AppColors.darkText
-                                        .withValues(alpha: 0.15),
-                                spreadRadius: 0,
-                                blurRadius: 10,
-                                offset: Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 200,
-                                width: 100.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(2.5.w),
-                                    topRight: Radius.circular(2.5.w),
-                                  ),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      Paths.homeHudlePlaygroundImage,
+            child: FutureBuilder<List<Venue>>(
+                future: _venuesFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text("Error fetching venues"));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(
+                      child: Text(
+                        "No venues available",
+                        style: AppTextStyles.body.copyWith(
+                          color: AppColors.lightGreyColor,
+                        ),
+                      ),
+                    );
+                  }
+
+                  final venues = snapshot.data!;
+
+                  return ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: venues.length,
+                    itemBuilder: (context, index) {
+                      final venue = venues[index];
+                      final venueAddress = venue.address;
+
+                      return Row(
+                        children: [
+                          SizedBox(width: index == 0 ? 2.5.w : 0),
+                          Hero(
+                            tag: "Hero${venue.id}",
+                            // flightShuttleBuilder: (flightContext, animation,
+                            //     direction, fromContext, toContext) {
+                            //   return Center(child: CircularProgressIndicator());
+                            // },
+                            transitionOnUserGestures: true,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        PlaygroundDetailsScreen(
+                                      playgroundId: venue.id,
                                     ),
-                                    fit: BoxFit.cover,
                                   ),
+                                );
+                              },
+                              child: Container(
+                                height: 300,
+                                width: 75.w,
+                                decoration: BoxDecoration(
+                                  color: isDarkMode
+                                      ? AppColors.darkScaffoldBackground
+                                      : Color(0xFFF9F9F9),
+                                  borderRadius: BorderRadius.circular(2.5.w),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: isDarkMode
+                                          ? AppColors.lightGreenColor
+                                              .withValues(alpha: 0.15)
+                                          : AppColors.darkText
+                                              .withValues(alpha: 0.15),
+                                      spreadRadius: 0,
+                                      blurRadius: 10,
+                                      offset: Offset(0, 4),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  width: 100.w,
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 3.5.w,
-                                    vertical: 2.5.w,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      // Container(
-                                      //   padding: EdgeInsets.symmetric(
-                                      //       horizontal: 3.5.w, vertical: 2.5.w),
-                                      //   decoration: BoxDecoration(
-                                      //     color: AppColors.darkGreenColor,
-                                      //     borderRadius: BorderRadius.circular(100.w),
-                                      //   ),
-                                      //   child: Row(
-                                      //     mainAxisSize: MainAxisSize.min,
-                                      //     children: [
-                                      //       Icon(
-                                      //         Icons.sports_football,
-                                      //         color: AppColors.lightText,
-                                      //         size: 15.sp,
-                                      //       ),
-                                      //       SizedBox(width: 2.5.w),
-                                      //       Text(
-                                      //         "Football",
-                                      //         style: AppTextStyles.body.copyWith(
-                                      //           fontSize: 12.sp,
-                                      //           fontWeight: FontWeight.bold,
-                                      //           color: Colors.white,
-                                      //         ),
-                                      //       ),
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      SizedBox(height: 2.5.w),
-                                      Text(
-                                        "Conscient Sports | Vasant Kunj",
-                                        textAlign: TextAlign.start,
-                                        style: AppTextStyles.body.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15.sp,
-                                          color: isDarkMode
-                                              ? AppColors.lightText
-                                              : Color(0xFF020202),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 200,
+                                      width: 100.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(2.5.w),
+                                          topRight: Radius.circular(2.5.w),
+                                        ),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                            Paths.homeHudlePlaygroundImage,
+                                          ),
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
-                                      SizedBox(height: 2.5.w),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.pin_drop_sharp,
-                                            size: 15.sp,
-                                            color: isDarkMode
-                                                ? AppColors.lightText
-                                                : AppColors.mediumGreyColor,
-                                          ),
-                                          SizedBox(width: 2.5.w),
-                                          Expanded(
-                                            child: Text(
-                                              "The Heritage School, D-2, Pocket 2, Vasant Kunj, Delhi",
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        width: 100.w,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 3.5.w,
+                                          vertical: 2.5.w,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            // Container(
+                                            //   padding: EdgeInsets.symmetric(
+                                            //       horizontal: 3.5.w, vertical: 2.5.w),
+                                            //   decoration: BoxDecoration(
+                                            //     color: AppColors.darkGreenColor,
+                                            //     borderRadius: BorderRadius.circular(100.w),
+                                            //   ),
+                                            //   child: Row(
+                                            //     mainAxisSize: MainAxisSize.min,
+                                            //     children: [
+                                            //       Icon(
+                                            //         Icons.sports_football,
+                                            //         color: AppColors.lightText,
+                                            //         size: 15.sp,
+                                            //       ),
+                                            //       SizedBox(width: 2.5.w),
+                                            //       Text(
+                                            //         "Football",
+                                            //         style: AppTextStyles.body.copyWith(
+                                            //           fontSize: 12.sp,
+                                            //           fontWeight: FontWeight.bold,
+                                            //           color: Colors.white,
+                                            //         ),
+                                            //       ),
+                                            //     ],
+                                            //   ),
+                                            // ),
+                                            SizedBox(height: 2.5.w),
+                                            Text(
+                                              venue.name,
                                               textAlign: TextAlign.start,
                                               style:
                                                   AppTextStyles.body.copyWith(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 13.sp,
+                                                fontSize: 15.sp,
                                                 color: isDarkMode
                                                     ? AppColors.lightText
-                                                    : AppColors.mediumGreyColor,
+                                                    : Color(0xFF020202),
                                               ),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                            SizedBox(height: 2.5.w),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.pin_drop_sharp,
+                                                  size: 15.sp,
+                                                  color: isDarkMode
+                                                      ? AppColors.lightText
+                                                      : AppColors
+                                                          .mediumGreyColor,
+                                                ),
+                                                SizedBox(width: 2.5.w),
+                                                Expanded(
+                                                  child: Text(
+                                                    "${venueAddress.street}, ${venueAddress.city}, ${venueAddress.state}, ${venueAddress.postalCode}, ${venueAddress.country}",
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.start,
+                                                    style: AppTextStyles.body
+                                                        .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 13.sp,
+                                                      color: isDarkMode
+                                                          ? AppColors.lightText
+                                                          : AppColors
+                                                              .mediumGreyColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 5.w),
-                  ],
-                );
-              },
-            ),
+                          SizedBox(width: 5.w),
+                        ],
+                      );
+                    },
+                  );
+                }),
           )
         ],
       ),

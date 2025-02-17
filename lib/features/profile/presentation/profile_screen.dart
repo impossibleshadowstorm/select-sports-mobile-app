@@ -9,8 +9,7 @@ import 'package:select_sports/core/widgets/visibility_widgets.dart';
 import 'package:select_sports/features/profile/presentation/profile_controller.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:select_sports/providers/theme_provider.dart';
-
-import '../../../core/widgets/common_dropdowns.dart';
+import 'package:select_sports/core/widgets/common_dropdowns.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -20,6 +19,14 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(profileControllerProvider.notifier).fetchProfile();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Check if the current theme mode is dark

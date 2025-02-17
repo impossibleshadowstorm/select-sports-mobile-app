@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
+import 'package:select_sports/core/models/venue_model.dart';
 import 'package:select_sports/core/widgets/custom_buttons.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 import 'package:select_sports/utils/common_functions.dart';
@@ -26,6 +27,8 @@ class PlaygroundDetailsScreen extends ConsumerStatefulWidget {
 
 class _PlaygroundDetailsScreenState
     extends ConsumerState<PlaygroundDetailsScreen> {
+  late Future<Venue> _venueFuture;
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
@@ -53,141 +56,163 @@ class _PlaygroundDetailsScreenState
       body: SizedBox(
         height: 100.h,
         width: 100.w,
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Hero(
-                          tag: "Hero0",
-                          child: AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 500),
-                            // transitionBuilder: (child, animation) {
-                            //   final offsetAnimation = Tween<Offset>(
-                            //     begin: homeController.isSwipeRight
-                            //         ? const Offset(1, 0)
-                            //         : const Offset(-1, 0),
-                            //     end: Offset.zero,
-                            //   ).animate(animation);
-                            //   return SlideTransition(
-                            //     position: offsetAnimation,
-                            //     child: child,
-                            //   );
-                            // },
-                            transitionBuilder: (child, animation) {
-                              final offsetAnimation = Tween<Offset>(
-                                begin: homeController.isSwipeRight
-                                    ? const Offset(1, 0)
-                                    : const Offset(-1, 0),
-                                end: Offset.zero,
-                              ).animate(animation);
-                              return Stack(
-                                children: [
-                                  // Keeps the previous image visible during the animation
-                                  Positioned.fill(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(2.5.w),
-                                          topRight: Radius.circular(2.5.w),
-                                        ),
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                            playgroundImages[
-                                                homeState.previousImage],
+        child: FutureBuilder<Venue>(
+            future: _venueFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text("Error fetching venue"));
+              } else if (!snapshot.hasData) {
+                return Center(
+                  child: Text(
+                    "No venue available",
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.lightGreyColor,
+                    ),
+                  ),
+                );
+              }
+
+              return Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          Stack(
+                            children: [
+                              Hero(
+                                tag: "Hero${widget.playgroundId}",
+                                child: AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 500),
+                                  // transitionBuilder: (child, animation) {
+                                  //   final offsetAnimation = Tween<Offset>(
+                                  //     begin: homeController.isSwipeRight
+                                  //         ? const Offset(1, 0)
+                                  //         : const Offset(-1, 0),
+                                  //     end: Offset.zero,
+                                  //   ).animate(animation);
+                                  //   return SlideTransition(
+                                  //     position: offsetAnimation,
+                                  //     child: child,
+                                  //   );
+                                  // },
+                                  transitionBuilder: (child, animation) {
+                                    final offsetAnimation = Tween<Offset>(
+                                      begin: homeController.isSwipeRight
+                                          ? const Offset(1, 0)
+                                          : const Offset(-1, 0),
+                                      end: Offset.zero,
+                                    ).animate(animation);
+                                    return Stack(
+                                      children: [
+                                        // Keeps the previous image visible during the animation
+                                        Positioned.fill(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(2.5.w),
+                                                topRight:
+                                                    Radius.circular(2.5.w),
+                                              ),
+                                              image: DecorationImage(
+                                                image: NetworkImage(
+                                                  playgroundImages[
+                                                      homeState.previousImage],
+                                                ),
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
                                           ),
-                                          fit: BoxFit.cover,
                                         ),
+                                        // The new image with sliding animation
+                                        SlideTransition(
+                                          position: offsetAnimation,
+                                          child: child,
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                  child: Container(
+                                    key: ValueKey<int>(homeState.currentImage),
+                                    height: 40.h,
+                                    width: 100.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(2.5.w),
+                                        topRight: Radius.circular(2.5.w),
+                                      ),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                          playgroundImages[
+                                              homeState.currentImage],
+                                        ),
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
-                                  // The new image with sliding animation
-                                  SlideTransition(
-                                    position: offsetAnimation,
-                                    child: child,
+                                ),
+                              ),
+                              Positioned(
+                                top: 7.5.h,
+                                left: 5.w,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 2.5.w,
+                                      vertical: 2.5.w,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.lightGreenColor,
+                                      borderRadius:
+                                          BorderRadius.circular(2.5.w),
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.arrow_back,
+                                        color: AppColors.darkText,
+                                      ),
+                                    ),
                                   ),
-                                ],
-                              );
-                            },
-                            child: Container(
-                              key: ValueKey<int>(homeState.currentImage),
-                              height: 40.h,
-                              width: 100.w,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(2.5.w),
-                                  topRight: Radius.circular(2.5.w),
-                                ),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    playgroundImages[homeState.currentImage],
-                                  ),
-                                  fit: BoxFit.cover,
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ),
-                        Positioned(
-                          top: 7.5.h,
-                          left: 5.w,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 2.5.w,
-                                vertical: 2.5.w,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.lightGreenColor,
-                                borderRadius: BorderRadius.circular(2.5.w),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.arrow_back,
-                                  color: AppColors.darkText,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                          SizedBox(height: 2.5.w),
+                          _buildImageScroller(isDarkMode, playgroundImages,
+                              homeController, homeState),
+                          SizedBox(height: 2.5.w),
+                          _buildMainSection(isDarkMode),
+                          SizedBox(height: 5.w),
+                          _buildDescriptionSection(isDarkMode),
+                          SizedBox(height: 5.w),
+                          _buildAmenitiesSection(isDarkMode, venueAmenities)
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 2.5.w),
-                    _buildImageScroller(isDarkMode, playgroundImages,
-                        homeController, homeState),
-                    SizedBox(height: 2.5.w),
-                    _buildMainSection(isDarkMode),
-                    SizedBox(height: 5.w),
-                    _buildDescriptionSection(isDarkMode),
-                    SizedBox(height: 5.w),
-                    _buildAmenitiesSection(isDarkMode, venueAmenities)
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              width: 100.w,
-              padding: EdgeInsets.symmetric(horizontal: 5.w),
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-              ),
-              child: CustomButtons.fullWidthFilledButton(
-                buttonText: "Book Now",
-                ref: ref,
-                onClick: () {},
-                customDarkColor: AppColors.darkGreenColor,
-              ),
-            ),
-            SizedBox(height: 25),
-          ],
-        ),
+                  ),
+                  Container(
+                    width: 100.w,
+                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    child: CustomButtons.fullWidthFilledButton(
+                      buttonText: "Book Now",
+                      ref: ref,
+                      onClick: () {},
+                      customDarkColor: AppColors.darkGreenColor,
+                    ),
+                  ),
+                  SizedBox(height: 25),
+                ],
+              );
+            }),
       ),
     );
   }
