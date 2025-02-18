@@ -31,6 +31,26 @@ class ProfileRepository {
     }
   }
 
+  Future<Profile?> getProfile() async {
+    try {
+      final response = await apiClient.authorizedGet(ApiEndpoints.me);
+
+      if (response.statusCode == 200) {
+        return Profile.fromJson(response.data['data']);
+      }
+
+      return null;
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print("Profile Repository Error:");
+        print(e);
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<ProfileOptions?> getProfileOptions() async {
     try {
       final response = await apiClient.authorizedGet(ApiEndpoints.sportsProfileOptions);
