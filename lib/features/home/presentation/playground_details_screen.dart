@@ -5,7 +5,6 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/shared_preferences_keys.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/models/address_model.dart';
-import 'package:select_sports/core/models/slot_model.dart';
 import 'package:select_sports/core/models/venue_model.dart';
 import 'package:select_sports/core/network/shared_preferences_helper.dart';
 import 'package:select_sports/core/widgets/custom_buttons.dart';

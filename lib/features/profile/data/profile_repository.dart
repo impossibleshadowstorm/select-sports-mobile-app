@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:select_sports/core/models/user_model.dart';
 import 'package:select_sports/core/network/api_client.dart';
 import 'package:select_sports/core/constants/api_endpoints.dart';
 import 'package:select_sports/features/profile/data/models/profile_model.dart';
@@ -31,12 +32,12 @@ class ProfileRepository {
     }
   }
 
-  Future<Profile?> getProfile() async {
+  Future<User?> getProfile() async {
     try {
       final response = await apiClient.authorizedGet(ApiEndpoints.me);
 
       if (response.statusCode == 200) {
-        return Profile.fromJson(response.data['data']);
+        return User.fromJson(response.data['data']);
       }
 
       return null;

@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:select_sports/core/models/user_model.dart';
 
 import '../data/profile_repository.dart';
 
@@ -16,6 +17,7 @@ class ProfileController extends StateNotifier<ProfileState> {
             draws: 0,
             loses: 0,
             isLoading: true,
+            isProfileLoading: true,
             preferredPositionOptions: [],
             experienceLevelOptions: [],
             preferredFootOptions: [],
@@ -36,6 +38,22 @@ class ProfileController extends StateNotifier<ProfileState> {
         preferredPosition: profile.preferredPosition,
         experienceLevel: profile.skillLevel,
         preferredFoot: profile.preferredFoot,
+        isLoading: false,
+      );
+    } else {
+      state = state.copyWith(isLoading: false);
+    }
+  }
+
+  Future<void> fetchUserProfile() async {
+    state = state.copyWith(isLoading: true, isProfileLoading: true);
+
+    final user =
+        await profileRepository.getProfile(); // Fetch user profile data
+
+    if (user != null) {
+      state = state.copyWith(
+        userDetail: user,
         isLoading: false,
       );
     } else {
@@ -90,6 +108,7 @@ class ProfileController extends StateNotifier<ProfileState> {
 class ProfileState {
   final bool isEditing;
   final bool isLoading;
+  final bool isProfileLoading;
   final String preferredPosition;
   final String experienceLevel;
   final String preferredFoot;
@@ -100,10 +119,12 @@ class ProfileState {
   final List<String> preferredPositionOptions;
   final List<String> experienceLevelOptions;
   final List<String> preferredFootOptions;
+  final User? userDetail;
 
   ProfileState({
     this.isEditing = false,
     this.isLoading = false,
+    this.isProfileLoading = false,
     required this.preferredPosition,
     required this.experienceLevel,
     required this.preferredFoot,
@@ -114,6 +135,7 @@ class ProfileState {
     required this.preferredPositionOptions,
     required this.preferredFootOptions,
     required this.experienceLevelOptions,
+    this.userDetail,
   });
 
   ProfileState copyWith({
@@ -122,6 +144,7 @@ class ProfileState {
     String? experienceLevel,
     String? preferredFoot,
     bool? isLoading,
+    bool? isProfileLoading,
     int? totalMatches,
     int? winnings,
     int? draws,
@@ -129,6 +152,7 @@ class ProfileState {
     List<String>? preferredPositionOptions,
     List<String>? preferredFootOptions,
     List<String>? experienceLevelOptions,
+    User? userDetail,
   }) {
     return ProfileState(
       isEditing: isEditing ?? this.isEditing,
@@ -136,13 +160,17 @@ class ProfileState {
       experienceLevel: experienceLevel ?? this.experienceLevel,
       preferredFoot: preferredFoot ?? this.preferredFoot,
       isLoading: isLoading ?? this.isLoading,
+      isProfileLoading: isProfileLoading ?? this.isProfileLoading,
       totalMatches: totalMatches ?? this.totalMatches,
       winnings: winnings ?? this.winnings,
       draws: draws ?? this.draws,
       loses: loses ?? this.loses,
-      preferredPositionOptions: preferredPositionOptions ?? this.preferredPositionOptions,
+      preferredPositionOptions:
+          preferredPositionOptions ?? this.preferredPositionOptions,
       preferredFootOptions: preferredFootOptions ?? this.preferredFootOptions,
-      experienceLevelOptions: experienceLevelOptions ?? this.experienceLevelOptions,
+      experienceLevelOptions:
+          experienceLevelOptions ?? this.experienceLevelOptions,
+      userDetail: userDetail ?? this.userDetail,
     );
   }
 }
