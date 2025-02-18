@@ -6,6 +6,8 @@ import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/widgets/custom_buttons.dart';
 import 'package:select_sports/core/widgets/visibility_widgets.dart';
+import 'package:select_sports/features/auth/presentation/auth_controller.dart';
+import 'package:select_sports/features/auth/presentation/login_page.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 
 class MenusScreen extends ConsumerStatefulWidget {
@@ -23,6 +25,7 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
 
     // Access ThemeNotifier for toggling the theme
     final themeNotifier = ref.read(themeProvider.notifier);
+    final authController = ref.read(authControllerProvider.notifier);
 
     return Scaffold(
       body: SizedBox(
@@ -121,7 +124,8 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             Paths.menuUpcomingIcon,
                             "Upcoming Bookings",
                             () {
-                              Navigator.pushNamed(context, "/upcoming_bookings");
+                              themeNotifier.toggleTheme(context);
+                              // Navigator.pushNamed(context, "/upcoming_bookings");
                             },
                           ),
                           Divider(
@@ -236,7 +240,23 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             Paths.settingsTermsAndConditionsIcon,
                             "Terms & Conditions",
                             () {
-                              Navigator.pushNamed(context, "/terms_and_conditions");
+                              Navigator.pushNamed(
+                                  context, "/terms_and_conditions");
+                            },
+                          ),
+                          _buildOptionTile(
+                            isDarkMode,
+                            Paths.settingsTermsAndConditionsIcon,
+                            "Log Out",
+                            () async {
+                              authController.logout();
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()),
+                                (Route<dynamic> route) =>
+                                    false, // Removes all previous routes
+                              );
                             },
                           ),
                         ],

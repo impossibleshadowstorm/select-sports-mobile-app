@@ -53,6 +53,27 @@ class HomeRepository {
       return null;
     }
   }
+
+  Future<Slot?> getSlotDetail(String id) async {
+    try {
+      final response = await apiClient.get("${ApiEndpoints.availableSlots}/$id");
+
+      if (response.statusCode == 200) {
+        var slotData = response.data['data'];
+        return Slot.fromJson(slotData);
+      }
+
+      return null;
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print("Home Repository Error [Get Slot]:");
+        print(e);
+      }
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
 }
 
 final homeRepositoryProvider = Provider<HomeRepository>(

@@ -5,6 +5,7 @@ class Address {
   final String state;
   final String postalCode;
   final String country;
+  final String? nearBy;
   final String createdAt;
   final String updatedAt;
 
@@ -15,6 +16,7 @@ class Address {
     required this.state,
     required this.postalCode,
     required this.country,
+    this.nearBy,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -27,6 +29,7 @@ class Address {
       state: json['state'],
       postalCode: json['postalCode'],
       country: json['country'],
+      nearBy: json['nearby'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
     );

@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 class CommonFunctions {
   static String capitalizeFirst(String str) {
     if (str.isEmpty) return str;
-    return str[0].toUpperCase() + str.substring(1);
+    return str[0].toUpperCase() + str.substring(1).toLowerCase();
   }
 
   static String formatDateInDayDateMon(DateTime dateTime) {

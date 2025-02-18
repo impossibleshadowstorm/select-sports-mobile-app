@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:select_sports/core/models/slot_model.dart';
 import 'package:select_sports/core/models/venue_model.dart';
 import 'package:select_sports/features/home/data/home_repository.dart';
 
@@ -23,6 +24,15 @@ class HomeController extends StateNotifier<HomeControllerState> {
     return await homeRepository.getVenueDetail(id);
   }
 
+  Future<void> fetchSlotDetail(String id) async {
+    final slot = await homeRepository.getSlotDetail(id);
+    state = HomeControllerState(
+      currentImage: state.currentImage,
+      previousImage: state.previousImage,
+      slotDetail: slot,
+    );
+  }
+
   // Getter to determine if swipe direction is to the right
   bool get isSwipeRight => state.currentImage > state.previousImage;
 }
@@ -31,10 +41,12 @@ class HomeController extends StateNotifier<HomeControllerState> {
 class HomeControllerState {
   final int currentImage;
   final int previousImage;
+  final Slot? slotDetail;
 
   HomeControllerState({
     this.currentImage = 0,
     this.previousImage = 0,
+    this.slotDetail,
   });
 }
 

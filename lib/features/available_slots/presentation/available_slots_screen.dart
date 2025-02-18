@@ -87,6 +87,8 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
                                       builder: (context) =>
                                           PlaygroundDetailsScreen(
                                         playgroundId: slot.venueId,
+                                        slotId: slot.id,
+                                        onlyPlayground: false,
                                       ),
                                     ),
                                   );
@@ -98,8 +100,12 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
                                       "${slot.venue.name}, ${slotVenueAddress.street}",
                                   venueLocation:
                                       "${slotVenueAddress.street}, ${slotVenueAddress.city}, ${slotVenueAddress.state}, ${slotVenueAddress.postalCode}, ${slotVenueAddress.country}",
-                                  gameDate: CommonFunctions.formatDateInDayDateMon(slot.startTime),
-                                  gameTime: CommonFunctions.formatTimeIn24HourMinAMPM(slot.startTime),
+                                  gameDate:
+                                      CommonFunctions.formatDateInDayDateMon(
+                                          slot.startTime),
+                                  gameTime:
+                                      CommonFunctions.formatTimeIn24HourMinAMPM(
+                                          slot.startTime),
                                   actualPrice: 399.00,
                                   discountedPrice: 329.00,
                                   maxPlayer: slot.maxPlayer,

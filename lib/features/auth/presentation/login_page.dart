@@ -228,6 +228,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           SharedPreferencesKeys.authToken,
           result['data']['token'],
         );
+        SharedPreferencesHelper.set(
+          SharedPreferencesKeys.userId,
+          result['data']['userId'],
+        );
         Navigator.pushNamed(context, '/main');
       } else {
         CustomSnackBar.showError(result["message"]);

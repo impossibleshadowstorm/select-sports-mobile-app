@@ -26,7 +26,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    print("hii");
     final homeController = ref.read(homeControllerProvider.notifier);
     _venuesFuture = homeController.fetchVenues();
   }
