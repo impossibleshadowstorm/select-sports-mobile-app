@@ -11,7 +11,7 @@ class ProfileRepository {
 
   ProfileRepository(this.apiClient);
 
-  Future<Profile?> getProfile() async {
+  Future<Profile?> getSportsProfile() async {
     try {
       final response = await apiClient.authorizedGet(ApiEndpoints.userProfile);
 

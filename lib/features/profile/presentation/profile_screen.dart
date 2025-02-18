@@ -23,7 +23,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(profileControllerProvider.notifier).fetchProfile();
+      ref.read(profileControllerProvider.notifier).fetchSportsProfile();
     });
   }
 

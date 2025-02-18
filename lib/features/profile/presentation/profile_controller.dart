@@ -21,15 +21,15 @@ class ProfileController extends StateNotifier<ProfileState> {
             preferredFootOptions: [],
           ),
         ) {
-    fetchProfile();
+    fetchSportsProfile();
     fetchProfileOptions();
   }
 
   // Fetch profile data
-  Future<void> fetchProfile() async {
+  Future<void> fetchSportsProfile() async {
     state = state.copyWith(isLoading: true);
 
-    final profile = await profileRepository.getProfile();
+    final profile = await profileRepository.getSportsProfile();
 
     if (profile != null) {
       state = state.copyWith(
