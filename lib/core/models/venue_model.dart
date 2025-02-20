@@ -1,5 +1,7 @@
+import 'package:flutter_logs/flutter_logs.dart';
 import 'package:select_sports/core/models/address_model.dart';
 import 'package:select_sports/core/models/booking_model.dart';
+import 'package:select_sports/utils/app_logger.dart';
 
 class Venue {
   final String id;
@@ -11,7 +13,6 @@ class Venue {
   final List<String> amenities;
   final String addressId;
   final Address address;
-  // final List<Booking> bookings;
 
   Venue({
     required this.id,
@@ -23,23 +24,24 @@ class Venue {
     required this.amenities,
     required this.addressId,
     required this.address,
-    // required this.bookings,
   });
 
   factory Venue.fromJson(Map<String, dynamic> json) {
-    return Venue(
-      id: json['id'],
-      name: json['name'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
-      images: List<String>.from(json['images'] ?? []),
-      description: json['description'],
-      amenities: List<String>.from(json['amenities'] ?? []),
-      addressId: json['addressId'],
-      address: Address.fromJson(json['address']),
-      // bookings: (json['bookings'] as List)
-      //     .map((booking) => Booking.fromJson(booking))
-      //     .toList(),
-    );
+    try {
+      return Venue(
+        id: json['id'],
+        name: json['name'],
+        createdAt: json['createdAt'],
+        updatedAt: json['updatedAt'],
+        images: List<String>.from(json['images'] ?? []),
+        description: json['description'],
+        amenities: List<String>.from(json['amenities'] ?? []),
+        addressId: json['addressId'],
+        address: Address.fromJson(json['address']),
+      );
+    } catch (e, s) {
+      logger.e("Venue Model Parsing Failed", error: e, stackTrace: s);
+      return throw Exception("Venue parsing failed");
+    }
   }
 }

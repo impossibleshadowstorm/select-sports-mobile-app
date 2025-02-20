@@ -25,12 +25,15 @@ class HomeController extends StateNotifier<HomeControllerState> {
   }
 
   Future<void> fetchSlotDetail(String id) async {
-    final slot = await homeRepository.getSlotDetail(id);
-    state = HomeControllerState(
-      currentImage: state.currentImage,
-      previousImage: state.previousImage,
-      slotDetail: slot,
-    );
+    try {
+      final slot = await homeRepository.getSlotDetail(id);
+      print(slot);
+      state = HomeControllerState(
+        currentImage: state.currentImage,
+        previousImage: state.previousImage,
+        slotDetail: slot,
+      );
+    } catch (err) {}
   }
 
   // Getter to determine if swipe direction is to the right

@@ -5,6 +5,7 @@ import 'package:select_sports/core/models/slot_model.dart';
 import 'package:select_sports/core/network/api_client.dart';
 import 'package:select_sports/core/constants/api_endpoints.dart';
 import 'package:select_sports/features/profile/data/models/profile_options_model.dart';
+import 'dart:developer' as developer;
 
 class AvailableSlotsRepository {
   final ApiClient apiClient;
@@ -18,7 +19,11 @@ class AvailableSlotsRepository {
 
       if (response.statusCode == 200) {
         List<dynamic> slotsData = response.data['data'];
-        return slotsData.map((slot) => Slot.fromJson(slot)).toList();
+        try {
+          return slotsData.map((slot) => Slot.fromJson(slot)).toList();
+        } catch(e) {
+          developer.log(e.toString());
+        }
       }
 
       return [];

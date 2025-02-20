@@ -28,11 +28,29 @@ import 'package:select_sports/features/wallet/presentation/wallet_screen.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 import 'package:toastification/toastification.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_logs/flutter_logs.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoogleFonts.config.allowRuntimeFetching = false;
   await SharedPreferencesHelper.init();
+  //Initialize Logging
+  await FlutterLogs.initLogs(
+    logLevelsEnabled: [
+      LogLevel.INFO,
+      LogLevel.WARNING,
+      LogLevel.ERROR,
+      LogLevel.SEVERE
+    ],
+    timeStampFormat: TimeStampFormat.TIME_FORMAT_READABLE,
+    directoryStructure: DirectoryStructure.FOR_DATE,
+    logTypesEnabled: ["device", "network", "errors"],
+    logFileExtension: LogFileExtension.LOG,
+    debugFileOperations: true,
+    isDebuggable: true,
+    enabled: true,
+  );
+
   runApp(
     const ProviderScope(
       child: MyApp(),

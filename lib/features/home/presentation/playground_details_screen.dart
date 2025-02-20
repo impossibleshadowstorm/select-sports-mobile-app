@@ -78,6 +78,8 @@ class _PlaygroundDetailsScreenState
                 homeState.slotDetail!.bookings.any((booking) =>
                 booking.userId == SharedPreferencesHelper.get(SharedPreferencesKeys.userId));
 
+            print(homeState.slotDetail);
+
             return Column(
               children: [
                 Expanded(

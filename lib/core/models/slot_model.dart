@@ -1,6 +1,7 @@
 import 'package:select_sports/core/models/sport_model.dart';
 import 'package:select_sports/core/models/venue_model.dart';
 import 'package:select_sports/core/models/booking_model.dart';
+import 'package:select_sports/utils/app_logger.dart';
 
 class Slot {
   final String id;
@@ -11,6 +12,8 @@ class Slot {
   final String status;
   final String createdAt;
   final String updatedAt;
+  final double price;
+  final double discountedPrice;
   final String sportId;
   final String venueId;
   final String? team1Id;
@@ -29,6 +32,8 @@ class Slot {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    required this.price,
+    required this.discountedPrice,
     required this.sportId,
     required this.venueId,
     this.team1Id,
@@ -40,25 +45,33 @@ class Slot {
   });
 
   factory Slot.fromJson(Map<String, dynamic> json) {
-    return Slot(
-      id: json['id'],
-      startTime: DateTime.parse(json['startTime']),
-      endTime: DateTime.parse(json['endTime']),
-      maxPlayer: json['maxPlayer'],
-      slotType: json['slotType'],
-      status: json['status'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
-      sportId: json['sportId'],
-      venueId: json['venueId'],
-      team1Id: json['team1Id'],
-      team2Id: json['team2Id'],
-      hostId: json['hostId'],
-      sport: Sport.fromJson(json['sport']),
-      venue: Venue.fromJson(json['venue']),
-      bookings: (json['bookings'] as List)
-          .map((booking) => Booking.fromJson(booking))
-          .toList(),
-    );
+    try {
+      return Slot(
+        id: json['id'] as String,
+        startTime: DateTime.parse(json['startTime']),
+        endTime: DateTime.parse(json['endTime']),
+        maxPlayer: json['maxPlayer'] as int,
+        slotType: json['slotType'] as String,
+        status: json['status'] as String,
+        createdAt: json['createdAt'] as String,
+        updatedAt: json['updatedAt'] as String,
+        price: json['price'].toDouble(),
+        discountedPrice: json['discountedPrice'].toDouble(),
+        sportId: json['sportId'] as String,
+        venueId: json['venueId'] as String,
+        team1Id: json['team1Id'] as String?,
+        team2Id: json['team2Id'] as String?,
+        hostId: json['hostId'] as String?,
+        sport: Sport.fromJson(json['sport']),
+        venue: Venue.fromJson(json['venue']),
+        bookings: (json['bookings'] as List<dynamic>?)
+                ?.map((booking) => Booking.fromJson(booking))
+                .toList() ??
+            [],
+      );
+    } catch (e, s) {
+      logger.e("Slot Model Parsing Failed", error: e, stackTrace: s);
+      return throw Exception("Slot parsing failed");
+    }
   }
 }
