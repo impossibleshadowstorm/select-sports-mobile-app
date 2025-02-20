@@ -387,11 +387,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   Widget _buildActionsWithDropdown(
-      String icon,
-      String title,
-      String selectedValue,
-      List<String> options,
-      ValueChanged<String?> onChanged) {
+    String icon,
+    String title,
+    String selectedValue,
+    List<String> options,
+    ValueChanged<String?> onChanged,
+  ) {
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: 2.5.w,

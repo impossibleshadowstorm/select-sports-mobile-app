@@ -165,6 +165,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       CustomButtons.fullWidthFilledButton(
                         ref: ref,
                         buttonText: "Login",
+                        loading: authState.isLoginProcessRunning,
                         onClick: () {
                           _submitForm();
                         },
@@ -185,6 +186,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           InkWell(
                             overlayColor: WidgetStatePropertyAll(Colors.transparent),
                             onTap: () {
+                              authController.resetLoginForm();
                               Navigator.pushNamed(context, '/signup');
                             },
                             child: Text(
@@ -219,10 +221,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _login() async {
     // Check if the widget is still mounted before triggering UI updates
-    final result = await ref.read(authControllerProvider.notifier).login();
+    final authController = ref.read(authControllerProvider.notifier);
+    final result = await authController.login();
 
     if (mounted) {
       if (result['success']) {
+        authController.resetLoginForm();
+
         CustomSnackBar.showSuccess(result["message"]);
         SharedPreferencesHelper.set(
           SharedPreferencesKeys.authToken,

@@ -85,3 +85,10 @@ class CommonAppText {
     );
   }
 }
+
+class CommonAppOptions {
+  static const List<String> genders = [
+    'MALE',
+    'FEMALE',
+  ];
+}

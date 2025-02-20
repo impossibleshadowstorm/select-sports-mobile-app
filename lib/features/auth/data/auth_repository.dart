@@ -112,9 +112,9 @@ class AuthRepository {
       return {'success': false, 'message': message};
     } on DioException catch (e) {
       if (kDebugMode) {
-        print(e.response?.data["error"]);
+        print(e);
       }
-      return {'success': false, 'message': e.response?.data["message"]};
+      return {'success': false, 'message': "Login Unsuccessful"};
     } catch (e) {
       return {'success': false, 'message': e.toString()};
     }
@@ -125,7 +125,8 @@ class AuthRepository {
     String email,
     String password,
     String phone,
-    String age,
+    String dob,
+    String gender,
   ) async {
     try {
       final response = await apiClient.post(ApiEndpoints.signup, {
@@ -133,7 +134,8 @@ class AuthRepository {
         'email': email,
         'password': password,
         'phone': phone,
-        'age': age,
+        'dob': dob,
+        'gender': gender,
       });
 
       final message = response.data['message'] ?? "Unexpected response";

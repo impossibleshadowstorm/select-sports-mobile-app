@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Validators {
   static String? validateName(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -49,14 +51,30 @@ class Validators {
     return null;
   }
 
-  static String? validateAge(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return "Age is required";
+  static String? validateDob(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Date of Birth is required";
     }
-    final age = int.tryParse(value.trim());
-    if (age == null || age <= 15) {
-      return "Enter a valid age";
+
+    try {
+      DateTime dob = DateFormat("dd-MM-yyyy").parse(value);
+      DateTime now = DateTime.now();
+      int age = now.year - dob.year;
+
+      if (now.month < dob.month ||
+          (now.month == dob.month && now.day < dob.day)) {
+        age--;
+      }
+
+      if (age < 15) {
+        return "You must be at least 15 years old";
+      } else if (age > 80) {
+        return "Age cannot be more than 80 years";
+      }
+    } catch (e) {
+      return "Invalid date format. Use dd-MM-yyyy";
     }
+
     return null;
   }
 

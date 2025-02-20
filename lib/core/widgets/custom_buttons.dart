@@ -12,12 +12,15 @@ class CustomButtons {
     required Function onClick,
     Color? customDarkColor,
     Color? customLightColor,
+    bool loading = false,
   }) {
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
 
     return GestureDetector(
       onTap: () {
-        onClick();
+        if (!loading) {
+          onClick();
+        }
       },
       child: Container(
         width: 100.w,
@@ -30,19 +33,37 @@ class CustomButtons {
         ),
         decoration: BoxDecoration(
           color: isDarkMode
-              ? (customDarkColor ?? AppColors.darkGreyColor)
-              : (customLightColor ?? AppColors.lightGreenColor),
+              ? loading
+                  ? (AppColors.darkGreyColor)
+                  : (customDarkColor ?? AppColors.darkGreenColor)
+              : loading
+                  ? (AppColors.darkGreyColor)
+                  : (customLightColor ?? AppColors.lightGreenColor),
           borderRadius: BorderRadius.circular(2.5.w),
         ),
         child: Center(
-          child: Text(
-            buttonText,
-            style: TextStyle(
-              color: isDarkMode ? AppColors.lightText : AppColors.darkText,
-              fontSize: 15.sp,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: loading
+              ? Text(
+                  "Please wait..",
+                  style: TextStyle(
+                    color: isDarkMode
+                        ? AppColors.lightText
+                        : loading
+                            ? AppColors.lightGreyColor
+                            : AppColors.darkText,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              : Text(
+                  buttonText,
+                  style: TextStyle(
+                    color:
+                        isDarkMode ? AppColors.lightText : AppColors.darkText,
+                    fontSize: 15.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
         ),
       ),
     );

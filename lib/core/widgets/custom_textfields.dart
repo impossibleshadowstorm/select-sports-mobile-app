@@ -13,7 +13,9 @@ class CustomTextFields {
     TextInputType keyboardType = TextInputType.text,
     bool obscureText = false,
     int maxLines = 1,
+    bool enabled = true,
     required WidgetRef ref,
+    Function()? onClick,
   }) {
     FocusNode fieldFocus = FocusNode();
     bool hasError = false;
@@ -24,58 +26,64 @@ class CustomTextFields {
         setState(() {});
       });
 
-      return TextFormField(
-        focusNode: fieldFocus,
-        controller: controller,
-        obscureText: obscureText,
-        keyboardType: keyboardType,
-        // validator: validator,
-        validator: (value) {
-          final result = validator?.call(value);
-          setState(() {
-            hasError = result != null;
-          });
-          return result;
-        },
-        maxLines: maxLines,
-        cursorColor: isDarkMode
-            ? AppColors.inputFilledBackground
-            : AppColors.darkGreenColor,
-        style: TextStyle(
-          color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
-        ),
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: TextStyle(
-            color: isDarkMode
-                ? AppColors.mediumGreyColor
+      return GestureDetector(
+        onTap: onClick,
+        child: AbsorbPointer(
+          absorbing: onClick != null,
+          child: TextFormField(
+            focusNode: fieldFocus,
+            controller: controller,
+            obscureText: obscureText,
+            keyboardType: keyboardType,
+            enabled: enabled,
+            validator: (value) {
+              final result = validator?.call(value);
+              setState(() {
+                hasError = result != null;
+              });
+              return result;
+            },
+            maxLines: maxLines,
+            cursorColor: isDarkMode
+                ? AppColors.inputFilledBackground
                 : AppColors.darkGreenColor,
-          ),
-          labelText: labelText,
-          labelStyle: TextStyle(
-            color: hasError
-                ? Colors.red
-                : isDarkMode
-                ? fieldFocus.hasFocus
-                    ? AppColors.lightGreenColor
-                    : AppColors.lightGreyColor
-                : AppColors.darkGreenColor,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: isDarkMode
-                  ? AppColors.lightGreenColor
-                  : AppColors.darkGreenColor,
+            style: TextStyle(
+              color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+            ),
+            decoration: InputDecoration(
+              hintText: hintText,
+              hintStyle: TextStyle(
+                color: isDarkMode
+                    ? AppColors.mediumGreyColor
+                    : AppColors.darkGreenColor,
+              ),
+              labelText: labelText,
+              labelStyle: TextStyle(
+                color: hasError
+                    ? Colors.red
+                    : isDarkMode
+                    ? fieldFocus.hasFocus
+                        ? AppColors.lightGreenColor
+                        : AppColors.lightGreyColor
+                    : AppColors.darkGreenColor,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: isDarkMode
+                      ? AppColors.lightGreenColor
+                      : AppColors.darkGreenColor,
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: isDarkMode
+                      ? AppColors.mediumGreyColor
+                      : AppColors.darkGreenColor,
+                ),
+              ),
+              border: OutlineInputBorder(),
             ),
           ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: isDarkMode
-                  ? AppColors.mediumGreyColor
-                  : AppColors.darkGreenColor,
-            ),
-          ),
-          border: OutlineInputBorder(),
         ),
       );
     });

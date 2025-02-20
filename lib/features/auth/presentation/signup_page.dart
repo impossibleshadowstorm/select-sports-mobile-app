@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
+import 'package:select_sports/core/widgets/common_dropdowns.dart';
 import 'package:select_sports/core/widgets/custom_buttons.dart';
 import 'package:select_sports/core/widgets/custom_snackbar.dart';
 import 'package:select_sports/core/widgets/custom_textfields.dart';
@@ -25,6 +27,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     final authController = ref.read(authControllerProvider.notifier);
     final authState = ref.watch(authControllerProvider);
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
+
+    final themeNotifier = ref.read(themeProvider.notifier);
 
     return Scaffold(
       body: SizedBox(
@@ -156,17 +160,33 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       ),
                       SizedBox(height: 5.w),
                       CustomTextFields.outlined(
-                        controller: authController.ageController,
-                        hintText: "xx",
-                        labelText: "Age",
-                        keyboardType: TextInputType.number,
-                        validator: Validators.validateAge,
+                        controller: authController.dobController,
+                        hintText: "24-02-2024",
+                        labelText: "DOB",
+                        keyboardType: TextInputType.datetime,
+                        validator: Validators.validateDob,
                         ref: ref,
+                        enabled: false,
+                        onClick: () {
+                          authController.openDobPicker();
+                          authController.selectDate(context);
+                        },
+                      ),
+                      SizedBox(height: 5.w),
+                      CommonDropdown(
+                        items: CommonAppOptions.genders,
+                        selectedValue: authState.gender,
+                        onChanged: (value) {
+                          if (value != null) {
+                            authController.changeGenderSelection(value);
+                          }
+                        },
                       ),
                       SizedBox(height: 5.w),
                       CustomButtons.fullWidthFilledButton(
                         ref: ref,
                         buttonText: "Sign up",
+                        loading: authState.isSignUpProcessRunning,
                         onClick: () {
                           _submitForm();
                         },
@@ -175,18 +195,25 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Have an account? ",
-                            textAlign: TextAlign.center,
-                            style: AppTextStyles.body.copyWith(
-                              color: isDarkMode
-                                  ? AppColors.lightText
-                                  : AppColors.darkText,
+                          InkWell(
+                            onTap: () {
+                              themeNotifier.toggleTheme(context);
+                            },
+                            child: Text(
+                              "Have an account? ",
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.body.copyWith(
+                                color: isDarkMode
+                                    ? AppColors.lightText
+                                    : AppColors.darkText,
+                              ),
                             ),
                           ),
                           InkWell(
-                            overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                            overlayColor:
+                                WidgetStatePropertyAll(Colors.transparent),
                             onTap: () {
+                              authController.resetLoginForm();
                               Navigator.pushNamed(context, '/login');
                             },
                             child: Text(
@@ -221,12 +248,16 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   }
 
   Future<void> _signup() async {
-    final result = await ref.read(authControllerProvider.notifier).signup();
+    final authController = ref.read(authControllerProvider.notifier);
+    final result = await authController.signup();
 
     if (mounted) {
       if (result['success']) {
+        authController.resetSignupForm();
+
         CustomSnackBar.showSuccess(
             "${result['message']}. Please login using credentials.");
+
         Navigator.pushNamed(context, '/login');
       } else {
         CustomSnackBar.showError(result['message']);
