@@ -1,10 +1,24 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/models/user_model.dart';
 
 import '../data/profile_repository.dart';
 
 class ProfileController extends StateNotifier<ProfileState> {
   final ProfileRepository profileRepository;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController roleController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
+  TextEditingController streetController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController postalCodeController = TextEditingController();
+  TextEditingController nearbyController = TextEditingController();
 
   ProfileController(this.profileRepository)
       : super(
@@ -21,10 +35,43 @@ class ProfileController extends StateNotifier<ProfileState> {
             preferredPositionOptions: [],
             experienceLevelOptions: [],
             preferredFootOptions: [],
+            gender: CommonAppOptions.genders[0],
           ),
         ) {
     fetchSportsProfile();
     fetchProfileOptions();
+  }
+
+    void openDobPicker() {
+    state = state.copyWith(isDobPickerOpen: true);
+  }
+
+  void closeDobPicker() {
+    state = state.copyWith(isDobPickerOpen: false);
+  }
+
+  Future<void> selectDate(BuildContext context) async {
+    DateTime now = DateTime.now();
+    DateTime earliestDate =
+        now.subtract(const Duration(days: 65 * 365)); // 65 years ago
+    DateTime latestDate =
+        now.subtract(const Duration(days: 15 * 365)); // 15 years ago
+
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: latestDate,
+      firstDate: earliestDate,
+      lastDate: latestDate,
+    );
+
+    if (pickedDate != null) {
+      dobController.text = DateFormat("dd-MM-yyyy").format(pickedDate);
+      closeDobPicker();
+    }
+  }
+
+  void changeGenderSelection(String gender) {
+    state = state.copyWith(gender: gender);
   }
 
   // Fetch profile data
@@ -46,7 +93,7 @@ class ProfileController extends StateNotifier<ProfileState> {
   }
 
   Future<void> fetchUserProfile() async {
-    state = state.copyWith(isLoading: true, isProfileLoading: true);
+    state = state.copyWith(isLoading: false, isProfileLoading: false);
 
     final user =
         await profileRepository.getProfile(); // Fetch user profile data
@@ -90,6 +137,24 @@ class ProfileController extends StateNotifier<ProfileState> {
     state = state.copyWith(preferredFoot: newFoot);
   }
 
+  Future<Map<String, dynamic>> updateProfile() async {
+    try {
+      state = state.copyWith(isUpdateProcessRunning: true);
+
+      final response = await profileRepository.updateProfile(
+        nameController.text.trim(),
+        phoneController.text.trim(),
+        dobController.text.trim(),
+        roleController.text.trim(),
+        state.gender,
+      );
+
+      return response;
+    } finally {
+      state = state.copyWith(isUpdateProcessRunning: false);
+    }
+  }
+
   // Available options
   static const List<String> preferredPositions = [
     'GOALKEEPER',
@@ -109,6 +174,9 @@ class ProfileState {
   final bool isEditing;
   final bool isLoading;
   final bool isProfileLoading;
+  final bool isDobPickerOpen;
+  final bool isUpdateProcessRunning;
+  final String gender;
   final String preferredPosition;
   final String experienceLevel;
   final String preferredFoot;
@@ -125,6 +193,9 @@ class ProfileState {
     this.isEditing = false,
     this.isLoading = false,
     this.isProfileLoading = false,
+    this.isDobPickerOpen = false,
+    this.isUpdateProcessRunning = false,
+    required this.gender,
     required this.preferredPosition,
     required this.experienceLevel,
     required this.preferredFoot,
@@ -153,6 +224,9 @@ class ProfileState {
     List<String>? preferredFootOptions,
     List<String>? experienceLevelOptions,
     User? userDetail,
+    bool? isUpdateProcessRunning,
+    bool? isDobPickerOpen,
+    String? gender,
   }) {
     return ProfileState(
       isEditing: isEditing ?? this.isEditing,
@@ -171,6 +245,9 @@ class ProfileState {
       experienceLevelOptions:
           experienceLevelOptions ?? this.experienceLevelOptions,
       userDetail: userDetail ?? this.userDetail,
+      gender: gender ?? this.gender,
+      isUpdateProcessRunning: isUpdateProcessRunning ?? this.isUpdateProcessRunning,
+      isDobPickerOpen: isDobPickerOpen ?? this.isDobPickerOpen,
     );
   }
 }

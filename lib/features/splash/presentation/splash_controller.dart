@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:select_sports/features/auth/presentation/login_page.dart';
 import 'package:select_sports/features/main/presentation/main_screen.dart';
+import 'package:select_sports/features/profile/presentation/edit_profile_screen.dart';
 import 'package:select_sports/features/splash/data/splash_repository.dart';
 
 final splashControllerProvider = Provider<SplashController>((ref) {
@@ -41,7 +42,8 @@ class SplashController {
       // Navigate to login screen
       if (context.mounted) {
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          // MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => UpdateProfileScreen()),
           (route) => false,
         );
       }

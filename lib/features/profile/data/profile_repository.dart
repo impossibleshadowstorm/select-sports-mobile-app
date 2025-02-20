@@ -70,6 +70,48 @@ class ProfileRepository {
       return null;
     }
   }
+    Future<Map<String, dynamic>> updateProfile(
+    String name,
+    String phone,
+    String dob,
+    String gender,
+    String role,
+  ) async {
+    try {
+      final response = await apiClient.post(ApiEndpoints.signup, {
+        'name': name,
+        'phone': phone,
+        'dob': dob,
+        'gender': gender,
+        'role':role,
+      });
+
+      final message = response.data['message'] ?? "Unexpected response";
+
+      if (response.statusCode == 201) {
+        return {
+          'success': true,
+          'data': response.data['data'],
+          'message': response.data['message'],
+        };
+      }
+
+      return {'success': false, 'message': message};
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print(e.response?.data["error"]);
+      }
+      // Check if the response contains a valid error message
+      final data = e.response?.data;
+      if (data is Map<String, dynamic> && data.containsKey("message")) {
+        return {'success': false, 'message': data["message"]};
+      }
+
+      return {'success': false, 'message': "An unknown error occurred."};
+    } catch (e) {
+      return {'success': false, 'message': e.toString()};
+    }
+  }
 }
 
 final profileRepositoryProvider = Provider<ProfileRepository>(
