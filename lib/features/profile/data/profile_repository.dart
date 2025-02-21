@@ -54,7 +54,8 @@ class ProfileRepository {
 
   Future<ProfileOptions?> getProfileOptions() async {
     try {
-      final response = await apiClient.authorizedGet(ApiEndpoints.sportsProfileOptions);
+      final response =
+          await apiClient.authorizedGet(ApiEndpoints.sportsProfileOptions);
 
       if (response.statusCode == 200) {
         return ProfileOptions.fromJson(response.data['data']);
@@ -70,20 +71,38 @@ class ProfileRepository {
       return null;
     }
   }
-    Future<Map<String, dynamic>> updateProfile(
+
+  Future<Map<String, dynamic>> updateProfile(
     String name,
     String phone,
     String dob,
     String gender,
-    String role,
+    String street,
+    String city,
+    String nearby,
+    String postalCode,
+    String state,
   ) async {
     try {
-      final response = await apiClient.post(ApiEndpoints.signup, {
+      print(name +
+          phone +
+          dob +
+          gender +
+          nearby +
+          street +
+          city +
+          state +
+          postalCode);
+      final response = await apiClient.patch(ApiEndpoints.userProfile, {
         'name': name,
         'phone': phone,
         'dob': dob,
         'gender': gender,
-        'role':role,
+        'nearby': nearby,
+        'street': street,
+        'city': city,
+        'state': state,
+        'postalCode': postalCode,
       });
 
       final message = response.data['message'] ?? "Unexpected response";

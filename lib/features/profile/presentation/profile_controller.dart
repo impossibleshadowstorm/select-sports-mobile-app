@@ -10,13 +10,10 @@ class ProfileController extends StateNotifier<ProfileState> {
   final ProfileRepository profileRepository;
 
   TextEditingController nameController = TextEditingController();
-  TextEditingController roleController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController dobController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
   TextEditingController streetController = TextEditingController();
   TextEditingController cityController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
   TextEditingController postalCodeController = TextEditingController();
   TextEditingController nearbyController = TextEditingController();
 
@@ -36,13 +33,14 @@ class ProfileController extends StateNotifier<ProfileState> {
             experienceLevelOptions: [],
             preferredFootOptions: [],
             gender: CommonAppOptions.genders[0],
+            state: CommonAppOptions.states[0],
           ),
         ) {
     fetchSportsProfile();
     fetchProfileOptions();
   }
 
-    void openDobPicker() {
+  void openDobPicker() {
     state = state.copyWith(isDobPickerOpen: true);
   }
 
@@ -72,6 +70,10 @@ class ProfileController extends StateNotifier<ProfileState> {
 
   void changeGenderSelection(String gender) {
     state = state.copyWith(gender: gender);
+  }
+
+  void changesStateSelection(String selectedState) {
+    state = state.copyWith(state: selectedState);
   }
 
   // Fetch profile data
@@ -145,8 +147,12 @@ class ProfileController extends StateNotifier<ProfileState> {
         nameController.text.trim(),
         phoneController.text.trim(),
         dobController.text.trim(),
-        roleController.text.trim(),
         state.gender,
+        streetController.text.trim(),
+        cityController.text.trim(),
+        nearbyController.text.trim(),
+        postalCodeController.text.trim(),
+        state.state
       );
 
       return response;
@@ -177,6 +183,7 @@ class ProfileState {
   final bool isDobPickerOpen;
   final bool isUpdateProcessRunning;
   final String gender;
+  final String state;
   final String preferredPosition;
   final String experienceLevel;
   final String preferredFoot;
@@ -196,6 +203,7 @@ class ProfileState {
     this.isDobPickerOpen = false,
     this.isUpdateProcessRunning = false,
     required this.gender,
+    required this.state,
     required this.preferredPosition,
     required this.experienceLevel,
     required this.preferredFoot,
@@ -227,6 +235,7 @@ class ProfileState {
     bool? isUpdateProcessRunning,
     bool? isDobPickerOpen,
     String? gender,
+    String? state,
   }) {
     return ProfileState(
       isEditing: isEditing ?? this.isEditing,
@@ -246,8 +255,10 @@ class ProfileState {
           experienceLevelOptions ?? this.experienceLevelOptions,
       userDetail: userDetail ?? this.userDetail,
       gender: gender ?? this.gender,
-      isUpdateProcessRunning: isUpdateProcessRunning ?? this.isUpdateProcessRunning,
+      isUpdateProcessRunning:
+          isUpdateProcessRunning ?? this.isUpdateProcessRunning,
       isDobPickerOpen: isDobPickerOpen ?? this.isDobPickerOpen,
+      state: state ?? this.state,
     );
   }
 }

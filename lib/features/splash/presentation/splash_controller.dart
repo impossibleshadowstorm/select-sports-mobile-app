@@ -42,8 +42,8 @@ class SplashController {
       // Navigate to login screen
       if (context.mounted) {
         Navigator.of(context).pushAndRemoveUntil(
-          // MaterialPageRoute(builder: (context) => LoginScreen()),
-          MaterialPageRoute(builder: (context) => UpdateProfileScreen()),
+          MaterialPageRoute(builder: (context) => LoginScreen()),
+          // MaterialPageRoute(builder: (context) => UpdateProfileScreen()),
           (route) => false,
         );
       }

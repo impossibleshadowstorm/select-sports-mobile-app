@@ -21,6 +21,10 @@ class ApiClient {
     return await _dio.post(endpoint, data: data);
   }
 
+  Future<Response> patch(String endpoint, dynamic data) async {
+    return await _dio.patch(endpoint, data: data);
+  }
+
   Future<Response> authorizedGet(String endpoint) async {
     return await _dio.get(
       endpoint,

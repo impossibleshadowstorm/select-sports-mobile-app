@@ -234,7 +234,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = ref.watch(themeProvider) == ThemeMode.light;
+    final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
     final profileState = ref.watch(profileControllerProvider);
     final profileNotifier = ref.read(profileControllerProvider.notifier);
 
@@ -360,6 +360,49 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
                     onChanged: (value) {
                       if (value != null) {
                         profileNotifier.changeGenderSelection(value);
+                      }
+                    },
+                  ),
+                  SizedBox(height: 5.w),
+                  CustomTextFields.outlined(
+                    controller: profileNotifier.nearbyController,
+                    hintText: "Near BOB Branch",
+                    labelText: "Near By Places",
+                    validator: Validators.validateName,
+                    ref: ref,
+                  ),
+                  SizedBox(height: 5.w),
+                  CustomTextFields.outlined(
+                    controller: profileNotifier.streetController,
+                    hintText: "Madhya Marg",
+                    labelText: "Street",
+                    validator: Validators.validateName,
+                    ref: ref,
+                  ),
+                  SizedBox(height: 5.w),
+                  CustomTextFields.outlined(
+                    controller: profileNotifier.cityController,
+                    hintText: "Chandigarh",
+                    labelText: "City",
+                    validator: Validators.validateName,
+                    ref: ref,
+                  ),
+                  SizedBox(height: 5.w),
+                  CustomTextFields.outlined(
+                    controller: profileNotifier.postalCodeController,
+                    hintText: "140901",
+                    labelText: "PIN Code",
+                    keyboardType: TextInputType.number,
+                    validator: Validators.validatePostalCode,
+                    ref: ref,
+                  ),
+                  SizedBox(height: 5.w),
+                  CommonDropdown(
+                    items: CommonAppOptions.states,
+                    selectedValue: profileState.state,
+                    onChanged: (value) {
+                      if (value != null) {
+                        profileNotifier.changesStateSelection(value);
                       }
                     },
                   ),
