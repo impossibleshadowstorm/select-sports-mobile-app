@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:select_sports/core/models/slot_model.dart';
 import 'package:select_sports/core/models/venue_model.dart';
 import 'package:select_sports/features/home/data/home_repository.dart';
+import 'package:select_sports/utils/app_logger.dart';
 
 // A StateNotifier to manage currentImage and previousImage states
 class HomeController extends StateNotifier<HomeControllerState> {
@@ -27,13 +28,14 @@ class HomeController extends StateNotifier<HomeControllerState> {
   Future<void> fetchSlotDetail(String id) async {
     try {
       final slot = await homeRepository.getSlotDetail(id);
-      print(slot);
       state = HomeControllerState(
         currentImage: state.currentImage,
         previousImage: state.previousImage,
         slotDetail: slot,
       );
-    } catch (err) {}
+    } catch (err, stack) {
+      logger.e("Home Controller Error [Slot Detail]", error: err, stackTrace: stack);
+    }
   }
 
   // Getter to determine if swipe direction is to the right

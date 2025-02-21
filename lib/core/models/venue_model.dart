@@ -1,6 +1,4 @@
-import 'package:flutter_logs/flutter_logs.dart';
 import 'package:select_sports/core/models/address_model.dart';
-import 'package:select_sports/core/models/booking_model.dart';
 import 'package:select_sports/utils/app_logger.dart';
 
 class Venue {

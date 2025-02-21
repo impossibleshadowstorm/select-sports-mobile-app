@@ -20,17 +20,20 @@ class HomeRepository {
 
       if (response.statusCode == 200) {
         List<dynamic> venuesData = response.data['data'];
-        return venuesData.map((venue) => Venue.fromJson(venue)).toList();
+        try {
+          return venuesData.map((venue) => Venue.fromJson(venue)).toList();
+        } catch (e) {
+          logger.e("Home Repository Error [Get Venues]", error: e);
+        }
       }
 
       return [];
-    } on DioException catch (e) {
-      if (kDebugMode) {
-        print("Home Repository Error:");
-        print(e);
-      }
+    } on DioException catch (e, s) {
+      logger.e("Home Repository Dio Exception [Get Venues]",
+          error: e, stackTrace: s);
       return [];
-    } catch (e) {
+    } catch (e, s) {
+      logger.e("Home Repository Error [Get Venues]", error: e, stackTrace: s);
       return [];
     }
   }
@@ -41,17 +44,21 @@ class HomeRepository {
 
       if (response.statusCode == 200) {
         var venueData = response.data['data'];
-        return Venue.fromJson(venueData);
+        try {
+          return Venue.fromJson(venueData);
+        } catch (e) {
+          logger.e("Home Repository Error [Get Venue Detail]", error: e);
+        }
       }
 
       return null;
-    } on DioException catch (e) {
-      if (kDebugMode) {
-        print("Home Repository Error [Get Venue]:");
-        print(e);
-      }
+    } on DioException catch (e, s) {
+      logger.e("Home Repository Dio Exception [Get Venue Detail]",
+          error: e, stackTrace: s);
       return null;
-    } catch (e) {
+    } catch (e, s) {
+      logger.e("Home Repository Error [Get Venue Detail]",
+          error: e, stackTrace: s);
       return null;
     }
   }
@@ -66,15 +73,18 @@ class HomeRepository {
         try {
           return Slot.fromJson(slotData);
         } catch (e) {
-          logger.e("Home Repository Error [Get Slot]", error: e);
+          logger.e("Home Repository Error [Get Slot Detail]", error: e);
         }
       }
 
       return null;
     } on DioException catch (e, s) {
-      logger.e("Home Repository Error [Get Slot]", error: e, stackTrace: s);
+      logger.e("Home Repository DioException [Get Slot Detail]",
+          error: e, stackTrace: s);
       return null;
-    } catch (e) {
+    } catch (e, s) {
+      logger.e("Home Repository Error [Get Slot Detail]",
+          error: e, stackTrace: s);
       return null;
     }
   }
