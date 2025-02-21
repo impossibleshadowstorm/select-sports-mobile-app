@@ -29,6 +29,18 @@ class Validators {
     return null;
   }
 
+  static String? validatePostalCode(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "Postal code is required";
+    }
+    final postalCodeRegExp = RegExp(r'^\d{6}$');
+    if (!postalCodeRegExp.hasMatch(value)) {
+      return "Please enter a valid 6-digit postal code";
+    }
+    return null;
+  }
+
+
   static String? validateConfirmPassword(
       String? confirmPassword, String? newPassword) {
     if (confirmPassword == null || confirmPassword.trim().isEmpty) {
