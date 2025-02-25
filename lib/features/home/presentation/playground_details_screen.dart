@@ -7,6 +7,7 @@ import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/models/address_model.dart';
 import 'package:select_sports/core/models/venue_model.dart';
 import 'package:select_sports/core/network/shared_preferences_helper.dart';
+import 'package:select_sports/core/widgets/common_bottom_sheet.dart';
 import 'package:select_sports/core/widgets/custom_buttons.dart';
 import 'package:select_sports/core/widgets/custom_snackbar.dart';
 import 'package:select_sports/providers/theme_provider.dart';
@@ -76,7 +77,8 @@ class _PlaygroundDetailsScreenState
             final List<String> venueAmenities = playgroundData.amenities;
             final bool isSlotBookedByMe = homeState.slotDetail != null &&
                 homeState.slotDetail!.bookings.any((booking) =>
-                booking.userId == SharedPreferencesHelper.get(SharedPreferencesKeys.userId));
+                    booking.userId ==
+                    SharedPreferencesHelper.get(SharedPreferencesKeys.userId));
 
             return Column(
               children: [
@@ -212,7 +214,9 @@ class _PlaygroundDetailsScreenState
                       ref: ref,
                       onClick: () {
                         // If User already booked this slot then it must not perform any action
-                        if (!isSlotBookedByMe) {}
+                        if (!isSlotBookedByMe) {
+                          _modalBottomSheet(isDarkMode);
+                        }
                       },
                       customDarkColor: AppColors.darkGreenColor,
                     ),
@@ -221,6 +225,118 @@ class _PlaygroundDetailsScreenState
               ],
             );
           },
+        ),
+      ),
+    );
+  }
+
+  void _modalBottomSheet(bool isDarkMode) {
+    CommonBottomSheets.customDraggableBottomSheet(
+      context,
+      (controller) => Container(
+        height: 75.h,
+        width: 100.w,
+        padding: EdgeInsets.symmetric(horizontal: 5.w),
+        child: SingleChildScrollView(
+          controller: controller,
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 5.w),
+                width: 60.0,
+                height: 6.0,
+                decoration: BoxDecoration(
+                  color: AppColors.darkGreenColor,
+                  borderRadius: BorderRadius.circular(24.0),
+                ),
+              ),
+              SizedBox(height: 5.w),
+              Text(
+                "In-App Payment",
+                style: AppTextStyles.subheading.copyWith(
+                  color: isDarkMode
+                      ? AppColors.lightGreenColor
+                      : AppColors.darkGreenColor,
+                ),
+              ),
+              Divider(
+                color: isDarkMode
+                    ? AppColors.darkGreyColor
+                    : AppColors.lightestGreyColorV3,
+              ),
+              SizedBox(height: 5.w),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 0.5.w),
+                decoration: BoxDecoration(
+                  color: AppColors.lightText,
+                  borderRadius: BorderRadius.circular(5.w),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 2.5.w),
+                        decoration: BoxDecoration(
+                          color: AppColors.darkGreenColor,
+                          borderRadius: BorderRadius.circular(5.w),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Wallet",
+                            style: AppTextStyles.body.copyWith(
+                              color: isDarkMode
+                                  ? AppColors.darkGreyColor
+                                  : AppColors.lightText,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 2.5.w),
+                        decoration: BoxDecoration(
+                          // color: AppColors.darkGreenColor,
+                          borderRadius: BorderRadius.circular(5.w),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Card",
+                            style: AppTextStyles.body.copyWith(
+                              color: isDarkMode
+                                  ? AppColors.darkGreyColor
+                                  : AppColors.darkText,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 2.5.w),
+                        decoration: BoxDecoration(
+                          // color: AppColors.darkGreenColor,
+                          borderRadius: BorderRadius.circular(5.w),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "UPI",
+                            style: AppTextStyles.body.copyWith(
+                              color: isDarkMode
+                                  ? AppColors.darkGreyColor
+                                  : AppColors.darkText,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -34,6 +34,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoogleFonts.config.allowRuntimeFetching = false;
   await SharedPreferencesHelper.init();
+
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -60,12 +61,18 @@ class MyApp extends ConsumerWidget {
             scaffoldBackgroundColor: AppColors.lightBackground,
             textTheme:
                 GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+            bottomSheetTheme: BottomSheetThemeData(
+              dragHandleColor: Colors.pink,
+            ),
           ),
           darkTheme: ThemeData.dark().copyWith(
             primaryColor: AppColors.darkGreenColor,
             scaffoldBackgroundColor: AppColors.darkScaffoldBackground,
             textTheme:
                 GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+            bottomSheetTheme: BottomSheetThemeData(
+              dragHandleColor: Colors.pink,
+            ),
           ),
           themeMode: themeMode,
           initialRoute: '/',

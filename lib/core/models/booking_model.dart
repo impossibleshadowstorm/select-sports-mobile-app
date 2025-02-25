@@ -18,14 +18,18 @@ class Booking {
   });
 
   factory Booking.fromJson(Map<String, dynamic> json) {
-    return Booking(
-      id: json['id'],
-      status: json['status'],
-      cancellationFee: json['cancellationFee'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
-      slotId: json['slotId'],
-      userId: json['userId'],
-    );
+    try {
+      return Booking(
+        id: json['id'],
+        status: json['status'],
+        cancellationFee: json['cancellationFee'],
+        createdAt: json['createdAt'],
+        updatedAt: json['updatedAt'],
+        slotId: json['slotId'],
+        userId: json['userId'],
+      );
+    } catch(e) {
+      return throw Exception("Booking parsing failed");
+    }
   }
 }

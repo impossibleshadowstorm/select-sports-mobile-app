@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:select_sports/core/models/slot_model.dart';
 import 'package:select_sports/core/network/api_client.dart';
 import 'package:select_sports/core/constants/api_endpoints.dart';
 import 'package:select_sports/features/profile/data/models/profile_options_model.dart';
+import 'package:select_sports/utils/app_logger.dart';
 
 class AvailableSlotsRepository {
   final ApiClient apiClient;
@@ -13,22 +13,26 @@ class AvailableSlotsRepository {
 
   Future<List<Slot>> getAvailableSlots() async {
     try {
-      final response =
-          await apiClient.get(ApiEndpoints.availableSlots);
+      final response = await apiClient.get(ApiEndpoints.availableSlots);
 
       if (response.statusCode == 200) {
         List<dynamic> slotsData = response.data['data'];
-        return slotsData.map((slot) => Slot.fromJson(slot)).toList();
+        try {
+          return slotsData.map((slot) => Slot.fromJson(slot)).toList();
+        } catch (err, stack) {
+          logger.e("Available Slot Repository Dio Exception [Available slots]",
+              error: err, stackTrace: stack);
+        }
       }
 
       return [];
-    } on DioException catch (e) {
-      if (kDebugMode) {
-        print("Available Slots Repository Error:");
-        print(e);
-      }
+    } on DioException catch (err, stack) {
+      logger.e("Available Slot Repository Dio Exception [Available slots]",
+          error: err, stackTrace: stack);
       return [];
-    } catch (e) {
+    } catch (err, stack) {
+      logger.e("Available Slot Repository Error [Available slots]",
+          error: err, stackTrace: stack);
       return [];
     }
   }
@@ -43,12 +47,13 @@ class AvailableSlotsRepository {
       }
 
       return null;
-    } on DioException catch (e) {
-      if (kDebugMode) {
-        print(e.response?.data["error"]);
-      }
+    } on DioException catch (err, stack) {
+      logger.e("Available Slot Repository Dio Exception [Profile Options]",
+          error: err, stackTrace: stack);
       return null;
-    } catch (e) {
+    } catch (err, stack) {
+      logger.e("Available Slot Repository Error [Profile Options]",
+          error: err, stackTrace: stack);
       return null;
     }
   }

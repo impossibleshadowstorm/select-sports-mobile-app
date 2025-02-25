@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
 import 'package:select_sports/core/models/slot_model.dart';
 import 'package:select_sports/core/models/venue_model.dart';
 import 'package:select_sports/core/network/api_client.dart';
 import 'package:select_sports/core/constants/api_endpoints.dart';
 import 'package:select_sports/features/profile/data/models/profile_options_model.dart';
+import 'package:select_sports/utils/app_logger.dart';
 
 class HomeRepository {
   final ApiClient apiClient;
@@ -18,17 +20,20 @@ class HomeRepository {
 
       if (response.statusCode == 200) {
         List<dynamic> venuesData = response.data['data'];
-        return venuesData.map((venue) => Venue.fromJson(venue)).toList();
+        try {
+          return venuesData.map((venue) => Venue.fromJson(venue)).toList();
+        } catch (e) {
+          logger.e("Home Repository Error [Get Venues]", error: e);
+        }
       }
 
       return [];
-    } on DioException catch (e) {
-      if (kDebugMode) {
-        print("Home Repository Error:");
-        print(e);
-      }
+    } on DioException catch (e, s) {
+      logger.e("Home Repository Dio Exception [Get Venues]",
+          error: e, stackTrace: s);
       return [];
-    } catch (e) {
+    } catch (e, s) {
+      logger.e("Home Repository Error [Get Venues]", error: e, stackTrace: s);
       return [];
     }
   }
@@ -39,38 +44,47 @@ class HomeRepository {
 
       if (response.statusCode == 200) {
         var venueData = response.data['data'];
-        return Venue.fromJson(venueData);
+        try {
+          return Venue.fromJson(venueData);
+        } catch (e) {
+          logger.e("Home Repository Error [Get Venue Detail]", error: e);
+        }
       }
 
       return null;
-    } on DioException catch (e) {
-      if (kDebugMode) {
-        print("Home Repository Error [Get Venue]:");
-        print(e);
-      }
+    } on DioException catch (e, s) {
+      logger.e("Home Repository Dio Exception [Get Venue Detail]",
+          error: e, stackTrace: s);
       return null;
-    } catch (e) {
+    } catch (e, s) {
+      logger.e("Home Repository Error [Get Venue Detail]",
+          error: e, stackTrace: s);
       return null;
     }
   }
 
   Future<Slot?> getSlotDetail(String id) async {
     try {
-      final response = await apiClient.get("${ApiEndpoints.availableSlots}/$id");
+      final response =
+          await apiClient.get("${ApiEndpoints.availableSlots}/$id");
 
       if (response.statusCode == 200) {
         var slotData = response.data['data'];
-        return Slot.fromJson(slotData);
+        try {
+          return Slot.fromJson(slotData);
+        } catch (e) {
+          logger.e("Home Repository Error [Get Slot Detail]", error: e);
+        }
       }
 
       return null;
-    } on DioException catch (e) {
-      if (kDebugMode) {
-        print("Home Repository Error [Get Slot]:");
-        print(e);
-      }
+    } on DioException catch (e, s) {
+      logger.e("Home Repository DioException [Get Slot Detail]",
+          error: e, stackTrace: s);
       return null;
-    } catch (e) {
+    } catch (e, s) {
+      logger.e("Home Repository Error [Get Slot Detail]",
+          error: e, stackTrace: s);
       return null;
     }
   }
