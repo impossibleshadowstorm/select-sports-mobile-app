@@ -54,7 +54,8 @@ class ProfileRepository {
 
   Future<ProfileOptions?> getProfileOptions() async {
     try {
-      final response = await apiClient.authorizedGet(ApiEndpoints.sportsProfileOptions);
+      final response =
+          await apiClient.authorizedGet(ApiEndpoints.sportsProfileOptions);
 
       if (response.statusCode == 200) {
         return ProfileOptions.fromJson(response.data['data']);
@@ -68,6 +69,66 @@ class ProfileRepository {
       return null;
     } catch (e) {
       return null;
+    }
+  }
+
+  Future<Map<String, dynamic>> updateProfile(
+    String name,
+    String phone,
+    String dob,
+    String gender,
+    String street,
+    String city,
+    String nearby,
+    String postalCode,
+    String state,
+  ) async {
+    try {
+      print(name +
+          phone +
+          dob +
+          gender +
+          nearby +
+          street +
+          city +
+          state +
+          postalCode);
+      final response = await apiClient.patch(ApiEndpoints.userProfile, {
+        'name': name,
+        'phone': phone,
+        'dob': dob,
+        'gender': gender,
+        'nearby': nearby,
+        'street': street,
+        'city': city,
+        'state': state,
+        'postalCode': postalCode,
+      });
+
+      final message = response.data['message'] ?? "Unexpected response";
+
+      if (response.statusCode == 201) {
+        return {
+          'success': true,
+          'data': response.data['data'],
+          'message': response.data['message'],
+        };
+      }
+
+      return {'success': false, 'message': message};
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        print(e.response?.data["error"]);
+      }
+      // Check if the response contains a valid error message
+      final data = e.response?.data;
+      if (data is Map<String, dynamic> && data.containsKey("message")) {
+        return {'success': false, 'message': data["message"]};
+      }
+
+      return {'success': false, 'message': "An unknown error occurred."};
+    } catch (e) {
+      return {'success': false, 'message': e.toString()};
     }
   }
 }

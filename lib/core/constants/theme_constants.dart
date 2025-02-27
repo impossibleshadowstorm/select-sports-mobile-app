@@ -91,4 +91,12 @@ class CommonAppOptions {
     'MALE',
     'FEMALE',
   ];
+
+  //TODO: FIx to get the List from Backend i.e DB enum 
+  static const List<String> states = [
+    'DELHI',
+    'HARYANA',
+    'UTTAR PRADESH'
+  ];
+
 }
