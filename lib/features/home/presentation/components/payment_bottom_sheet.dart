@@ -4,6 +4,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/widgets/common_bottom_sheet.dart';
 import 'package:select_sports/features/home/presentation/home_controller.dart';
+import 'package:gradient_slide_to_act/gradient_slide_to_act.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 void paymentBottomSheet(
   BuildContext context,
@@ -63,6 +65,42 @@ void paymentBottomSheet(
                   ],
                 ),
               ),
+              SizedBox(height: 4.h),
+              GradientSlideToAct(
+                dragableIcon: Icons.credit_card,
+                submittedIcon: Icons.done,
+                text: 'Pay using Card / UPI / Net Banking',
+                width: 400,
+                dragableIconBackgroundColor: Colors.greenAccent,
+                textStyle: TextStyle(color: Colors.white, fontSize: 15),
+                backgroundColor: Colors.grey,
+                onSubmit: () {},
+                gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0Xff11998E),
+                      Color(0Xff38EF7D),
+                    ]),
+              ),
+              SizedBox(height: 4.h),
+              GradientSlideToAct(
+                dragableIcon: Icons.wallet,
+                text: 'Pay using Wallet Balance',
+                width: 400,
+                dragableIconBackgroundColor: Colors.greenAccent,
+                submittedIcon: Icons.done,
+                textStyle: TextStyle(color: Colors.white, fontSize: 15),
+                backgroundColor: Colors.grey,
+                onSubmit: () {},
+                gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0Xff11998E),
+                      Color(0Xff38EF7D),
+                    ]),
+              )
             ],
           ),
         ),
