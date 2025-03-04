@@ -11,10 +11,14 @@ class HomeController extends StateNotifier<HomeControllerState> {
   HomeController(this.homeRepository) : super(HomeControllerState());
 
   void updateCurrentImage(int index) {
-    state = HomeControllerState(
+    state = state.copyWith(
       currentImage: index,
       previousImage: state.currentImage,
     );
+  }
+
+  void updatePaymentMode(int index) {
+    state = state.copyWith(selectedPaymentMode: index);
   }
 
   Future<List<Venue>> fetchVenues() async {
@@ -28,9 +32,7 @@ class HomeController extends StateNotifier<HomeControllerState> {
   Future<void> fetchSlotDetail(String id) async {
     try {
       final slot = await homeRepository.getSlotDetail(id);
-      state = HomeControllerState(
-        currentImage: state.currentImage,
-        previousImage: state.previousImage,
+      state = state.copyWith(
         slotDetail: slot,
       );
     } catch (err, stack) {
@@ -47,12 +49,29 @@ class HomeControllerState {
   final int currentImage;
   final int previousImage;
   final Slot? slotDetail;
+  final int selectedPaymentMode;
 
   HomeControllerState({
     this.currentImage = 0,
     this.previousImage = 0,
+    this.selectedPaymentMode = 0,
     this.slotDetail,
   });
+
+  // CopyWith method for immutability
+  HomeControllerState copyWith({
+    int? currentImage,
+    int? previousImage,
+    int? selectedPaymentMode,
+    Slot? slotDetail,
+  }) {
+    return HomeControllerState(
+      currentImage: currentImage ?? this.currentImage,
+      previousImage: previousImage ?? this.previousImage,
+      selectedPaymentMode: selectedPaymentMode ?? this.selectedPaymentMode,
+      slotDetail: slotDetail,
+    );
+  }
 }
 
 final homeControllerProvider =
