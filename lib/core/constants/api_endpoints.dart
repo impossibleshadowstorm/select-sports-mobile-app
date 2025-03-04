@@ -13,4 +13,5 @@ class ApiEndpoints {
   static const String availableSlots = "/slots";
   static const String venues = "/venues";
   static const String sportsProfileOptions = "/user/sports-profile-options";
+  static const String initiatePayment = "/razorpay-transactions/initiate";
 }

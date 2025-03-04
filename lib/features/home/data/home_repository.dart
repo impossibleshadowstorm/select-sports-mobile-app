@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:select_sports/core/models/initiate_razorpay_model.dart';
+import 'package:select_sports/core/models/initiate_sufficient_wallet_model.dart';
 import 'package:select_sports/core/models/slot_model.dart';
 import 'package:select_sports/core/models/venue_model.dart';
 import 'package:select_sports/core/network/api_client.dart';
@@ -84,6 +86,43 @@ class HomeRepository {
       return null;
     } catch (e, s) {
       logger.e("Home Repository Error [Get Slot Detail]",
+          error: e, stackTrace: s);
+      return null;
+    }
+  }
+
+  Future initiatePayment(String slotId, bool useWallet) async {
+    try {
+      final response = await apiClient.authorizedPost(
+        "${ApiEndpoints.initiatePayment}/$slotId",
+        {
+          "useWallet": useWallet,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var bookingData = response.data['data'];
+        try {
+          return InitiateSufficientWalletModel.fromJson(bookingData);
+        } catch (e) {
+          logger.e("Home Repository Error [Initiate Payment]", error: e);
+        }
+      } else if (response.statusCode == 402) {
+        var razorpayData = response.data['data'];
+        try {
+          return InitiateRazorpayModel.fromJson(razorpayData);
+        } catch (e) {
+          logger.e("Home Repository Error [Initiate Payment]", error: e);
+        }
+      }
+
+      return null;
+    } on DioException catch (e, s) {
+      logger.e("Home Repository Dio Exception [Initiate Payment]",
+          error: e, stackTrace: s);
+      return null;
+    } catch (e, s) {
+      logger.e("Home Repository Error [Initiate Payment]",
           error: e, stackTrace: s);
       return null;
     }

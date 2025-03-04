@@ -28,6 +28,9 @@ class HomeController extends StateNotifier<HomeControllerState> {
   Future<Venue?> fetchVenueDetail(String id) async {
     return await homeRepository.getVenueDetail(id);
   }
+  Future initiatePayment(String slotId, bool useWallet) async {
+    return await homeRepository.initiatePayment(slotId, useWallet);
+  }
 
   Future<void> fetchSlotDetail(String id) async {
     try {

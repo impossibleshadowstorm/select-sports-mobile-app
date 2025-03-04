@@ -33,6 +33,7 @@ class ApiClient {
   }
 
   Future<Response> authorizedPost(String endpoint, dynamic data) async {
+    print(endpoint);
     return await _dio.post(
       endpoint,
       data: data,

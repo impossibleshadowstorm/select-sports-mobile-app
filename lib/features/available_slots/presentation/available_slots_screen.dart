@@ -62,7 +62,16 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
                     } else if (snapshot.hasError) {
                       return Center(child: Text("Error fetching slots"));
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return Center(child: Text("No slots available"));
+                      return Center(
+                        child: Text(
+                          "No slots available for now",
+                          style: TextStyle(
+                            color: isDarkMode
+                                ? AppColors.lightText
+                                : AppColors.darkText,
+                          ),
+                        ),
+                      );
                     }
 
                     final slots = snapshot.data!;

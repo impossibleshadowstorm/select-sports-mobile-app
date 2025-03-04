@@ -216,7 +216,7 @@ class _PlaygroundDetailsScreenState
                       onClick: () {
                         // If User already booked this slot then it must not perform any action
                         if (!isSlotBookedByMe) {
-                          paymentBottomSheet(context, isDarkMode);
+                          paymentBottomSheet(context, isDarkMode, homeController, widget.playgroundId);
                         }
                       },
                       customDarkColor: AppColors.darkGreenColor,

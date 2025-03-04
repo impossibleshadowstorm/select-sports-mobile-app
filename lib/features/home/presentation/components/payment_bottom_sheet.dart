@@ -5,11 +5,12 @@ import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/widgets/common_bottom_sheet.dart';
 import 'package:select_sports/features/home/presentation/home_controller.dart';
 import 'package:gradient_slide_to_act/gradient_slide_to_act.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 void paymentBottomSheet(
   BuildContext context,
   bool isDarkMode,
+  HomeController homeController,
+  String slotId,
 ) {
   CommonBottomSheets.customDraggableBottomSheet(
     context,
@@ -46,25 +47,25 @@ void paymentBottomSheet(
                     : AppColors.lightestGreyColorV3,
               ),
               SizedBox(height: 5.w),
-              Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 1.5.w),
-                decoration: BoxDecoration(
-                  color: isDarkMode
-                      ? AppColors.darkGreyColor
-                      : AppColors.lightText,
-                  borderRadius: BorderRadius.circular(2.5.w),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    _buildModeTabs(isDarkMode, ref, 0, "Wallet"),
-                    _buildModeTabs(isDarkMode, ref, 1, "Card"),
-                    _buildModeTabs(isDarkMode, ref, 2, "UPI"),
-                  ],
-                ),
-              ),
+              // Container(
+              //   padding:
+              //       EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 1.5.w),
+              //   decoration: BoxDecoration(
+              //     color: isDarkMode
+              //         ? AppColors.darkGreyColor
+              //         : AppColors.lightText,
+              //     borderRadius: BorderRadius.circular(2.5.w),
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: [
+              //       _buildModeTabs(isDarkMode, ref, 0, "Wallet"),
+              //       _buildModeTabs(isDarkMode, ref, 1, "Card"),
+              //       _buildModeTabs(isDarkMode, ref, 2, "UPI"),
+              //     ],
+              //   ),
+              // ),
               SizedBox(height: 4.h),
               GradientSlideToAct(
                 dragableIcon: Icons.credit_card,
@@ -74,14 +75,18 @@ void paymentBottomSheet(
                 dragableIconBackgroundColor: Colors.greenAccent,
                 textStyle: TextStyle(color: Colors.white, fontSize: 15),
                 backgroundColor: Colors.grey,
-                onSubmit: () {},
+                onSubmit: () async {
+                  var a = await homeController.initiatePayment(slotId, false);
+                  print(a);
+                },
                 gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0Xff11998E),
-                      Color(0Xff38EF7D),
-                    ]),
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0Xff11998E),
+                    Color(0Xff38EF7D),
+                  ],
+                ),
               ),
               SizedBox(height: 4.h),
               GradientSlideToAct(
@@ -94,12 +99,13 @@ void paymentBottomSheet(
                 backgroundColor: Colors.grey,
                 onSubmit: () {},
                 gradient: const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0Xff11998E),
-                      Color(0Xff38EF7D),
-                    ]),
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0Xff11998E),
+                    Color(0Xff38EF7D),
+                  ],
+                ),
               )
             ],
           ),
