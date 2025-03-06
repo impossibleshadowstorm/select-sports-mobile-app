@@ -80,7 +80,8 @@ class _PlaygroundDetailsScreenState
                 homeState.slotDetail!.bookings.any((booking) =>
                     booking.userId ==
                     SharedPreferencesHelper.get(SharedPreferencesKeys.userId));
-
+            // print('Home State Slot');
+            // print(homeState.slotDetail?.id);
             return Column(
               children: [
                 Expanded(
@@ -216,7 +217,8 @@ class _PlaygroundDetailsScreenState
                       onClick: () {
                         // If User already booked this slot then it must not perform any action
                         if (!isSlotBookedByMe) {
-                          paymentBottomSheet(context, isDarkMode, homeController, widget.playgroundId);
+                          paymentBottomSheet(context, isDarkMode,
+                              homeController,homeState.slotDetail!.id);
                         }
                       },
                       customDarkColor: AppColors.darkGreenColor,

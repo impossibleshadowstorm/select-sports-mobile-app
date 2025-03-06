@@ -14,9 +14,16 @@ import 'package:select_sports/features/home/presentation/home_controller.dart';
 import 'package:select_sports/features/home/presentation/playground_details_screen.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 
-
 class RazorpayScreen extends ConsumerStatefulWidget {
-  const RazorpayScreen({super.key});
+  final Map<String, dynamic> razorpayOptions;
+  final bool useWallet;
+  final String slotId;
+
+  const RazorpayScreen(
+      {super.key,
+      required this.razorpayOptions,
+      required this.useWallet,
+      required this.slotId});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _RazorpayScreenState();
@@ -24,59 +31,57 @@ class RazorpayScreen extends ConsumerStatefulWidget {
 
 class _RazorpayScreenState extends ConsumerState<RazorpayScreen> {
   late Razorpay _razorpay;
+  late HomeController _homeController;
 
   @override
   void initState() {
     super.initState();
-     _razorpay = Razorpay();
+    initializePayment();
+  }
+
+  void initializePayment() async{
+    _homeController = ref.read(homeControllerProvider.notifier);
+    _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    openCheckout();
+
+    // Ensures `openCheckout` runs after the first frame is rendered
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   openCheckout();
+    // });
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
-     _razorpay.clear(); 
+    _razorpay.clear();
     super.dispose();
   }
-  
-  void openCheckout() {
-    var options = {
-        "key":"rzp_test_YouRraZorPayKey",
-         "order_id": "order_Q0pfdXdiC0eaiG",
-        "amount": 10000,
-        "name": "SELECT-SPORTS",
-        "description": "Payment for Slot #b9fe83b2-fa0c-430f-8093-8e68a3b87912",
-        "prefill": {
-            "contact": "8923456783",
-            "email": "Saurabh@user.com"
-        },
-        "external": {
-            "wallets": [
-                "paytm"
-            ]
-        }
-    };
 
+  void openCheckout() {
     try {
-      _razorpay.open(options);
+      _razorpay.open(widget.razorpayOptions);
     } catch (e) {
       debugPrint('Error: $e');
     }
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("Payment Successful: ${response.paymentId}")),
     );
 
-    print("Payment Successfull");
-    print(response.data);
-    print(response.orderId);
-    print(response.paymentId);
-    print(response.signature);
-
+    final verifyResponse = await _homeController.verifyPayment(
+      widget.slotId,
+      response.paymentId ?? '',
+      response.orderId ?? '',
+      response.signature ?? '',
+      widget.useWallet,
+    );
+    print(verifyResponse);
+    print(verifyResponse.statusCode);
+    print(verifyResponse.data);
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -92,7 +97,7 @@ class _RazorpayScreenState extends ConsumerState<RazorpayScreen> {
       SnackBar(
           content: Text("External Wallet Selected: ${response.walletName}")),
     );
-        print("Payment in External wallet");
+    print("Payment in External wallet");
     print(response);
   }
 
@@ -105,23 +110,121 @@ class _RazorpayScreenState extends ConsumerState<RazorpayScreen> {
         height: 100.h,
         width: 100.w,
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Top Landing Section
-              SizedBox(height: 10.w),
-              // Box So that the data behind the bottom bar must be visible..
-              SizedBox(height: 5.w),
-                      CustomButtons.fullWidthFilledButton(
-                        ref: ref,
-                        buttonText: "Login",
-                        onClick: () {
-                        },
-                      ),
-            ],
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(height: 10.w),
+                SizedBox(height: 5.w),
+                CustomButtons.fullWidthFilledButton(
+                  ref: ref,
+                  buttonText: "Pay now",
+                  onClick: () {
+                    openCheckout();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-
 }
+
+
+
+
+// class _RazorpayScreenState extends ConsumerState<RazorpayScreen> {
+//   late Razorpay _razorpay;
+//   late HomeController _homeController;
+
+//   @override
+//   void initState() async{
+//     super.initState();
+//     _homeController = ref.read(homeControllerProvider.notifier);
+//     _razorpay = Razorpay();
+//     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+//     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+//     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+//     openCheckout();
+//   }
+
+//   @override
+//   void dispose() {
+//     // TODO: implement dispose
+//     _razorpay.clear();
+//     super.dispose();
+//   }
+
+//   void openCheckout() async{
+//     try {
+//       _razorpay.open(widget.razorpayOptions); // Use passed options
+//     } catch (e) {
+//       debugPrint('Error: $e');
+//     }
+//   }
+
+//   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text("Payment Successful: ${response.paymentId}")),
+//     );
+
+//     final verifyResponse = await _homeController.verifyPayment(
+//         widget.slotId,
+//         response.paymentId ?? '',
+//         response.orderId ?? '',
+//         response.signature ?? '',
+//         widget.useWallet);
+//     print(verifyResponse);
+//     print(verifyResponse.statusCode);
+//     print(verifyResponse.data);
+//   }
+
+//   void _handlePaymentError(PaymentFailureResponse response) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text("Payment Failed: ${response.message}")),
+//     );
+//     print("Payment Got Error");
+//     print(response);
+//   }
+
+//   void _handleExternalWallet(ExternalWalletResponse response) {
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(
+//           content: Text("External Wallet Selected: ${response.walletName}")),
+//     );
+//     print("Payment in External wallet");
+//     print(response);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
+
+//     return Scaffold(
+//       body: SizedBox(
+//         height: 100.h,
+//         width: 100.w,
+//         child: SingleChildScrollView(
+//           child: Center(
+//             child: Column(
+//               children: [
+//                 // Top Landing Section
+//                 SizedBox(height: 10.w),
+//                 // Box So that the data behind the bottom bar must be visible..
+//                 SizedBox(height: 5.w),
+//                 CustomButtons.fullWidthFilledButton(
+//                   ref: ref,
+//                   buttonText: "Pay now",
+//                   onClick: () {
+//                     openCheckout();
+//                   },
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

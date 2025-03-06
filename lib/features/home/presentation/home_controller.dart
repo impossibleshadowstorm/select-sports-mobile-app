@@ -28,8 +28,15 @@ class HomeController extends StateNotifier<HomeControllerState> {
   Future<Venue?> fetchVenueDetail(String id) async {
     return await homeRepository.getVenueDetail(id);
   }
+
   Future initiatePayment(String slotId, bool useWallet) async {
     return await homeRepository.initiatePayment(slotId, useWallet);
+  }
+
+  Future verifyPayment(String slotId, String paymentId, String orderId,
+      String signature, bool useWallet) async {
+    return await homeRepository.verifyPayment(
+        slotId, paymentId, orderId, signature, useWallet);
   }
 
   Future<void> fetchSlotDetail(String id) async {
@@ -39,7 +46,8 @@ class HomeController extends StateNotifier<HomeControllerState> {
         slotDetail: slot,
       );
     } catch (err, stack) {
-      logger.e("Home Controller Error [Slot Detail]", error: err, stackTrace: stack);
+      logger.e("Home Controller Error [Slot Detail]",
+          error: err, stackTrace: stack);
     }
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/widgets/common_bottom_sheet.dart';
+import 'package:select_sports/features/home/presentation/components/RazorpayScreen.dart';
 import 'package:select_sports/features/home/presentation/home_controller.dart';
 import 'package:gradient_slide_to_act/gradient_slide_to_act.dart';
 
@@ -15,6 +16,7 @@ void paymentBottomSheet(
   CommonBottomSheets.customDraggableBottomSheet(
     context,
     (controller) => Consumer(builder: (context, ref, child) {
+      print(slotId);
       return Container(
         height: 75.h,
         width: 100.w,
@@ -78,6 +80,17 @@ void paymentBottomSheet(
                 onSubmit: () async {
                   var a = await homeController.initiatePayment(slotId, false);
                   print(a);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RazorpayScreen(razorpayOptions: a,useWallet: false, slotId: slotId,),
+                    ),
+                  );
+                  // if (a.status == 200) {
+                  // } else if (a.status == 402) {
+                  //   print(a.status);
+                  //   print(a.data);
+                  // }
                 },
                 gradient: const LinearGradient(
                   begin: Alignment.topLeft,

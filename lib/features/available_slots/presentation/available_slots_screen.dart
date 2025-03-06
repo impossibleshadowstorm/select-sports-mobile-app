@@ -62,6 +62,7 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
                     } else if (snapshot.hasError) {
                       return Center(child: Text("Error fetching slots"));
                     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      print(snapshot);
                       return Center(
                         child: Text(
                           "No slots available for now",
@@ -75,7 +76,7 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
                     }
 
                     final slots = snapshot.data!;
-
+                    print(slots);
                     return ListView.builder(
                       itemCount: slots.length,
                       padding: EdgeInsets.zero,

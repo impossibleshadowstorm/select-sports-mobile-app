@@ -99,7 +99,8 @@ class HomeRepository {
           "useWallet": useWallet,
         },
       );
-
+      print('Response status');
+      print(response.statusCode);
       if (response.statusCode == 200) {
         var bookingData = response.data['data'];
         try {
@@ -108,25 +109,77 @@ class HomeRepository {
           logger.e("Home Repository Error [Initiate Payment]", error: e);
         }
       } else if (response.statusCode == 402) {
-        var razorpayData = response.data['data'];
-        try {
-          return InitiateRazorpayModel.fromJson(razorpayData);
-        } catch (e) {
-          logger.e("Home Repository Error [Initiate Payment]", error: e);
-        }
+        print(response.data['razorpayOptions']);
+        var razorpayData = response.data['razorpayOptions'];
+
+        return razorpayData;
+        // try {
+        //   return InitiateRazorpayModel.fromJson(razorpayData);
+        // } catch (e) {
+        //   logger.e("Home Repository Error [Initiate Payment]", error: e);
+        // }
       }
 
       return null;
     } on DioException catch (e, s) {
+      print("Inside Dio catch");
       logger.e("Home Repository Dio Exception [Initiate Payment]",
           error: e, stackTrace: s);
       return null;
     } catch (e, s) {
+      print('Inside Catch');
       logger.e("Home Repository Error [Initiate Payment]",
           error: e, stackTrace: s);
       return null;
     }
   }
+
+  Future verifyPayment(String slotId,String paymentId, String orderId, String signature, bool useWallet) async {
+    try {
+      final response = await apiClient.authorizedPost(
+        "${ApiEndpoints.verifyPayment}/$paymentId",
+        {
+          "razorpay_signature": signature,
+          "razorpay_order_id": orderId,
+          "slotId": slotId,
+          "useWallet": useWallet,
+        },
+      );
+      print('Response status');
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        var bookingData = response.data['data'];
+        try {
+          return InitiateSufficientWalletModel.fromJson(bookingData);
+        } catch (e) {
+          logger.e("Home Repository Error [Initiate Payment]", error: e);
+        }
+      } else if (response.statusCode == 402) {
+        print(response.data['razorpayOptions']);
+        var razorpayData = response.data['razorpayOptions'];
+
+        return razorpayData;
+        // try {
+        //   return InitiateRazorpayModel.fromJson(razorpayData);
+        // } catch (e) {
+        //   logger.e("Home Repository Error [Initiate Payment]", error: e);
+        // }
+      }
+
+      return null;
+    } on DioException catch (e, s) {
+      print("Inside Dio catch");
+      logger.e("Home Repository Dio Exception [Initiate Payment]",
+          error: e, stackTrace: s);
+      return null;
+    } catch (e, s) {
+      print('Inside Catch');
+      logger.e("Home Repository Error [Initiate Payment]",
+          error: e, stackTrace: s);
+      return null;
+    }
+  }
+
 }
 
 final homeRepositoryProvider = Provider<HomeRepository>(
