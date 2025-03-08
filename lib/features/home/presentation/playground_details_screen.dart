@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/shared_preferences_keys.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
@@ -35,6 +36,7 @@ class PlaygroundDetailsScreen extends ConsumerStatefulWidget {
 class _PlaygroundDetailsScreenState
     extends ConsumerState<PlaygroundDetailsScreen> {
   late Future<Venue?> _venueFuture;
+  
 
   @override
   void initState() {
@@ -45,6 +47,14 @@ class _PlaygroundDetailsScreenState
       homeController.fetchSlotDetail(widget.slotId!);
     }
   }
+
+
+
+
+  
+
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +90,8 @@ class _PlaygroundDetailsScreenState
                 homeState.slotDetail!.bookings.any((booking) =>
                     booking.userId ==
                     SharedPreferencesHelper.get(SharedPreferencesKeys.userId));
-
+            // print('Home State Slot');
+            // print(homeState.slotDetail?.id);
             return Column(
               children: [
                 Expanded(
@@ -216,7 +227,8 @@ class _PlaygroundDetailsScreenState
                       onClick: () {
                         // If User already booked this slot then it must not perform any action
                         if (!isSlotBookedByMe) {
-                          paymentBottomSheet(context, isDarkMode, homeController, widget.playgroundId);
+                          paymentBottomSheet(context, isDarkMode,
+                              homeController,homeState.slotDetail!.id);
                         }
                       },
                       customDarkColor: AppColors.darkGreenColor,

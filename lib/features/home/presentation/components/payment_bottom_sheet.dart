@@ -5,6 +5,7 @@ import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/widgets/common_bottom_sheet.dart';
 import 'package:select_sports/features/home/presentation/home_controller.dart';
 import 'package:gradient_slide_to_act/gradient_slide_to_act.dart';
+import 'package:select_sports/features/home/presentation/razorpay_controller.dart';
 
 void paymentBottomSheet(
   BuildContext context,
@@ -15,6 +16,7 @@ void paymentBottomSheet(
   CommonBottomSheets.customDraggableBottomSheet(
     context,
     (controller) => Consumer(builder: (context, ref, child) {
+      print(slotId);
       return Container(
         height: 75.h,
         width: 100.w,
@@ -78,6 +80,20 @@ void paymentBottomSheet(
                 onSubmit: () async {
                   var a = await homeController.initiatePayment(slotId, false);
                   print(a);
+
+                   final razorpayController = ref.read(razorpayControllerProvider);
+                    razorpayController.openCheckout(a,slotId,false);
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => RazorpayScreen(razorpayOptions: a,useWallet: false, slotId: slotId,),
+                  //   ),
+                  // );
+                  // if (a.status == 200) {
+                  // } else if (a.status == 402) {
+                  //   print(a.status);
+                  //   print(a.data);
+                  // }
                 },
                 gradient: const LinearGradient(
                   begin: Alignment.topLeft,
@@ -97,7 +113,13 @@ void paymentBottomSheet(
                 submittedIcon: Icons.done,
                 textStyle: TextStyle(color: Colors.white, fontSize: 15),
                 backgroundColor: Colors.grey,
-                onSubmit: () {},
+                onSubmit: () async{
+                  var a = await homeController.initiatePayment(slotId, true);
+                  print(a);
+
+                   final razorpayController = ref.read(razorpayControllerProvider);
+                    razorpayController.openCheckout(a,slotId,true);
+                },
                 gradient: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
