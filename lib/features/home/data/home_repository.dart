@@ -134,7 +134,8 @@ class HomeRepository {
     }
   }
 
-  Future verifyPayment(String slotId,String paymentId, String orderId, String signature, bool useWallet) async {
+  Future verifyPayment(String slotId, String paymentId, String orderId,
+      String signature, bool useWallet) async {
     try {
       final response = await apiClient.authorizedPost(
         "${ApiEndpoints.verifyPayment}/$paymentId",
@@ -145,25 +146,17 @@ class HomeRepository {
           "useWallet": useWallet,
         },
       );
-      print('Response status');
-      print(response.statusCode);
-      if (response.statusCode == 200) {
-        var bookingData = response.data['data'];
+      if (response.statusCode == 201) {
+        var bookingData = response.data;
         try {
           return InitiateSufficientWalletModel.fromJson(bookingData);
         } catch (e) {
           logger.e("Home Repository Error [Initiate Payment]", error: e);
         }
       } else if (response.statusCode == 402) {
-        print(response.data['razorpayOptions']);
         var razorpayData = response.data['razorpayOptions'];
 
         return razorpayData;
-        // try {
-        //   return InitiateRazorpayModel.fromJson(razorpayData);
-        // } catch (e) {
-        //   logger.e("Home Repository Error [Initiate Payment]", error: e);
-        // }
       }
 
       return null;
@@ -179,7 +172,6 @@ class HomeRepository {
       return null;
     }
   }
-
 }
 
 final homeRepositoryProvider = Provider<HomeRepository>(

@@ -1,12 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:select_sports/features/bookings/presentation/bookings_screen.dart';
 import 'package:select_sports/features/home/presentation/home_controller.dart';
+import 'package:select_sports/features/home/presentation/playground_details_screen.dart';
+import 'package:select_sports/features/main/presentation/main_controller.dart';
+import 'package:select_sports/features/main/presentation/main_screen.dart';
+import 'package:select_sports/providers/navigator_key.dart';
 
 final razorpayControllerProvider = Provider((ref) => RazorpayController(ref));
 
 class RazorpayController {
-  final ProviderRef ref;
+  final Ref ref;
   late Razorpay _razorpay;
   String? _slotId;
   bool? _useWallet;
@@ -49,8 +54,16 @@ class RazorpayController {
       response.signature ?? '',
       _useWallet!, // Pass useWallet dynamically
     );
-    debugPrint(
-        "Verification Response: ${verifyResponse.statusCode} - ${verifyResponse.data}");
+
+    if (verifyResponse.status == 201) {
+      // For Navigator
+      final mainController = ref.read(mainControllerProvider.notifier);
+      mainController.updateIndex(4); // Update to the 4th index
+      Navigator.pushReplacement(
+        ref.read(navigatorKeyProvider).currentContext!,
+        MaterialPageRoute(builder: (context) => BookingsScreen()),
+      );
+    }
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {

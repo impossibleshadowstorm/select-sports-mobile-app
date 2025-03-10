@@ -26,6 +26,7 @@ import 'package:select_sports/features/terms_and_conditions/presentation/terms_a
 import 'package:select_sports/features/upcoming_bookings/presentation/upcoming_bookings_screen.dart';
 import 'package:select_sports/features/wallet/presentation/add_money_screen.dart';
 import 'package:select_sports/features/wallet/presentation/wallet_screen.dart';
+import 'package:select_sports/providers/navigator_key.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 import 'package:toastification/toastification.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -49,10 +50,12 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeProvider);
+    final navigatorKey = ref.read(navigatorKeyProvider);
 
     return ResponsiveSizer(builder: (context, orientation, screenType) {
       return ToastificationWrapper(
         child: MaterialApp(
+          navigatorKey: navigatorKey,
           title: 'Select Sports',
           debugShowCheckedModeBanner: false,
           theme: ThemeData.light().copyWith(

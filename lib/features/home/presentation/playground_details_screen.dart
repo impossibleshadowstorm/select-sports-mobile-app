@@ -36,24 +36,17 @@ class PlaygroundDetailsScreen extends ConsumerStatefulWidget {
 class _PlaygroundDetailsScreenState
     extends ConsumerState<PlaygroundDetailsScreen> {
   late Future<Venue?> _venueFuture;
-  
 
   @override
   void initState() {
     super.initState();
     final homeController = ref.read(homeControllerProvider.notifier);
     _venueFuture = homeController.fetchVenueDetail(widget.playgroundId);
+
     if (widget.slotId != null) {
       homeController.fetchSlotDetail(widget.slotId!);
     }
   }
-
-
-
-
-  
-
-  
 
 
   @override
@@ -228,7 +221,7 @@ class _PlaygroundDetailsScreenState
                         // If User already booked this slot then it must not perform any action
                         if (!isSlotBookedByMe) {
                           paymentBottomSheet(context, isDarkMode,
-                              homeController,homeState.slotDetail!.id);
+                              homeController, homeState.slotDetail!.id);
                         }
                       },
                       customDarkColor: AppColors.darkGreenColor,

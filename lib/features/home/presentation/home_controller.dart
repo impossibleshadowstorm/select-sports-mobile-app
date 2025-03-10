@@ -33,10 +33,17 @@ class HomeController extends StateNotifier<HomeControllerState> {
     return await homeRepository.initiatePayment(slotId, useWallet);
   }
 
-  Future verifyPayment(String slotId, String paymentId, String orderId,
-      String signature, bool useWallet) async {
-    return await homeRepository.verifyPayment(
+  Future verifyPayment(
+    String slotId,
+    String paymentId,
+    String orderId,
+    String signature,
+    bool useWallet,
+  ) async {
+    var verifyDetail = await homeRepository.verifyPayment(
         slotId, paymentId, orderId, signature, useWallet);
+    await fetchSlotDetail(slotId);
+    return verifyDetail;
   }
 
   Future<void> fetchSlotDetail(String id) async {
