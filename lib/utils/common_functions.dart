@@ -13,4 +13,8 @@ class CommonFunctions {
   static String formatTimeIn24HourMinAMPM(DateTime dateTime) {
     return DateFormat('hh:mma').format(dateTime);
   }
+
+  static String getLastNChars(String input, int length) {
+    return input.length > length ? input.substring(input.length - length) : input;
+  }
 }

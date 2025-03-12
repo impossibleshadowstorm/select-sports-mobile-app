@@ -1,6 +1,5 @@
 import 'package:select_sports/core/models/sport_model.dart';
 import 'package:select_sports/core/models/venue_model.dart';
-import 'package:select_sports/core/models/booking_model.dart';
 import 'package:select_sports/utils/app_logger.dart';
 
 class Slot {
@@ -75,3 +74,40 @@ class Slot {
     }
   }
 }
+
+class Booking {
+  final String id;
+  final String status;
+  final String? cancellationFee;
+  final String createdAt;
+  final String updatedAt;
+  final String slotId;
+  final String userId;
+
+  Booking({
+    required this.id,
+    required this.status,
+    this.cancellationFee,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.slotId,
+    required this.userId,
+  });
+
+  factory Booking.fromJson(Map<String, dynamic> json) {
+    try {
+      return Booking(
+        id: json['id'],
+        status: json['status'],
+        cancellationFee: json['cancellationFee'],
+        createdAt: json['createdAt'],
+        updatedAt: json['updatedAt'],
+        slotId: json['slotId'],
+        userId: json['userId'],
+      );
+    } catch(e) {
+      return throw Exception("Booking parsing failed");
+    }
+  }
+}
+
