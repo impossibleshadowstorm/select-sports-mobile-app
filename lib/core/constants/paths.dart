@@ -17,6 +17,7 @@ class Paths {
   static String lottieDarkCodingJson = "assets/lottie_jsons/dark_coding1.json";
   static String lottieCodingJson = "assets/lottie_jsons/coding.json";
   static String lottieSplashLogoJson = "assets/lottie_jsons/splash_logo.json";
+  static String lottieSplashDarkLogoJson = "assets/lottie_jsons/splash_dark_logo.json";
 
   // Profile Images
   static String profileImage = 'https://images.pexels.com/photos/3777946/pexels-photo-3777946.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';

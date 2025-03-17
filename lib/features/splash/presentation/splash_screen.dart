@@ -1,16 +1,15 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:select_sports/core/constants/paths.dart';
 import 'package:select_sports/features/splash/presentation/splash_controller.dart';
+import 'package:select_sports/providers/theme_provider.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
@@ -23,7 +22,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   // Method to check user state after 2 seconds delay
   Future<void> _checkUserState() async {
     // Delay for 2 seconds
-    await Future.delayed(const Duration(milliseconds: 2700));
+    await Future.delayed(const Duration(milliseconds: 3000));
 
     // Check if the widget is still mounted to avoid async gap issues
     if (!mounted) return;
@@ -36,15 +35,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).brightness == Brightness.dark
+      backgroundColor: isDarkMode
           ? Theme.of(context).primaryColorDark
           : Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Lottie.asset(
-            Paths.lottieSplashLogoJson,
+            isDarkMode? Paths.lottieSplashDarkLogoJson : Paths.lottieSplashLogoJson,
             animate: true,
           ),
           Text(
