@@ -8,6 +8,7 @@ import 'package:select_sports/core/widgets/custom_buttons.dart';
 import 'package:select_sports/core/widgets/visibility_widgets.dart';
 import 'package:select_sports/features/auth/presentation/auth_controller.dart';
 import 'package:select_sports/features/auth/presentation/login_page.dart';
+import 'package:select_sports/features/main/presentation/main_controller.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 
 class MenusScreen extends ConsumerStatefulWidget {
@@ -250,6 +251,7 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             "Log Out",
                             () async {
                               authController.logout();
+                              ref.read(mainControllerProvider.notifier).updateIndex(2);
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(

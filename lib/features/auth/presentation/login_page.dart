@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
@@ -21,6 +22,13 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,162 +44,132 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           physics: BouncingScrollPhysics(),
           child: Form(
             key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 35.h,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        AppColors.darkestBackground,
-                        AppColors.darkMediumBackground,
-                        AppColors.darkLightBackground,
+            child: KeyboardListener(
+              focusNode: _focusNode,
+              autofocus: true,
+              onKeyEvent: (event) {
+                if (event is KeyDownEvent &&
+                    event.logicalKey == LogicalKeyboardKey.enter) {
+                  _submitForm();
+                  FocusScope.of(context).unfocus(); // Dismiss keyboard
+                }
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 35.h,
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          AppColors.darkestBackground,
+                          AppColors.darkMediumBackground,
+                          AppColors.darkLightBackground,
+                        ],
+                      ),
+                    ),
+                    child: Stack(
+                      clipBehavior: Clip.hardEdge,
+                      children: [
+                        Positioned(
+                          top: 0.h,
+                          left: 20.w,
+                          child: SizedBox(
+                            height: 35.h,
+                            width: 100.w,
+                            child: Image(
+                              image: AssetImage(
+                                Paths.loginFootballImage,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 35.h,
+                          width: 100.w,
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.4),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 5.h, horizontal: 5.w),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Sign in to your",
+                                style: AppTextStyles.largeHeading.copyWith(
+                                  color: AppColors.lightText,
+                                ),
+                              ),
+                              Text(
+                                "Account",
+                                style: AppTextStyles.largeHeading.copyWith(
+                                  color: AppColors.lightText,
+                                ),
+                              ),
+                              SizedBox(height: 2.5.w),
+                              Text(
+                                "Access your account at fingertips",
+                                style: AppTextStyles.body.copyWith(
+                                  color: AppColors.lightText,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  child: Stack(
-                    clipBehavior: Clip.hardEdge,
-                    children: [
-                      Positioned(
-                        top: 0.h,
-                        left: 20.w,
-                        child: SizedBox(
-                          height: 35.h,
-                          width: 100.w,
-                          child: Image(
-                            image: AssetImage(
-                              Paths.loginFootballImage,
-                            ),
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.5.w),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10.w),
+                        CustomTextFields.outlined(
+                          controller: authController.emailController,
+                          hintText: "johndoe@gmail.com",
+                          labelText: "Email",
+                          validator: Validators.validateEmail,
+                          ref: ref,
+                        ),
+                        SizedBox(height: 5.w),
+                        CustomTextFields.outlinedWithIcon(
+                          controller: authController.passwordController,
+                          hintText: "**************",
+                          labelText: "Password",
+                          validator: Validators.validatePassword,
+                          ref: ref,
+                          obscureText: !authState.passwordVisible,
+                          isPrefix: false,
+                          icon: Icon(
+                            authState.passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: isDarkMode
+                                ? AppColors.lightText
+                                : AppColors.darkText,
                           ),
+                          onIconPressed: () {
+                            authController.togglePasswordVisibility();
+                          },
                         ),
-                      ),
-                      Container(
-                        height: 35.h,
-                        width: 100.w,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.4),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 5.h, horizontal: 5.w),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Sign in to your",
-                              style: AppTextStyles.largeHeading.copyWith(
-                                color: AppColors.lightText,
-                              ),
-                            ),
-                            Text(
-                              "Account",
-                              style: AppTextStyles.largeHeading.copyWith(
-                                color: AppColors.lightText,
-                              ),
-                            ),
-                            SizedBox(height: 2.5.w),
-                            Text(
-                              "Access your account at fingertips",
-                              style: AppTextStyles.body.copyWith(
-                                color: AppColors.lightText,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.5.w),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10.w),
-                      CustomTextFields.outlined(
-                        controller: authController.emailController,
-                        hintText: "johndoe@gmail.com",
-                        labelText: "Email",
-                        validator: Validators.validateEmail,
-                        ref: ref,
-                      ),
-                      SizedBox(height: 5.w),
-                      CustomTextFields.outlinedWithIcon(
-                        controller: authController.passwordController,
-                        hintText: "**************",
-                        labelText: "Password",
-                        validator: Validators.validatePassword,
-                        ref: ref,
-                        obscureText: !authState.passwordVisible,
-                        isPrefix: false,
-                        icon: Icon(
-                          authState.passwordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: isDarkMode
-                              ? AppColors.lightText
-                              : AppColors.darkText,
-                        ),
-                        onIconPressed: () {
-                          authController.togglePasswordVisibility();
-                        },
-                      ),
-                      SizedBox(height: 5.w),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/forgot');
-                        },
-                        child: SizedBox(
-                          width: 100.w,
-                          child: Text(
-                            "Forgot Password?",
-                            textAlign: TextAlign.right,
-                            style: AppTextStyles.body.copyWith(
-                              color: isDarkMode
-                                  ? AppColors.lightGreenColor
-                                  : AppColors.darkGreenColor,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 5.w),
-                      CustomButtons.fullWidthFilledButton(
-                        ref: ref,
-                        buttonText: "Login",
-                        loading: authState.isLoginProcessRunning,
-                        onClick: () {
-                          _submitForm();
-                        },
-                      ),
-                      SizedBox(height: 5.w),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Don't Have an account? ",
-                            textAlign: TextAlign.center,
-                            style: AppTextStyles.body.copyWith(
-                              color: isDarkMode
-                                  ? AppColors.lightText
-                                  : AppColors.darkText,
-                            ),
-                          ),
-                          InkWell(
-                            overlayColor: WidgetStatePropertyAll(Colors.transparent),
-                            onTap: () {
-                              authController.resetLoginForm();
-                              Navigator.pushNamed(context, '/signup');
-                            },
+                        SizedBox(height: 5.w),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/forgot');
+                          },
+                          child: SizedBox(
+                            width: 100.w,
                             child: Text(
-                              " Create here.",
-                              textAlign: TextAlign.center,
+                              "Forgot Password?",
+                              textAlign: TextAlign.right,
                               style: AppTextStyles.body.copyWith(
                                 color: isDarkMode
                                     ? AppColors.lightGreenColor
@@ -200,12 +178,54 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        SizedBox(height: 5.w),
+                        CustomButtons.fullWidthFilledButton(
+                          ref: ref,
+                          buttonText: "Login",
+                          loading: authState.isLoginProcessRunning,
+                          onClick: () {
+                            _submitForm();
+                            FocusScope.of(context).unfocus();
+                          },
+                        ),
+                        SizedBox(height: 5.w),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Don't Have an account? ",
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.body.copyWith(
+                                color: isDarkMode
+                                    ? AppColors.lightText
+                                    : AppColors.darkText,
+                              ),
+                            ),
+                            InkWell(
+                              overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                              onTap: () {
+                                authController.resetLoginForm();
+                                Navigator.pushNamed(context, '/signup');
+                              },
+                              child: Text(
+                                " Create here.",
+                                textAlign: TextAlign.center,
+                                style: AppTextStyles.body.copyWith(
+                                  color: isDarkMode
+                                      ? AppColors.lightGreenColor
+                                      : AppColors.darkGreenColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
