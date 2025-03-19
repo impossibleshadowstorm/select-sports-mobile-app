@@ -55,79 +55,80 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
             ),
             Expanded(
               child: FutureBuilder<List<Slot>>(
-                  future: _slotsFuture,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text("Error fetching slots"));
-                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return Center(
-                        child: Text(
-                          "No slots available for now",
-                          style: TextStyle(
-                            color: isDarkMode
-                                ? AppColors.lightText
-                                : AppColors.darkText,
-                          ),
+                future: _slotsFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text("Error fetching slots"));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(
+                      child: Text(
+                        "No slots available for now",
+                        style: TextStyle(
+                          color: isDarkMode
+                              ? AppColors.lightText
+                              : AppColors.darkText,
+                        ),
+                      ),
+                    );
+                  }
+
+                  final slots = snapshot.data!;
+
+                  return ListView.builder(
+                    itemCount: slots.length,
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      final slot = slots[index];
+                      final slotVenueAddress = slot.venue.address;
+
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5.w),
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        PlaygroundDetailsScreen(
+                                      playgroundId: slot.venueId,
+                                      slotId: slot.id,
+                                      onlyPlayground: false,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: _buildSlotSection(
+                                isDarkMode: isDarkMode,
+                                venueImage: slot.venue.images[0],
+                                venueName:
+                                    "${slot.venue.name}, ${slotVenueAddress.street}",
+                                venueLocation:
+                                    "${slotVenueAddress.street}, ${slotVenueAddress.city}, ${slotVenueAddress.state}, ${slotVenueAddress.postalCode}, ${slotVenueAddress.country}",
+                                gameDate:
+                                    CommonFunctions.formatDateInDayDateMon(
+                                        slot.startTime),
+                                gameTime:
+                                    CommonFunctions.formatTimeIn24HourMinAMPM(
+                                        slot.startTime),
+                                actualPrice: slot.price,
+                                discountedPrice: slot.discountedPrice,
+                                maxPlayer: slot.maxPlayer,
+                                slotsLeft: slot.bookings.length,
+                              ),
+                            ),
+                            SizedBox(height: 5.w),
+                          ],
                         ),
                       );
-                    }
-
-                    final slots = snapshot.data!;
-
-                    return ListView.builder(
-                      itemCount: slots.length,
-                      padding: EdgeInsets.zero,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) {
-                        final slot = slots[index];
-                        final slotVenueAddress = slot.venue.address;
-
-                        return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5.w),
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          PlaygroundDetailsScreen(
-                                        playgroundId: slot.venueId,
-                                        slotId: slot.id,
-                                        onlyPlayground: false,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: _buildSlotSection(
-                                  isDarkMode: isDarkMode,
-                                  venueImage: slot.venue.images[0],
-                                  venueName:
-                                      "${slot.venue.name}, ${slotVenueAddress.street}",
-                                  venueLocation:
-                                      "${slotVenueAddress.street}, ${slotVenueAddress.city}, ${slotVenueAddress.state}, ${slotVenueAddress.postalCode}, ${slotVenueAddress.country}",
-                                  gameDate:
-                                      CommonFunctions.formatDateInDayDateMon(
-                                          slot.startTime),
-                                  gameTime:
-                                      CommonFunctions.formatTimeIn24HourMinAMPM(
-                                          slot.startTime),
-                                  actualPrice: 399.00,
-                                  discountedPrice: 329.00,
-                                  maxPlayer: slot.maxPlayer,
-                                  slotsLeft: slot.bookings.length,
-                                ),
-                              ),
-                              SizedBox(height: 5.w),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  }),
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

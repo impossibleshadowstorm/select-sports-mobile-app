@@ -348,12 +348,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                           SizedBox(width: 5.w),
-                          Text(
-                            'Playing techniques',
-                            style: AppTextStyles.subheading.copyWith(
-                              color: AppColors.lightText,
-                            ),
-                          ),
+                          // Text(
+                          //   'Playing techniques',
+                          //   style: AppTextStyles.subheading.copyWith(
+                          //     color: AppColors.lightText,
+                          //   ),
+                          // ),
                         ],
                       ),
                       SizedBox(height: 5.h),

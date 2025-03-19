@@ -227,6 +227,27 @@ class _PlaygroundDetailsScreenState
                       customDarkColor: AppColors.darkGreenColor,
                     ),
                   ),
+                if (isSlotBookedByMe)
+                  Container(
+                    width: 100.w,
+                    padding: EdgeInsets.symmetric(horizontal: 5.w),
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    child: CustomButtons.fullWidthFilledButton(
+                      buttonText:
+                      "Cancel Booking",
+                      ref: ref,
+                      onClick: () {
+                        // If User already booked this slot then it must not perform any action
+                        if (!isSlotBookedByMe) {
+                          paymentBottomSheet(context, isDarkMode,
+                              homeController, homeState.slotDetail!.id);
+                        }
+                      },
+                      customDarkColor: AppColors.redColor,
+                    ),
+                  ),
                 SizedBox(height: 25),
               ],
             );
