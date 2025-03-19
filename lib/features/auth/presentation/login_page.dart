@@ -257,6 +257,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           SharedPreferencesKeys.userId,
           result['data']['userId'],
         );
+        SharedPreferencesHelper.set(
+          SharedPreferencesKeys.name,
+          result['data']['name'],
+        );
+        SharedPreferencesHelper.set(
+          SharedPreferencesKeys.email,
+          result['data']['email'],
+        );
         Navigator.pushNamed(context, '/main');
       } else {
         CustomSnackBar.showError(result["message"]);

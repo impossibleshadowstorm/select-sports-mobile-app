@@ -12,6 +12,7 @@ import 'package:select_sports/features/available_slots/presentation/available_sl
 import 'package:select_sports/features/bookings/presentation/bookings_screen.dart';
 import 'package:select_sports/features/main/presentation/main_screen.dart';
 import 'package:select_sports/features/manage_teams/presentation/manage_teams_screen.dart';
+import 'package:select_sports/features/need_help/presentation/need_help_screen.dart';
 import 'package:select_sports/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:select_sports/features/profile/presentation/edit_profile_screen.dart';
 import 'package:select_sports/features/profile/presentation/profile_screen.dart';
@@ -61,6 +62,7 @@ class MyApp extends ConsumerWidget {
           theme: ThemeData.light().copyWith(
             primaryColor: AppColors.lightGreenColor,
             primaryColorDark: AppColors.darkGreenColor,
+            splashColor: Colors.transparent,
             scaffoldBackgroundColor: AppColors.lightBackground,
             textTheme:
                 GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
@@ -83,7 +85,6 @@ class MyApp extends ConsumerWidget {
             '/': (context) => SplashScreen(),
             '/login': (context) => LoginScreen(),
             '/signup': (context) => SignupScreen(),
-            '/onboarding': (context) => OnboardingScreen(),
             '/main': (context) => MainScreen(),
             '/join_a_game': (context) => AvailableSlotsScreen(),
             '/forgot': (context) => ForgotScreen(),
@@ -94,6 +95,7 @@ class MyApp extends ConsumerWidget {
             '/upcoming_bookings': (context) => UpcomingBookingsScreen(),
             '/bookings': (context) => BookingsScreen(),
             '/addMoney': (context) => AddMoneyScreen(),
+            '/need_help': (context) => NeedHelpScreen(),
             '/settings': (context) => SettingsScreen(),
             '/manage_teams': (context) => ManageTeamsScreen(),
             '/about_us': (context) => AboutUsScreen(),

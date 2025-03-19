@@ -52,16 +52,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 Navigator.pushNamed(context, "/update_mobile");
               },
             ),
-            SizedBox(height: 5.w),
-            _buildActionTile(
-              isDarkMode,
-              Paths.menuSettingIcon,
-              "Notification Preferences",
-              "Define what alerts and notifications you want to see",
-              () {
-                Navigator.pushNamed(context, "/notification_preferences");
-              },
-            ),
+            // SizedBox(height: 5.w),
+            // _buildActionTile(
+            //   isDarkMode,
+            //   Paths.menuSettingIcon,
+            //   "Notification Preferences",
+            //   "Define what alerts and notifications you want to see",
+            //   () {
+            //     Navigator.pushNamed(context, "/notification_preferences");
+            //   },
+            // ),
             SizedBox(height: 5.w),
             _buildActionTile(
               isDarkMode,
@@ -73,15 +73,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               },
             ),
             SizedBox(height: 5.w),
-            _buildActionTile(
-              isDarkMode,
-              Paths.menuSettingIcon,
-              "Account Settings",
-              "Delete you Account Permanently",
-              () {
-                Navigator.pushNamed(context, "/delete_account");
-              },
-            ),
+            // _buildActionTile(
+            //   isDarkMode,
+            //   Paths.menuSettingIcon,
+            //   "Account Settings",
+            //   "Delete you Account Permanently",
+            //   () {
+            //     Navigator.pushNamed(context, "/delete_account");
+            //   },
+            // ),
           ],
         ),
       ),

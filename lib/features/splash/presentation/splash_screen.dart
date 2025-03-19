@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
+import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/features/splash/presentation/splash_controller.dart';
 import 'package:select_sports/providers/theme_provider.dart';
 
@@ -45,11 +47,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Lottie.asset(
-            isDarkMode? Paths.lottieSplashDarkLogoJson : Paths.lottieSplashLogoJson,
+            isDarkMode
+                ? Paths.lottieSplashDarkLogoJson
+                : Paths.lottieSplashLogoJson,
             animate: true,
           ),
           Text(
             "Select Sports",
+            style: AppTextStyles.body.copyWith(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.bold,
+              color: isDarkMode ? AppColors.lightText : AppColors.darkText,
+            ),
           ),
         ],
       ),

@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
+import 'package:select_sports/core/constants/shared_preferences_keys.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
+import 'package:select_sports/core/network/shared_preferences_helper.dart';
 import 'package:select_sports/core/widgets/custom_buttons.dart';
 import 'package:select_sports/core/widgets/visibility_widgets.dart';
 import 'package:select_sports/features/auth/presentation/auth_controller.dart';
@@ -62,7 +64,9 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                     SizedBox(
                       width: 100.w,
                       child: Text(
-                        "Sumit Saurav",
+                        SharedPreferencesHelper.get(
+                                SharedPreferencesKeys.name) ??
+                            "---",
                         textAlign: TextAlign.center,
                         style: AppTextStyles.subheading.copyWith(
                           color: isDarkMode
@@ -74,7 +78,9 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                     SizedBox(
                       width: 100.w,
                       child: Text(
-                        "sumitsaurav1119@gmail.com",
+                        SharedPreferencesHelper.get(
+                                SharedPreferencesKeys.email) ??
+                            "---",
                         textAlign: TextAlign.center,
                         style: AppTextStyles.body.copyWith(
                           color: isDarkMode
@@ -115,20 +121,19 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                               Navigator.pushNamed(context, "/wallet");
                             },
                           ),
-                          Divider(
-                            color: isDarkMode
-                                ? AppColors.darkGreyColor
-                                : AppColors.lightestGreyColorV3,
-                          ),
-                          _buildOptionTile(
-                            isDarkMode,
-                            Paths.menuUpcomingIcon,
-                            "Upcoming Bookings",
-                            () {
-                              themeNotifier.toggleTheme(context);
-                              // Navigator.pushNamed(context, "/upcoming_bookings");
-                            },
-                          ),
+                          // Divider(
+                          //   color: isDarkMode
+                          //       ? AppColors.darkGreyColor
+                          //       : AppColors.lightestGreyColorV3,
+                          // ),
+                          // _buildOptionTile(
+                          //   isDarkMode,
+                          //   Paths.menuUpcomingIcon,
+                          //   "Upcoming Bookings",
+                          //   () {
+                          //     themeNotifier.toggleTheme(context);
+                          //   },
+                          // ),
                           Divider(
                             color: isDarkMode
                                 ? AppColors.darkGreyColor
@@ -202,7 +207,7 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                             Paths.menuNeedHelpIcon,
                             "Need Help",
                             () {
-                              // Navigator.pushNamed(context, "/main");
+                              Navigator.pushNamed(context, "/need_help");
                             },
                           ),
                           Divider(
@@ -245,13 +250,17 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                                   context, "/terms_and_conditions");
                             },
                           ),
-                          _buildOptionTile(
-                            isDarkMode,
-                            Paths.settingsTermsAndConditionsIcon,
-                            "Log Out",
-                            () async {
+                          Divider(
+                            color: isDarkMode
+                                ? AppColors.darkGreyColor
+                                : AppColors.lightestGreyColorV3,
+                          ),
+                          InkWell(
+                            onTap: () {
                               authController.logout();
-                              ref.read(mainControllerProvider.notifier).updateIndex(2);
+                              ref
+                                  .read(mainControllerProvider.notifier)
+                                  .updateIndex(2);
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
@@ -260,6 +269,38 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                                     false, // Removes all previous routes
                               );
                             },
+                            overlayColor:
+                                WidgetStatePropertyAll(Colors.transparent),
+                            child: Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(),
+                                      child: Center(
+                                        child: SvgPicture.asset(
+                                          Paths.settingsTermsAndConditionsIcon,
+                                          height: 25,
+                                          width: 25,
+                                          color: AppColors.redColor,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 5.w),
+                                    Text(
+                                      "Log Out",
+                                      style: AppTextStyles.subheading.copyWith(
+                                        // color: AppColors.lightText.withValues(alpha: 0.9),
+                                        color: AppColors.redColor,
+                                        fontSize: 15.sp,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -276,7 +317,11 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
   }
 
   Widget _buildOptionTile(
-      bool isDarkMode, String icon, String menuTitle, Function onClick) {
+    bool isDarkMode,
+    String icon,
+    String menuTitle,
+    Function onClick,
+  ) {
     return InkWell(
       onTap: () {
         onClick();
