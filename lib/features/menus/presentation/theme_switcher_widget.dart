@@ -5,6 +5,7 @@ import 'package:select_sports/core/constants/paths.dart';
 
 const lightColor = Color.fromRGBO(200, 173, 112, 1);
 
+// TODO: theme switcher
 class LightEffect extends StatefulWidget {
   const LightEffect({super.key});
 
