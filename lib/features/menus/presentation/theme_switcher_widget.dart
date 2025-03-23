@@ -6,7 +6,7 @@ import 'package:select_sports/core/constants/paths.dart';
 const lightColor = Color.fromRGBO(200, 173, 112, 1);
 
 class LightEffect extends StatefulWidget {
-  const LightEffect({Key? key}) : super(key: key);
+  const LightEffect({super.key});
 
   @override
   State<LightEffect> createState() => _LightEffectState();
