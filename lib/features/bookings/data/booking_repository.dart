@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:select_sports/core/models/booking_detail_model.dart';
 import 'package:select_sports/core/models/booking_list_model.dart';
 import 'package:select_sports/core/models/slot_model.dart';
 import 'package:select_sports/core/network/api_client.dart';
@@ -35,6 +36,32 @@ class BookingRepository {
       logger.e("Booking Repository Error [Get Bookings]",
           error: err, stackTrace: stack);
       return [];
+    }
+  }
+
+  Future<BookingDetail?> getBookingDetails(String bookingId) async {
+    try {
+      final response = await apiClient.authorizedGet("${ApiEndpoints.bookings}/$bookingId");
+
+      if (response.statusCode == 200) {
+        var bookingsData = response.data['data'];
+        try {
+          return BookingDetail.fromJson(bookingsData);
+        } catch (err, stack) {
+          logger.e("Booking Repository Dio Exception [Get Bookings]",
+              error: err, stackTrace: stack);
+        }
+      }
+
+      return null;
+    } on DioException catch (err, stack) {
+      logger.e("Booking Repository Dio Exception [Get Bookings]",
+          error: err, stackTrace: stack);
+      return null;
+    } catch (err, stack) {
+      logger.e("Booking Repository Error [Get Bookings]",
+          error: err, stackTrace: stack);
+      return null;
     }
   }
 }

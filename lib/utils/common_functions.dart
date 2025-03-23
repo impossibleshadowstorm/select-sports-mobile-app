@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:intl/intl.dart';
 
 class CommonFunctions {
@@ -16,5 +18,24 @@ class CommonFunctions {
 
   static String getLastNChars(String input, int length) {
     return input.length > length ? input.substring(input.length - length) : input;
+  }
+
+  // function to format date like "January 14 2025"
+  static String formatDateInMonthDayYear(DateTime dateTime) {
+    return DateFormat('MMMM d y').format(dateTime);
+  }
+
+  // function to format time like "01:25 PM/AM"
+  static String formatTimeIn12HourAMPM(DateTime dateTime) {
+    return DateFormat('hh:mm a').format(dateTime);
+  }
+
+  // Convert HEX string (#a31f1f) to Flutter Color
+  static Color hexToColor(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF$hexColor"; // Add alpha if not provided
+    }
+    return Color(int.parse(hexColor, radix: 16));
   }
 }

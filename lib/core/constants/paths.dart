@@ -24,6 +24,8 @@ class Paths {
   static String profileShotsImage = 'assets/images/profile/football.svg';
   static String profilePassesImage = 'assets/images/profile/football_touches.svg';
   static String profileTouchesImage = 'assets/images/profile/football_passes.svg';
+  static String darkGreenAvatarImage = 'assets/images/avatars/dark_green_man.svg';
+  static String userAvatarImage = 'assets/images/avatars/avatar-1.png';
 
   // Menu Images
   static String menuWalletIcon = 'assets/images/profile/wallet_menu.svg';
