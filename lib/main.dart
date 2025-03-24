@@ -12,9 +12,7 @@ import 'package:select_sports/features/available_slots/presentation/available_sl
 import 'package:select_sports/features/bookings/presentation/bookings_screen.dart';
 import 'package:select_sports/features/main/presentation/main_screen.dart';
 import 'package:select_sports/features/manage_teams/presentation/manage_teams_screen.dart';
-import 'package:select_sports/features/menus/presentation/theme_switcher_widget.dart';
 import 'package:select_sports/features/need_help/presentation/need_help_screen.dart';
-import 'package:select_sports/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:select_sports/features/profile/presentation/edit_profile_screen.dart';
 import 'package:select_sports/features/profile/presentation/profile_screen.dart';
 import 'package:select_sports/features/settings/presentation/reset_page.dart';
@@ -107,7 +105,6 @@ class MyApp extends ConsumerWidget {
             '/update_mobile': (context) => UpdateMobileScreen(),
             '/rewards': (context) => RewardsScreen(),
             '/update_profile':(context) => UpdateProfileScreen(),
-            '/light':(context) => LightEffect(),
           },
         ),
       );

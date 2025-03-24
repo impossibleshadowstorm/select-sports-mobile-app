@@ -201,7 +201,6 @@ class _MenusScreenState extends ConsumerState<MenusScreen> {
                                 Paths.menuOurHostsIcons,
                                 "Our Hosts",
                                 () {
-                                  Navigator.pushNamed(context, "/light");
                                   // themeNotifier.toggleTheme(context);
                                 },
                               ),
