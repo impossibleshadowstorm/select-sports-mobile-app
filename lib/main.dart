@@ -13,6 +13,7 @@ import 'package:select_sports/features/bookings/presentation/bookings_screen.dar
 import 'package:select_sports/features/main/presentation/main_screen.dart';
 import 'package:select_sports/features/manage_teams/presentation/manage_teams_screen.dart';
 import 'package:select_sports/features/need_help/presentation/need_help_screen.dart';
+import 'package:select_sports/features/out_hosts/presentation/our_hosts_screen.dart';
 import 'package:select_sports/features/profile/presentation/edit_profile_screen.dart';
 import 'package:select_sports/features/profile/presentation/profile_screen.dart';
 import 'package:select_sports/features/settings/presentation/reset_page.dart';
@@ -95,6 +96,7 @@ class MyApp extends ConsumerWidget {
             '/bookings': (context) => BookingsScreen(),
             '/addMoney': (context) => AddMoneyScreen(),
             '/need_help': (context) => NeedHelpScreen(),
+            '/our_hosts': (context) => OurHostsScreen(),
             '/settings': (context) => SettingsScreen(),
             '/manage_teams': (context) => ManageTeamsScreen(),
             '/about_us': (context) => AboutUsScreen(),

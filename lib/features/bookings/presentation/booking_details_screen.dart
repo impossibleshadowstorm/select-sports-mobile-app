@@ -540,6 +540,8 @@ class _BookingDetailsScreenState extends ConsumerState<BookingDetailsScreen> {
                         SizedBox(width: 1.5.w),
                         Text(
                           city,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.body.copyWith(
                             color: isDarkMode
                                 ? AppColors.lightText
@@ -552,6 +554,8 @@ class _BookingDetailsScreenState extends ConsumerState<BookingDetailsScreen> {
                     SizedBox(height: 0.5.w),
                     Text(
                       name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.body.copyWith(
                         color: isDarkMode
                             ? AppColors.lightText
@@ -563,6 +567,8 @@ class _BookingDetailsScreenState extends ConsumerState<BookingDetailsScreen> {
                     SizedBox(height: 0.5.w),
                     Text(
                       street,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.body.copyWith(
                         color: isDarkMode
                             ? AppColors.lightText

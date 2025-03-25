@@ -4,8 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/paths.dart';
+import 'package:select_sports/core/constants/shared_preferences_keys.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/models/venue_model.dart';
+import 'package:select_sports/core/network/shared_preferences_helper.dart';
 import 'package:select_sports/core/widgets/visibility_widgets.dart';
 import 'package:select_sports/core/widgets/frosted_glass.dart';
 import 'package:select_sports/features/home/presentation/home_controller.dart';
@@ -364,7 +366,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         ),
                       ),
                       Text(
-                        'Sumit Saurav',
+                        SharedPreferencesHelper.get(
+                            SharedPreferencesKeys.name) ??
+                            "---",
                         style: AppTextStyles.largeHeading.copyWith(
                           color: AppColors.lightText,
                         ),

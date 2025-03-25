@@ -11,7 +11,9 @@ import 'package:select_sports/core/widgets/custom_snackbar.dart';
 import 'package:select_sports/core/widgets/custom_textfields.dart';
 import 'package:select_sports/features/auth/presentation/auth_controller.dart';
 import 'package:select_sports/features/auth/utils/validators.dart';
+import 'package:select_sports/features/main/presentation/main_screen.dart';
 import 'package:select_sports/providers/theme_provider.dart';
+import 'package:toastification/toastification.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -23,6 +25,9 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FocusNode _focusNode = FocusNode();
+  DateTime? currentBackPressTime;
+  bool canPopNow = false;
+  int requiredSeconds = 2;
 
   @override
   void dispose() {
@@ -233,6 +238,29 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 
+  void onPopInvoked(bool didPop) {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) >
+            Duration(seconds: requiredSeconds)) {
+      currentBackPressTime = now;
+      CustomSnackBar.showWarning("Press Again to exit..!");
+      Future.delayed(
+        Duration(seconds: requiredSeconds),
+            () {
+          setState(() {
+            canPopNow = false;
+          });
+          toastification.dismissAll();
+        },
+      );
+      // Ok, let user exit app on the next back press
+      setState(() {
+        canPopNow = true;
+      });
+    }
+  }
+
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
       _login();
@@ -265,7 +293,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           SharedPreferencesKeys.email,
           result['data']['email'],
         );
-        Navigator.pushNamed(context, '/main');
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => MainScreen()),
+              (route) => false,
+        );
       } else {
         CustomSnackBar.showError(result["message"]);
       }
