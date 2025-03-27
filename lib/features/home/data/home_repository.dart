@@ -65,6 +65,32 @@ class HomeRepository {
     }
   }
 
+   Future<Slot?> cancelBooking(String id) async {
+    try {
+      final response =
+          await apiClient.get("${ApiEndpoints.bookings}/$id");
+
+      if (response.statusCode == 200) {
+        var cancelData = response.data['data'];
+        try {
+          return BookingCancellation.fromJson(cancelData);
+        } catch (e) {
+          logger.e("Home Repository Error [Get Slot Detail]", error: e);
+        }
+      }
+
+      return null;
+    } on DioException catch (e, s) {
+      logger.e("Home Repository DioException [Get Slot Detail]",
+          error: e, stackTrace: s);
+      return null;
+    } catch (e, s) {
+      logger.e("Home Repository Error [Get Slot Detail]",
+          error: e, stackTrace: s);
+      return null;
+    }
+  }
+
   Future<Slot?> getSlotDetail(String id) async {
     try {
       final response =

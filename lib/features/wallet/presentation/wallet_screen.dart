@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
+import 'package:select_sports/features/wallet/presentation/wallet_controller.dart';
 
 import '../../../providers/theme_provider.dart';
 
@@ -19,6 +20,7 @@ class WalletScreen extends ConsumerStatefulWidget {
 
 class _WalletScreenState extends ConsumerState<WalletScreen> {
   late ScrollController _scrollController;
+
   bool _isScrolled = false;
 
   final List<dynamic> _transactions = [
@@ -66,6 +68,9 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
     _scrollController.addListener(_listenToScrollChange);
 
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(walletControllerProvider.notifier).fetchUserWallet();
+    });
   }
 
   void _listenToScrollChange() {
@@ -86,6 +91,16 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
   Widget build(BuildContext context) {
     // final authController = ref.read(authControllerProvider);
     final isDarkMode = ref.watch(themeProvider) == ThemeMode.dark;
+    final walletState = ref.watch(walletControllerProvider);
+    final walletNotifier = ref.read(walletControllerProvider.notifier);
+
+    if (walletState.isLoading) {
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
 
     return Scaffold(
       body: CustomScrollView(
@@ -129,7 +144,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
               child: Column(
                 children: [
                   Text(
-                    '₹ 1,840.00',
+                    '₹ ${walletState.userWallet.balance}',
                     style: TextStyle(
                       color: isDarkMode ? AppColors.lightText : Colors.black,
                       fontSize: 22,
@@ -179,7 +194,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                             width: 3,
                           ),
                           Text(
-                            '1,840.00',
+                            walletState.userWallet.balance.toString(),
                             style: TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.bold,
@@ -263,7 +278,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                           SizedBox(
                             width: 10,
                           ),
-                          Text('₹ 1,840.00',
+                          Text('₹ ${walletState.userWallet.balance}',
                               style: TextStyle(
                                 color: isDarkMode
                                     ? AppColors.lightText
@@ -277,7 +292,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                     child: ListView.builder(
                       padding: EdgeInsets.only(top: 20),
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: _transactions.length,
+                      itemCount: walletState.userWallet.transactions?.length,
                       itemBuilder: (context, index) {
                         return FadeInDown(
                           duration: Duration(milliseconds: 500),
@@ -307,7 +322,13 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                                 Row(
                                   children: [
                                     Image.network(
-                                      _transactions[index][1],
+                                      walletState
+                                                  .userWallet
+                                                  .transactions![index]
+                                                  .method ==
+                                              "RAZORPAY"
+                                          ? "https://media.tradly.app/images/marketplace/34521/razor_pay_icon-ICtywSbN.png"
+                                          : "https://static-00.iconduck.com/assets.00/wallet-icon-1964x2048-g8f5z6u3.png",
                                       width: 50,
                                       height: 50,
                                     ),
@@ -319,7 +340,8 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          _transactions[index][0],
+                                          walletState.userWallet
+                                              .transactions![index].method,
                                           style: TextStyle(
                                               color: isDarkMode
                                                   ? AppColors.lightestGreyColor
@@ -331,7 +353,8 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                                           height: 5,
                                         ),
                                         Text(
-                                          _transactions[index][2],
+                                          walletState.userWallet
+                                              .transactions![index].updatedAt,
                                           style: TextStyle(
                                               color: isDarkMode
                                                   ? AppColors.darkBlue
@@ -343,7 +366,9 @@ class _WalletScreenState extends ConsumerState<WalletScreen> {
                                   ],
                                 ),
                                 Text(
-                                  _transactions[index][3],
+                                  walletState
+                                      .userWallet.transactions![index].amount
+                                      .toString(),
                                   style: TextStyle(
                                       color: isDarkMode
                                           ? AppColors.lightestGreyColor

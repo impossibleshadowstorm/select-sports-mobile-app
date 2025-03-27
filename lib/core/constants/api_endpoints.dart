@@ -16,4 +16,5 @@ class ApiEndpoints {
   static const String sportsProfileOptions = "/user/sports-profile-options";
   static const String initiatePayment = "/razorpay-transactions/initiate";
   static const String verifyPayment = "/razorpay-transactions/verify";
+  static const String wallet = "/user/wallet";
 }
