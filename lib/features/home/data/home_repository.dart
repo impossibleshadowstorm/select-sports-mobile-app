@@ -11,6 +11,8 @@ import 'package:select_sports/core/constants/api_endpoints.dart';
 import 'package:select_sports/features/profile/data/models/profile_options_model.dart';
 import 'package:select_sports/utils/app_logger.dart';
 
+import '../../../core/models/cancel_booking_model.dart';
+
 class HomeRepository {
   final ApiClient apiClient;
 
@@ -65,12 +67,14 @@ class HomeRepository {
     }
   }
 
-   Future<Slot?> cancelBooking(String id) async {
+   Future<BookingCancellation?> cancelBooking(String id) async {
     try {
       final response =
           await apiClient.get("${ApiEndpoints.bookings}/$id");
 
+      print(response.statusCode);
       if (response.statusCode == 200) {
+        print('data');
         var cancelData = response.data['data'];
         try {
           return BookingCancellation.fromJson(cancelData);

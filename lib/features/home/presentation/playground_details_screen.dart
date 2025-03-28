@@ -6,6 +6,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:select_sports/core/constants/shared_preferences_keys.dart';
 import 'package:select_sports/core/constants/theme_constants.dart';
 import 'package:select_sports/core/models/address_model.dart';
+import 'package:select_sports/core/models/slot_model.dart';
 import 'package:select_sports/core/models/venue_model.dart';
 import 'package:select_sports/core/network/shared_preferences_helper.dart';
 import 'package:select_sports/core/widgets/common_bottom_sheet.dart';
@@ -47,7 +48,6 @@ class _PlaygroundDetailsScreenState
       homeController.fetchSlotDetail(widget.slotId!);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -235,14 +235,32 @@ class _PlaygroundDetailsScreenState
                       color: Colors.transparent,
                     ),
                     child: CustomButtons.fullWidthFilledButton(
-                      buttonText:
-                      "Cancel Booking",
+                      buttonText: "Cancel Booking",
                       ref: ref,
-                      onClick: () {
-                        // If User already booked this slot then it must not perform any action
-                        if (!isSlotBookedByMe) {
-                          paymentBottomSheet(context, isDarkMode,
-                              homeController, homeState.slotDetail!.id);
+                      onClick: () async {
+                        homeController.fetchSlotDetail(widget.slotId!);
+                        Booking userBooking = homeState.slotDetail!.bookings
+                            .firstWhere((e) =>
+                                e.userId ==
+                                SharedPreferencesHelper.get(
+                                    SharedPreferencesKeys.userId));
+
+                        print(userBooking.status);
+                        if (userBooking.status == "CANCELLED") {
+                          return CustomSnackBar.showError(
+                              "Your Booking is Already Cancelled..!");
+                        }
+
+                        int response =
+                            await homeController.cancelBooking(userBooking.id);
+                        if (response == 1) {
+                          CustomSnackBar.showSuccess(
+                            "Booking is Cancelled Successfully..!",
+                          );
+                        } else {
+                          CustomSnackBar.showSuccess(
+                            "Booking Cancellation failed. Please try again..!",
+                          );
                         }
                       },
                       customDarkColor: AppColors.redColor,

@@ -47,15 +47,17 @@ class HomeController extends StateNotifier<HomeControllerState> {
     return verifyDetail;
   }
 
-  Future<void> cancelBooking(String id) async {
+  Future<int> cancelBooking(String id) async {
     try {
-      final canceledBooking = await homeRepository.cancelBooking(id);
-      state = state.copyWith(
-        cancelBooking: canceledBooking,
-      );
+      await homeRepository.cancelBooking(id);
+      return 1;
     } catch (err, stack) {
-      logger.e("Home Controller Error [Cancel Booking]",
-          error: err, stackTrace: stack);
+      logger.e(
+        "Home Controller Error [Cancel Booking]",
+        error: err,
+        stackTrace: stack,
+      );
+      return 0;
     }
   }
 
@@ -81,14 +83,12 @@ class HomeControllerState {
   final int previousImage;
   final Slot? slotDetail;
   final int selectedPaymentMode;
-  final BookingCancellation? cancelbooking;
 
   HomeControllerState({
     this.currentImage = 0,
     this.previousImage = 0,
     this.selectedPaymentMode = 0,
     this.slotDetail,
-    this.cancelbooking,
   });
 
   // CopyWith method for immutability
@@ -104,7 +104,6 @@ class HomeControllerState {
       previousImage: previousImage ?? this.previousImage,
       selectedPaymentMode: selectedPaymentMode ?? this.selectedPaymentMode,
       slotDetail: slotDetail,
-      cancelbooking: cancelbooking,
     );
   }
 }

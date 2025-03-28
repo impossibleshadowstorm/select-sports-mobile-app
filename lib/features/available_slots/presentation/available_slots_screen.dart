@@ -83,6 +83,7 @@ class _AvailableSlotsScreenState extends ConsumerState<AvailableSlotsScreen> {
                     itemBuilder: (context, index) {
                       final slot = slots[index];
                       final slotVenueAddress = slot.venue.address;
+                      print(slot.bookings.length);
 
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 5.w),
