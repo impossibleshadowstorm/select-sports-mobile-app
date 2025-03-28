@@ -73,7 +73,7 @@ void paymentBottomSheet(
                 dragableIcon: Icons.credit_card,
                 submittedIcon: Icons.done,
                 text: 'Pay using Card / UPI / Net Banking',
-                width: 400,
+                width: 70.0.w,
                 dragableIconBackgroundColor: Colors.greenAccent,
                 textStyle: TextStyle(color: Colors.white, fontSize: 15),
                 backgroundColor: Colors.grey,
@@ -108,7 +108,7 @@ void paymentBottomSheet(
               GradientSlideToAct(
                 dragableIcon: Icons.wallet,
                 text: 'Pay using Wallet Balance',
-                width: 400,
+                width: 70.w,
                 dragableIconBackgroundColor: Colors.greenAccent,
                 submittedIcon: Icons.done,
                 textStyle: TextStyle(color: Colors.white, fontSize: 15),

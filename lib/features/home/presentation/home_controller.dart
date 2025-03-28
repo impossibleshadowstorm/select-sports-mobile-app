@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:select_sports/core/models/cancel_booking_model.dart';
 import 'package:select_sports/core/models/slot_model.dart';
 import 'package:select_sports/core/models/venue_model.dart';
 import 'package:select_sports/features/home/data/home_repository.dart';
@@ -46,6 +47,18 @@ class HomeController extends StateNotifier<HomeControllerState> {
     return verifyDetail;
   }
 
+  Future<void> cancelBooking(String id) async {
+    try {
+      final canceledBooking = await homeRepository.cancelBooking(id);
+      state = state.copyWith(
+        cancelBooking: canceledBooking,
+      );
+    } catch (err, stack) {
+      logger.e("Home Controller Error [Cancel Booking]",
+          error: err, stackTrace: stack);
+    }
+  }
+
   Future<void> fetchSlotDetail(String id) async {
     try {
       final slot = await homeRepository.getSlotDetail(id);
@@ -68,12 +81,14 @@ class HomeControllerState {
   final int previousImage;
   final Slot? slotDetail;
   final int selectedPaymentMode;
+  final BookingCancellation? cancelbooking;
 
   HomeControllerState({
     this.currentImage = 0,
     this.previousImage = 0,
     this.selectedPaymentMode = 0,
     this.slotDetail,
+    this.cancelbooking,
   });
 
   // CopyWith method for immutability
@@ -82,12 +97,14 @@ class HomeControllerState {
     int? previousImage,
     int? selectedPaymentMode,
     Slot? slotDetail,
+    BookingCancellation? cancelbooking,
   }) {
     return HomeControllerState(
       currentImage: currentImage ?? this.currentImage,
       previousImage: previousImage ?? this.previousImage,
       selectedPaymentMode: selectedPaymentMode ?? this.selectedPaymentMode,
       slotDetail: slotDetail,
+      cancelbooking: cancelbooking,
     );
   }
 }
