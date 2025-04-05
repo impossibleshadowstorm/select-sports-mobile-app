@@ -87,15 +87,15 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
                         child: Column(
                           children: [
                             InkWell(
-                              overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                              overlayColor:
+                                  WidgetStatePropertyAll(Colors.transparent),
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        BookingDetailsScreen(
-                                          bookingId: booking.id,
-                                        ),
+                                    builder: (context) => BookingDetailsScreen(
+                                      bookingId: booking.id,
+                                    ),
                                   ),
                                 );
                               },
@@ -138,7 +138,9 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
                 fit: BoxFit.cover,
               ),
               border: Border.all(
-                color: AppColors.darkGreenColor,
+                color: booking.status == "CANCELLED"
+                    ? AppColors.redColor
+                    : AppColors.darkGreenColor,
                 width: 2,
               ),
               borderRadius: BorderRadius.only(
@@ -153,15 +155,18 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
               height: boxHeight,
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: AppColors.darkGreenColor,
-                  width: 1,
+                  color: booking.status == "CANCELLED"
+                      ? AppColors.redColor
+                      : AppColors.darkGreenColor,
+                  width: 2,
                 ),
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(5.w),
                   bottomRight: Radius.circular(5.w),
                 ),
-                color:
-                    isDarkMode ? AppColors.darkScaffoldBackground : AppColors.lightText,
+                color: isDarkMode
+                    ? AppColors.darkScaffoldBackground
+                    : AppColors.lightText,
               ),
               padding: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 2.5.w),
               child: Column(
@@ -176,7 +181,7 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
                         width: 20,
                         child: SvgPicture.asset(
                           Paths.footballIcon,
-                          color: isDarkMode
+                          color: booking.status == "CANCELLED" ? AppColors.redColor : isDarkMode
                               ? AppColors.lightGreenColor
                               : AppColors.darkGreenColor,
                         ),
@@ -185,7 +190,7 @@ class _BookingsScreenState extends ConsumerState<BookingsScreen> {
                       Text(
                         "Football",
                         style: AppTextStyles.body.copyWith(
-                          color: isDarkMode
+                          color: booking.status == "CANCELLED" ? AppColors.redColor : isDarkMode
                               ? AppColors.lightGreenColor
                               : AppColors.darkGreenColor,
                           fontSize: 14.sp,

@@ -67,18 +67,17 @@ class HomeRepository {
     }
   }
 
-   Future<BookingCancellation?> cancelBooking(String id) async {
+  Future<BookingCancellation?> cancelBooking(String id) async {
     try {
       final response =
-          await apiClient.get("${ApiEndpoints.bookings}/$id");
+          await apiClient.authorizedPatch("${ApiEndpoints.bookings}/$id", {});
 
-      print(response.statusCode);
       if (response.statusCode == 200) {
-        print('data');
-        var cancelData = response.data['data'];
+        var cancelData = response.data;
         try {
           return BookingCancellation.fromJson(cancelData);
-        } catch (e) {
+        } catch (e, stackTrace) {
+          print(stackTrace);
           logger.e("Home Repository Error [Get Slot Detail]", error: e);
         }
       }

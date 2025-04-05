@@ -80,9 +80,13 @@ class _PlaygroundDetailsScreenState
             final List<String> playgroundImages = playgroundData.images;
             final List<String> venueAmenities = playgroundData.amenities;
             final bool isSlotBookedByMe = homeState.slotDetail != null &&
-                homeState.slotDetail!.bookings.any((booking) =>
-                    booking.userId ==
-                    SharedPreferencesHelper.get(SharedPreferencesKeys.userId));
+                homeState.slotDetail!.bookings.any(
+                  (booking) =>
+                      booking.userId ==
+                          SharedPreferencesHelper.get(
+                              SharedPreferencesKeys.userId) &&
+                      booking.status == "CONFIRMED",
+                );
             // print('Home State Slot');
             // print(homeState.slotDetail?.id);
             return Column(
@@ -243,7 +247,7 @@ class _PlaygroundDetailsScreenState
                             .firstWhere((e) =>
                                 e.userId ==
                                 SharedPreferencesHelper.get(
-                                    SharedPreferencesKeys.userId));
+                                    SharedPreferencesKeys.userId) && e.status == "CONFIRMED");
 
                         print(userBooking.status);
                         if (userBooking.status == "CANCELLED") {
@@ -264,6 +268,7 @@ class _PlaygroundDetailsScreenState
                         }
                       },
                       customDarkColor: AppColors.redColor,
+                      customLightColor: AppColors.redColor,
                     ),
                   ),
                 SizedBox(height: 25),

@@ -112,6 +112,7 @@ class _BookingDetailsScreenState extends ConsumerState<BookingDetailsScreen> {
                             isDarkMode,
                             slotDetail.startTime,
                             slotDetail.endTime,
+                            bookingDetail.status,
                           ),
                           SizedBox(height: 5.w),
                           Text(
@@ -447,6 +448,7 @@ class _BookingDetailsScreenState extends ConsumerState<BookingDetailsScreen> {
     bool isDarkMode,
     DateTime startDateTime,
     DateTime endDateTime,
+    String status,
   ) {
     return Container(
       width: 100.w,
@@ -458,6 +460,27 @@ class _BookingDetailsScreenState extends ConsumerState<BookingDetailsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            "Current Status",
+            style: AppTextStyles.body.copyWith(
+              color: isDarkMode ? AppColors.lightGreyColor : AppColors.darkText,
+              fontSize: 13.sp,
+            ),
+          ),
+          SizedBox(height: 1.w),
+          Text(
+            status,
+            style: AppTextStyles.body.copyWith(
+              color: status == "CANCELLED"
+                  ? AppColors.redColor
+                  : isDarkMode
+                      ? AppColors.lightText
+                      : AppColors.darkText,
+              fontSize: 15.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 3.5.w),
           Text(
             "Start Date & Time",
             style: AppTextStyles.body.copyWith(

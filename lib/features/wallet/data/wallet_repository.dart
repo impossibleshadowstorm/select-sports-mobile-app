@@ -10,15 +10,16 @@ class WalletRepository {
 
   WalletRepository(this.apiClient);
 
-  Future<Wallet?> getWallet() async {
+  Future<WalletResponse?> getWallet() async {
     try {
       final response = await apiClient.authorizedGet(ApiEndpoints.wallet);
 
       if (response.statusCode == 200) {
         dynamic walletData = response.data['data'];
         try {
-          return Wallet.fromJson(walletData);
-        } catch (e) {
+          return WalletResponse.fromJson(walletData);
+        } catch (e, stackTrace) {
+          print(stackTrace);
           logger.e("Wallet Repository Error [Parsing Wallet]", error: e);
         }
       }
